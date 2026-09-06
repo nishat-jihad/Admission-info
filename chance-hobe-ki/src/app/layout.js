@@ -1,0 +1,36 @@
+import { Bangers, Hind_Siliguri, Baloo_Da_2 } from "next/font/google";
+import "./globals.css";
+
+const bangers = Bangers({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-bangers",
+});
+
+const hindSiliguri = Hind_Siliguri({
+  subsets: ["bengali", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-hind",
+});
+
+const balooDa2 = Baloo_Da_2({
+  subsets: ["bengali", "latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-baloo",
+});
+
+export const metadata = {
+  title: "Chance hobe ki?",
+  description:
+    "তোমার SSC আর HSC-র GPA দিয়ে তুমি কোন কোন ভার্সিটি, ইঞ্জিনিয়ারিং আর মেডিকেলে আবেদন করতে পারবে — সেটা এক নজরে জানিয়ে দেয় Chance hobe ki?",
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="bn">
+      <body className={`${bangers.variable} ${hindSiliguri.variable} ${balooDa2.variable}`}>
+        {children}
+      </body>
+    </html>
+  );
+}
