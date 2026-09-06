@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { universities } from "@/data/universities";
 import { engineeringUniIds, medicalUniIds } from "@/data/generalCriteria";
 import UniversityCard from "@/components/UniversityCard";
@@ -12,26 +13,34 @@ import CookieConsent from "@/components/CookieConsent";
 const VISIBLE_COUNT = 3;
 
 export default function HomePage() {
+  return (
+    <Suspense fallback={null}>
+      <HomePageContent />
+    </Suspense>
+  );
+}
+
+function HomePageContent() {
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [showAll, setShowAll] = useState(false);
 
+  // Re-runs every time the ?category= / ?q= params change, even when
+  // navigating client-side between "/" and "/?category=...#cards-wrap"
+  // (a plain window.location.search read only fires once on mount).
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const cat = params.get("category");
-    const q = params.get("q");
-    if (cat) {
-      setCategory(cat);
-      setShowAll(true);
-    }
-    if (q) {
-      setQuery(q);
+    const cat = searchParams.get("category");
+    const q = searchParams.get("q");
+    setCategory(cat || "all");
+    setQuery(q || "");
+    if (cat || q) {
       setShowAll(true);
     }
     if (window.location.hash === "#cards-wrap") {
       document.getElementById("cards-wrap")?.scrollIntoView({ block: "start" });
     }
-  }, []);
+  }, [searchParams]);
 
   const allIds = Object.keys(universities);
 
