@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 const CATEGORY_LINKS = [
   { category: "all", label: "হোম" },
@@ -12,17 +12,27 @@ const CATEGORY_LINKS = [
 ];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState("all");
-  const pathname = usePathname();
+  return (
+    <Suspense fallback={<NavbarShell />}>
+      <NavbarInner />
+    </Suspense>
+  );
+}
 
-  // Read the ?category= param client-side (avoids needing a Suspense
-  // boundary around every page just for a nav highlight).
-  useEffect(() => {
-    if (pathname !== "/") return;
-    const params = new URLSearchParams(window.location.search);
-    setActiveCategory(params.get("category") || "all");
-  }, [pathname]);
+// Rendered for the instant before the real navbar hydrates, so there's
+// no layout jump.
+function NavbarShell() {
+  return <header className="navbar" />;
+}
+
+function NavbarInner() {
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  // useSearchParams is reactive, so this updates immediately on every
+  // client-side Link navigation — including "/" -> "/?category=..." ones
+  // that don't remount the page.
+  const activeCategory = pathname === "/" ? searchParams.get("category") || "all" : "all";
 
   return (
     <header className="navbar">
