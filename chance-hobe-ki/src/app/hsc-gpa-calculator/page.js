@@ -44,7 +44,11 @@ export default function HscGpaCalculatorPage() {
     }
     const v = (id) => parseFloat(values[id]) || 0;
     const optional = optionalSubject === "bio" ? v("bio") : v("hm");
-    const netGpa = (v("bn") + v("en") + v("ict") + v("phy") + v("chem") + optional) / 6;
+    // অফিসিয়াল বোর্ড রুল: ঐচ্ছিক (৪র্থ) বিষয়ের পুরো GPA যোগ হয় না — শুধু
+    // (GPA - 2) বোনাস হিসেবে যোগ হয়, ঋণাত্মক হলে বোনাস ০।
+    const bonus = Math.max(0, optional - 2);
+    const mainTotal = v("bn") + v("en") + v("ict") + v("phy") + v("chem");
+    const netGpa = Math.min(5, (mainTotal + bonus) / 6);
     setResult({ type: "info", msg: `তোমার নেট HSC GPA: ${netGpa.toFixed(2)}` });
   }
 
@@ -72,7 +76,8 @@ export default function HscGpaCalculatorPage() {
             <div className="general-intro">
               সবগুলো বিষয়ের GPA দাও — <b>Higher Math</b> আর <b>Biology</b> দুটোই HSC-তে
               পড়ে থাকলে দুটোই দিয়ে দাও। এরপর নিচে কোনটা তোমার <b>ঐচ্ছিক (৪র্থ) বিষয়</b>{" "}
-              ছিল সেটা বেছে নাও — সেটার GPA দিয়েই নেট GPA হিসাব হবে।
+              ছিল সেটা বেছে নাও — বোর্ডের নিয়ম অনুযায়ী সেটার GPA থেকে ২ বাদ দিয়ে বোনাস
+              হিসেবে যোগ হবে (২-এর কম হলে বোনাস শূন্য)।
             </div>
 
             <div className="hsc-subject-group">
