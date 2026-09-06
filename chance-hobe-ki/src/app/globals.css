@@ -821,9 +821,8 @@ nav.nav-links button:not(.active):hover {
 .hsc-fields-grid .field {
   margin-bottom: 0;
 }
-.hsc-fields-grid-single {
-  grid-template-columns: 1fr;
-  max-width: 320px;
+.hsc-fields-grid .field-span-full {
+  grid-column: 1 / -1;
 }
 .hsc-subject-group {
   margin-bottom: 18px;
@@ -1370,6 +1369,8 @@ main.page {
   gap: 12px;
   position: sticky;
   top: 0;
+  align-self: flex-start;
+  width: 100%;
   z-index: 40;
   background: #fff;
   border-bottom: 1.5px solid var(--black);
@@ -1764,7 +1765,7 @@ section.block h2 .circular-tag {
   box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.85);
 }
 @media (max-width: 900px) {
-  body.uni-detail {
+  .layout.uni-detail {
     overflow-x: hidden;
   }
   .mobile-topbar {
