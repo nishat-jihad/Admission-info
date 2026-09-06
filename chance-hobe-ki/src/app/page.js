@@ -8,7 +8,6 @@ import { engineeringUniIds, medicalUniIds } from "@/data/generalCriteria";
 import UniversityCard from "@/components/UniversityCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CookieConsent from "@/components/CookieConsent";
 
 const VISIBLE_COUNT = 3;
 
@@ -194,7 +193,6 @@ function HomePageContent() {
       </section>
 
       <Footer />
-      <CookieConsent />
     </>
   );
 }
