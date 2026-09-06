@@ -7,9 +7,9 @@ import Footer from "@/components/Footer";
 
 const GPA_OPTIONS = ["5.00", "4.00", "3.50", "3.00", "2.00", "1.00"];
 
-function GpaSelect({ id, label, value, onChange }) {
+function GpaSelect({ id, label, value, onChange, fullWidth }) {
   return (
-    <div className="field">
+    <div className={`field${fullWidth ? " field-span-full" : ""}`}>
       <label htmlFor={id}>{label}</label>
       <select id={id} value={value} onChange={(e) => onChange(e.target.value)}>
         <option value="" disabled>
@@ -70,20 +70,22 @@ export default function HscGpaCalculatorPage() {
 
           <div className="general-card">
             <div className="general-intro">
-              <b>Biology</b> বা <b>Higher Math</b> — যেটা তোমার HSC-তে ছিল, নিচে থেকে
-              সেটা সিলেক্ট করে দাও। GPA বের করার আগে এটা সিলেক্ট করা আবশ্যক।
+              সবগুলো বিষয়ের GPA দাও — <b>Higher Math</b> আর <b>Biology</b> দুটোই HSC-তে
+              পড়ে থাকলে দুটোই দিয়ে দাও। এরপর নিচে কোনটা তোমার <b>ঐচ্ছিক (৪র্থ) বিষয়</b>{" "}
+              ছিল সেটা বেছে নাও — সেটার GPA দিয়েই নেট GPA হিসাব হবে।
             </div>
 
             <div className="hsc-subject-group">
               <div className="hsc-fields-grid">
                 <GpaSelect id="bn" label="বাংলা" value={values.bn || ""} onChange={(v) => setField("bn", v)} />
                 <GpaSelect id="en" label="ইংরেজি" value={values.en || ""} onChange={(v) => setField("en", v)} />
-              </div>
-            </div>
-
-            <div className="hsc-subject-group">
-              <div className="hsc-fields-grid hsc-fields-grid-single">
-                <GpaSelect id="ict" label="ICT" value={values.ict || ""} onChange={(v) => setField("ict", v)} />
+                <GpaSelect
+                  id="ict"
+                  label="ICT"
+                  value={values.ict || ""}
+                  onChange={(v) => setField("ict", v)}
+                  fullWidth
+                />
               </div>
             </div>
 
@@ -94,8 +96,17 @@ export default function HscGpaCalculatorPage() {
               </div>
             </div>
 
+            <div className="hsc-subject-group">
+              <div className="hsc-fields-grid">
+                <GpaSelect id="hm" label="উচ্চতর গণিত" value={values.hm || ""} onChange={(v) => setField("hm", v)} />
+                <GpaSelect id="bio" label="জীববিজ্ঞান" value={values.bio || ""} onChange={(v) => setField("bio", v)} />
+              </div>
+            </div>
+
             <div className="optional-select">
-              <div className="optional-select-title">চতুর্থ বিজ্ঞান বিষয় (যেকোনো একটা সিলেক্ট করো)</div>
+              <div className="optional-select-title">
+                উচ্চতর গণিত ও জীববিজ্ঞান — কোনটা তোমার ঐচ্ছিক (৪র্থ) বিষয় ছিল, সেটা বেছে নাও
+              </div>
               <div className="optional-toggle-row">
                 <div
                   className={`optional-toggle${optionalSubject === "hm" ? " selected" : ""}`}
@@ -110,16 +121,6 @@ export default function HscGpaCalculatorPage() {
                   জীববিজ্ঞান
                 </div>
               </div>
-              {optionalSubject && (
-                <div className="hsc-fields-grid hsc-fields-grid-single">
-                  <GpaSelect
-                    id={optionalSubject}
-                    label={optionalSubject === "hm" ? "উচ্চতর গণিত" : "জীববিজ্ঞান"}
-                    value={values[optionalSubject] || ""}
-                    onChange={(v) => setField(optionalSubject, v)}
-                  />
-                </div>
-              )}
             </div>
 
             <button className="check-btn wide" onClick={handleCheck}>
