@@ -10,7 +10,13 @@ export default function UniversitySidebar({ activeId }) {
 
   useEffect(() => {
     document.body.classList.toggle("drawer-open", mobileOpen);
+    return () => document.body.classList.remove("drawer-open");
   }, [mobileOpen]);
+
+  useEffect(() => {
+    document.body.classList.toggle("sidebar-collapsed", collapsed);
+    return () => document.body.classList.remove("sidebar-collapsed");
+  }, [collapsed]);
 
   useEffect(() => {
     function handleResize() {
