@@ -5,7 +5,47 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const GPA_OPTIONS = ["5.00", "4.00", "3.50", "3.00", "2.00", "1.00"];
+const GPA_OPTIONS = [
+  { value: "5.00", grade: "A+" },
+  { value: "4.00", grade: "A" },
+  { value: "3.50", grade: "A-" },
+  { value: "3.00", grade: "B" },
+  { value: "2.00", grade: "C" },
+  { value: "1.00", grade: "D" },
+];
+
+const GRADING_SCALE = [
+  { marks: "৮০-১০০", grade: "A+", points: "৫.০০" },
+  { marks: "৭০-৭৯", grade: "A", points: "৪.০০" },
+  { marks: "৬০-৬৯", grade: "A-", points: "৩.৫০" },
+  { marks: "৫০-৫৯", grade: "B", points: "৩.০০" },
+  { marks: "৪০-৪৯", grade: "C", points: "২.০০" },
+  { marks: "৩৩-৩৯", grade: "D", points: "১.০০" },
+  { marks: "০-৩২", grade: "F", points: "০.০০" },
+];
+
+function GradingScaleTable() {
+  return (
+    <table className="grading-table">
+      <thead>
+        <tr>
+          <th>মার্কস</th>
+          <th>গ্রেড</th>
+          <th>পয়েন্ট</th>
+        </tr>
+      </thead>
+      <tbody>
+        {GRADING_SCALE.map((row) => (
+          <tr key={row.grade}>
+            <td>{row.marks}</td>
+            <td>{row.grade}</td>
+            <td>{row.points}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
 
 function GpaSelect({ id, label, value, onChange, fullWidth }) {
   return (
@@ -15,9 +55,9 @@ function GpaSelect({ id, label, value, onChange, fullWidth }) {
         <option value="" disabled>
           GPA সিলেক্ট করো
         </option>
-        {GPA_OPTIONS.map((v) => (
-          <option key={v} value={v}>
-            {v}
+        {GPA_OPTIONS.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.value} ({opt.grade})
           </option>
         ))}
       </select>
@@ -56,7 +96,7 @@ export default function HscGpaCalculatorPage() {
     <>
       <Navbar />
       <section className="general-page open">
-        <div className="general-page-inner">
+        <div className="general-page-inner hsc-page-inner">
           <Link className="general-back-btn" href="/">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -72,67 +112,79 @@ export default function HscGpaCalculatorPage() {
             </p>
           </div>
 
-          <div className="general-card">
-            <div className="general-intro">
-              সবগুলো বিষয়ের GPA দাও — <b>Higher Math</b> আর <b>Biology</b> দুটোই HSC-তে
-              পড়ে থাকলে দুটোই দিয়ে দাও। এরপর নিচে কোনটা তোমার <b>ঐচ্ছিক (৪র্থ) বিষয়</b>{" "}
-              ছিল সেটা বেছে নাও — বোর্ডের নিয়ম অনুযায়ী সেটার GPA থেকে ২ বাদ দিয়ে বোনাস
-              হিসেবে যোগ হবে (২-এর কম হলে বোনাস শূন্য)।
-            </div>
-
-            <div className="hsc-subject-group">
-              <div className="hsc-fields-grid">
-                <GpaSelect id="bn" label="বাংলা" value={values.bn || ""} onChange={(v) => setField("bn", v)} />
-                <GpaSelect id="en" label="ইংরেজি" value={values.en || ""} onChange={(v) => setField("en", v)} />
-                <GpaSelect
-                  id="ict"
-                  label="ICT"
-                  value={values.ict || ""}
-                  onChange={(v) => setField("ict", v)}
-                  fullWidth
-                />
+          <div className="hsc-layout">
+            <div className="general-card hsc-main-card">
+              <div className="general-intro">
+                সবগুলো বিষয়ের GPA দাও — <b>Higher Math</b> আর <b>Biology</b> দুটোই HSC-তে
+                পড়ে থাকলে দুটোই দিয়ে দাও। এরপর নিচে কোনটা তোমার <b>ঐচ্ছিক (৪র্থ) বিষয়</b>{" "}
+                ছিল সেটা বেছে নাও — বোর্ডের নিয়ম অনুযায়ী সেটার GPA থেকে ২ বাদ দিয়ে বোনাস
+                হিসেবে যোগ হবে (২-এর কম হলে বোনাস শূন্য)।
               </div>
-            </div>
 
-            <div className="hsc-subject-group">
-              <div className="hsc-fields-grid">
-                <GpaSelect id="phy" label="পদার্থবিজ্ঞান" value={values.phy || ""} onChange={(v) => setField("phy", v)} />
-                <GpaSelect id="chem" label="রসায়ন" value={values.chem || ""} onChange={(v) => setField("chem", v)} />
-              </div>
-            </div>
-
-            <div className="hsc-subject-group">
-              <div className="hsc-fields-grid">
-                <GpaSelect id="hm" label="উচ্চতর গণিত" value={values.hm || ""} onChange={(v) => setField("hm", v)} />
-                <GpaSelect id="bio" label="জীববিজ্ঞান" value={values.bio || ""} onChange={(v) => setField("bio", v)} />
-              </div>
-            </div>
-
-            <div className="optional-select">
-              <div className="optional-select-title">
-                উচ্চতর গণিত ও জীববিজ্ঞান — কোনটা তোমার ঐচ্ছিক (৪র্থ) বিষয় ছিল, সেটা বেছে নাও
-              </div>
-              <div className="optional-toggle-row">
-                <div
-                  className={`optional-toggle${optionalSubject === "hm" ? " selected" : ""}`}
-                  onClick={() => setOptionalSubject("hm")}
-                >
-                  উচ্চতর গণিত
-                </div>
-                <div
-                  className={`optional-toggle${optionalSubject === "bio" ? " selected" : ""}`}
-                  onClick={() => setOptionalSubject("bio")}
-                >
-                  জীববিজ্ঞান
+              <div className="hsc-subject-group">
+                <div className="hsc-fields-grid">
+                  <GpaSelect id="bn" label="বাংলা" value={values.bn || ""} onChange={(v) => setField("bn", v)} />
+                  <GpaSelect id="en" label="ইংরেজি" value={values.en || ""} onChange={(v) => setField("en", v)} />
+                  <GpaSelect
+                    id="ict"
+                    label="ICT"
+                    value={values.ict || ""}
+                    onChange={(v) => setField("ict", v)}
+                    fullWidth
+                  />
                 </div>
               </div>
+
+              <div className="hsc-subject-group">
+                <div className="hsc-fields-grid">
+                  <GpaSelect id="phy" label="পদার্থবিজ্ঞান" value={values.phy || ""} onChange={(v) => setField("phy", v)} />
+                  <GpaSelect id="chem" label="রসায়ন" value={values.chem || ""} onChange={(v) => setField("chem", v)} />
+                </div>
+              </div>
+
+              <div className="hsc-subject-group">
+                <div className="hsc-fields-grid">
+                  <GpaSelect id="hm" label="উচ্চতর গণিত" value={values.hm || ""} onChange={(v) => setField("hm", v)} />
+                  <GpaSelect id="bio" label="জীববিজ্ঞান" value={values.bio || ""} onChange={(v) => setField("bio", v)} />
+                </div>
+              </div>
+
+              <div className="optional-select">
+                <div className="optional-select-title">
+                  উচ্চতর গণিত ও জীববিজ্ঞান — কোনটা তোমার ঐচ্ছিক (৪র্থ) বিষয় ছিল, সেটা বেছে নাও
+                </div>
+                <div className="optional-toggle-row">
+                  <div
+                    className={`optional-toggle${optionalSubject === "hm" ? " selected" : ""}`}
+                    onClick={() => setOptionalSubject("hm")}
+                  >
+                    উচ্চতর গণিত
+                  </div>
+                  <div
+                    className={`optional-toggle${optionalSubject === "bio" ? " selected" : ""}`}
+                    onClick={() => setOptionalSubject("bio")}
+                  >
+                    জীববিজ্ঞান
+                  </div>
+                </div>
+              </div>
+
+              <button className="check-btn wide" onClick={handleCheck}>
+                GPA বের করো
+              </button>
+
+              <div className="hsc-grading-mobile">
+                <div className="grading-panel-title">গ্রেডিং স্কেল</div>
+                <GradingScaleTable />
+              </div>
+
+              {result && <div className={`result-box ${result.type}`}>{result.msg}</div>}
             </div>
 
-            <button className="check-btn wide" onClick={handleCheck}>
-              GPA বের করো
-            </button>
-
-            {result && <div className={`result-box ${result.type}`}>{result.msg}</div>}
+            <aside className="hsc-grading-panel">
+              <div className="grading-panel-title">গ্রেডিং স্কেল</div>
+              <GradingScaleTable />
+            </aside>
           </div>
         </div>
       </section>
