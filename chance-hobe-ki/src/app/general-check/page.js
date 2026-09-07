@@ -135,6 +135,15 @@ export default function GeneralCheckPage() {
 
               {!result && <GpaScaleChart />}
 
+              {result && (
+                <div className="result-heading-block">
+                  <div className="result-heading-title">ফলাফল:</div>
+                  <p className="result-heading-sub">
+                    তোমার এই SSC and HSC GPA দিয়ে যেখানে যেখানে পরীক্ষা দিতে পারবে —
+                  </p>
+                </div>
+              )}
+
               {result && result.eligibleUnis.length > 0 && (
                 <div className="general-result-table-wrap">
                   <table className="general-result-table">
