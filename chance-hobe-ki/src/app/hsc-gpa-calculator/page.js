@@ -204,9 +204,23 @@ export default function HscGpaCalculatorPage() {
             )}
             </div>
 
-            <aside className="hsc-grading-panel">
-              <div className="grading-panel-title">গ্রেডিং স্কেল</div>
-              <GradingScaleTable />
+            <aside className="hsc-grading-panel hsc-about-panel">
+              <div className="grading-panel-title">About HSC GPA Calculation</div>
+              <p>
+                The Higher Secondary Certificate (HSC) examination is a crucial milestone in
+                Bangladesh&apos;s education system. This calculator helps students accurately
+                determine their Grade Point Average (GPA) based on the standardized grading
+                system used by all education boards in Bangladesh.
+              </p>
+              <p>The HSC GPA calculation considers:</p>
+              <ul>
+                <li>
+                  Compulsory subjects: Bangla, English, and Information &amp; Communication
+                  Technology
+                </li>
+                <li>Group-specific subjects: Different for Science, Humanities, and Business Studies groups</li>
+                <li>Fourth subject: Additional grade points if scored above grade C (2.00)</li>
+              </ul>
             </aside>
           </div>
         </div>
