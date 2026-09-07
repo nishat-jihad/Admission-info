@@ -6,6 +6,42 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { generalCriteria } from "@/data/generalCriteria";
 
+const GPA_SCALE = [
+  { marks: "80-100", grade: "A+", points: "5.00" },
+  { marks: "70-79", grade: "A", points: "4.00" },
+  { marks: "60-69", grade: "A-", points: "3.50" },
+  { marks: "50-59", grade: "B", points: "3.00" },
+  { marks: "40-49", grade: "C", points: "2.00" },
+  { marks: "33-39", grade: "D", points: "1.00" },
+  { marks: "0-32", grade: "F", points: "0.00" },
+];
+
+function GpaScaleChart() {
+  return (
+    <div className="gpa-scale-block">
+      <div className="grading-panel-title">GPA Scale</div>
+      <table className="grading-table">
+        <thead>
+          <tr>
+            <th>Marks (%)</th>
+            <th>Grade</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          {GPA_SCALE.map((row) => (
+            <tr key={row.grade}>
+              <td>{row.marks}</td>
+              <td>{row.grade}</td>
+              <td>{row.points}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function GeneralCheckPage() {
   const [ssc, setSsc] = useState("");
   const [hsc, setHsc] = useState("");
@@ -52,7 +88,6 @@ export default function GeneralCheckPage() {
           </Link>
 
           <div className="general-page-header">
-            <span className="hero-eyebrow">শুধু SSC + HSC দিয়ে</span>
             <h2 className="general-page-title">সব ভার্সিটি এক নজরে দেখো</h2>
             <p className="general-page-sub">নিচে GPA বসাও — ফলাফল সাথে সাথে নিচে দেখতে পাবে</p>
           </div>
@@ -98,6 +133,8 @@ export default function GeneralCheckPage() {
                 </button>
               </div>
 
+              {!result && <GpaScaleChart />}
+
               {result && result.eligibleUnis.length > 0 && (
                 <div className="general-result-table-wrap">
                   <table className="general-result-table">
@@ -131,6 +168,8 @@ export default function GeneralCheckPage() {
                   হচ্ছে না। এগুলোর জন্য নির্দিষ্ট ভার্সিটি চেক করো।
                 </div>
               )}
+
+              {result && <GpaScaleChart />}
             </div>
 
             <aside className="general-check-about">
