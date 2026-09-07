@@ -30,6 +30,36 @@ function Photo({ uni }) {
   );
 }
 
+function HeroGallery({ uni }) {
+  return (
+    <div className="uni-hero-gallery">
+      {uni.galleryPhotos.map((src, i) => (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img key={i} src={src} alt={`${uni.name} campus ${i + 1}`} />
+      ))}
+    </div>
+  );
+}
+
+function HeroText({ uni }) {
+  return (
+    <div className="uni-hero-text">
+      <h1>{uni.name}</h1>
+      {uni.website ? (
+        <a className="website" href={uni.website} target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M3 12h18M12 3c2.5 2.7 4 6.1 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6.1-4-9s1.5-6.3 4-9z" />
+          </svg>
+          {uni.website.replace("https://", "")}
+        </a>
+      ) : (
+        <div style={{ color: "#777", fontSize: 14 }}>{uni.fullName || ""}</div>
+      )}
+    </div>
+  );
+}
+
 export default function UniversityDetailPage({ params }) {
   const uni = universities[params.slug];
   if (!uni) notFound();
@@ -48,23 +78,19 @@ export default function UniversityDetailPage({ params }) {
           হোমে ফিরে যান
         </Link>
 
-        <div className="uni-hero">
-          <Photo uni={uni} />
-          <div className="uni-hero-text">
-            <h1>{uni.name}</h1>
-            {uni.website ? (
-              <a className="website" href={uni.website} target="_blank" rel="noopener noreferrer">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M3 12h18M12 3c2.5 2.7 4 6.1 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6.1-4-9s1.5-6.3 4-9z" />
-                </svg>
-                {uni.website.replace("https://", "")}
-              </a>
-            ) : (
-              <div style={{ color: "#777", fontSize: 14 }}>{uni.fullName || ""}</div>
-            )}
+        {uni.galleryPhotos && uni.galleryPhotos.length > 0 ? (
+          <>
+            <HeroGallery uni={uni} />
+            <div className="uni-hero uni-hero-no-photo">
+              <HeroText uni={uni} />
+            </div>
+          </>
+        ) : (
+          <div className="uni-hero">
+            <Photo uni={uni} />
+            <HeroText uni={uni} />
           </div>
-        </div>
+        )}
 
         <div className="info-grid">
           <div className="info-card">
