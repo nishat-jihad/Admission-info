@@ -1017,17 +1017,17 @@ footer.site-footer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 6px;
 }
 .socialContainer {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   background-color: rgba(255, 255, 255, 0.07);
   border: 1.5px solid rgba(255, 255, 255, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
   transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
@@ -1051,7 +1051,9 @@ footer.site-footer {
   transform: scale(0.9);
 }
 .socialSvg {
-  width: 15px;
+  width: 12px;
+  height: 12px;
+  display: block;
 }
 .socialSvg path {
   fill: #fff;
@@ -1074,7 +1076,7 @@ footer.site-footer {
   .footer-social {
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
   }
 }
 
