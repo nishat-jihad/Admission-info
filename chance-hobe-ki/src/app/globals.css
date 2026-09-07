@@ -1799,6 +1799,9 @@ section.block h2 .circular-tag {
   .mobile-topbar {
     display: flex;
   }
+  .mobile-topbar .hamburger-btn {
+    display: flex;
+  }
   .sidebar-overlay {
     display: block;
     pointer-events: none;
