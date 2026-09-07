@@ -946,6 +946,12 @@ nav.nav-links button:not(.active):hover {
     margin: 18px 0 4px;
   }
 }
+/* This page's content doesn't need a forced full-viewport height —
+   letting it be content-driven avoids a dead gap above the footer. */
+.hsc-calc-page {
+  min-height: 0;
+  padding-bottom: 48px;
+}
 
 /* ---------- FOOTER ---------- */
 footer.site-footer {
@@ -959,7 +965,7 @@ footer.site-footer {
   margin: 0 auto;
   padding: 52px 28px 32px;
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-columns: 1.4fr 1fr 1fr 0.7fr;
   gap: 40px;
 }
 .footer-brand {
@@ -1006,23 +1012,12 @@ footer.site-footer {
 .footer-col a:hover {
   color: var(--green);
 }
-.footer-extra {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 32px 28px 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-.footer-social-only {
-  display: flex;
-  justify-content: center;
-}
 .footer-social {
-  height: 46px;
+  height: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 }
 .socialContainer {
   width: 40px;
@@ -1072,6 +1067,14 @@ footer.site-footer {
   .footer-inner {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+  .footer-social-col h4 {
+    display: none;
+  }
+  .footer-social {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
   }
 }
 
