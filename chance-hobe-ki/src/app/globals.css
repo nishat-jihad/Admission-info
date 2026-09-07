@@ -1546,6 +1546,30 @@ main.content {
   align-items: flex-end;
   margin-bottom: 26px;
 }
+.uni-hero-no-photo {
+  margin-bottom: 26px;
+}
+.uni-hero-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid var(--black);
+  box-shadow: var(--shadow-hard);
+}
+.uni-hero-gallery img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 480px) {
+  .uni-hero-gallery img {
+    height: 96px;
+  }
+}
 .uni-hero-photo {
   width: 220px;
   height: 140px;
