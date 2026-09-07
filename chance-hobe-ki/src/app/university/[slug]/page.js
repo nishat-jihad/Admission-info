@@ -31,8 +31,12 @@ function Photo({ uni }) {
 }
 
 function HeroGallery({ uni }) {
+  const count = uni.galleryPhotos.length;
   return (
-    <div className="uni-hero-gallery">
+    <div
+      className="uni-hero-gallery"
+      style={{ gridTemplateColumns: `repeat(${count}, 1fr)` }}
+    >
       {uni.galleryPhotos.map((src, i) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img key={i} src={src} alt={`${uni.name} campus ${i + 1}`} />
