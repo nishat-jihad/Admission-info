@@ -47,6 +47,16 @@ function GradingScaleTable() {
   );
 }
 
+function gpaToGrade(gpa) {
+  if (gpa >= 5) return "A+";
+  if (gpa >= 4) return "A";
+  if (gpa >= 3.5) return "A-";
+  if (gpa >= 3) return "B";
+  if (gpa >= 2) return "C";
+  if (gpa >= 1) return "D";
+  return "F";
+}
+
 function GpaSelect({ id, label, value, onChange, fullWidth }) {
   return (
     <div className={`field${fullWidth ? " field-span-full" : ""}`}>
@@ -89,7 +99,7 @@ export default function HscGpaCalculatorPage() {
     const bonus = Math.max(0, optional - 2);
     const mainTotal = v("bn") + v("en") + v("ict") + v("phy") + v("chem");
     const netGpa = Math.min(5, (mainTotal + bonus) / 6);
-    setResult({ type: "info", msg: `তোমার নেট HSC GPA: ${netGpa.toFixed(2)}` });
+    setResult({ type: "info", gpa: netGpa.toFixed(2), grade: gpaToGrade(netGpa) });
   }
 
   return (
@@ -178,7 +188,18 @@ export default function HscGpaCalculatorPage() {
                 <GradingScaleTable />
               </div>
 
-              {result && <div className={`result-box ${result.type}`}>{result.msg}</div>}
+              {result && (
+              <div className={`result-box ${result.type}`}>
+                {result.gpa ? (
+                  <>
+                    <div className="result-line">তোমার নেট HSC GPA: {result.gpa}</div>
+                    <div className="result-line result-grade">GRADE: {result.grade}</div>
+                  </>
+                ) : (
+                  result.msg
+                )}
+              </div>
+            )}
             </div>
 
             <aside className="hsc-grading-panel">
