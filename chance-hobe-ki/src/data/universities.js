@@ -1092,8 +1092,7 @@ export const universities = {
     "photo": "https://just.edu.bd/img.800px.jpg",
     "galleryPhotos": [
       "https://just.edu.bd/img.800px.jpg",
-      "https://mbstu.ac.bd/wp-content/uploads/2024/11/Visit-MBSTU-13.jpeg",
-      "https://media.licdn.com/dms/image/v2/D5622AQFVOG18FnXzCw/feedshare-shrink_800/feedshare-shrink_800/0/1733500077901?e=2147483647&v=beta&t=bHlwGgoZKDEZW7eRjWKSvpFSTn8seIv8KVCGGPjBid0"
+      "https://mbstu.ac.bd/wp-content/uploads/2024/11/Visit-MBSTU-13.jpeg"
     ],
     "color": "#1D4ED8",
     "seats": "বিজ্ঞান বিভাগের আসন সংখ্যা প্রায় ৫৯৯৪ টি",
