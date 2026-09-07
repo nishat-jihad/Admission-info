@@ -711,7 +711,7 @@ nav.nav-links button:not(.active):hover {
 }
 .hsc-result-grade {
   font-family: var(--font-baloo), sans-serif;
-  font-size: clamp(28px, 4vw, 34px);
+  font-size: clamp(20px, 3vw, 24px);
   font-weight: 800;
   line-height: 1.1;
   color: var(--black);
