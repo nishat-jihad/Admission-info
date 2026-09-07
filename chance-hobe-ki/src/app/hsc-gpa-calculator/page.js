@@ -190,8 +190,9 @@ export default function HscGpaCalculatorPage() {
                 {result.gpa ? (
                   <>
                     <div className="hsc-result-title">তোমার HSC মোট GPA</div>
-                    <div className="hsc-result-number">{result.gpa}</div>
-                    <div className="hsc-result-grade">{result.grade}</div>
+                    <div className="hsc-result-number">
+                      {result.gpa} <span className="hsc-result-grade">({result.grade})</span>
+                    </div>
                   </>
                 ) : (
                   result.msg
