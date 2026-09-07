@@ -1795,6 +1795,7 @@ section.block h2 .circular-tag {
 @media (max-width: 900px) {
   .layout.uni-detail {
     overflow-x: hidden;
+    flex-direction: column;
   }
   .mobile-topbar {
     display: flex;
