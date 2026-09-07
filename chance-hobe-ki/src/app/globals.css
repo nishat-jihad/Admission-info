@@ -688,6 +688,14 @@ nav.nav-links button:not(.active):hover {
   color: #8a6d00;
   border: 1.5px solid #ffe6a3;
 }
+.result-line {
+  line-height: 1.7;
+}
+.result-line.result-grade {
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 800;
+}
 
 /* ---------- GENERAL / HSC-GPA STANDALONE PAGES ---------- */
 .general-page {
@@ -1004,76 +1012,9 @@ footer.site-footer {
   padding: 32px 28px 40px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
-.newsletter-box {
-  flex: 1;
-  min-width: 260px;
-}
-.newsletter-box h3 {
-  font-family: var(--font-baloo), sans-serif;
-  font-size: 19px;
-  color: #fff;
-  margin: 0 0 6px;
-}
-.newsletter-box p {
-  font-size: 13px;
-  color: #aebbe0;
-  line-height: 1.7;
-  margin: 0 0 14px;
-  max-width: 46ch;
-}
-.newsletter-row {
+.footer-social-only {
   display: flex;
-  align-items: center;
-  gap: 34px;
-  flex-wrap: wrap;
-}
-.newsletter-form {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  flex: 1;
-  min-width: 260px;
-}
-.newsletter-form input {
-  flex: 1;
-  min-width: 200px;
-  height: 46px;
-  padding: 0 18px;
-  border-radius: 999px;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.07);
-  color: #fff;
-  font-size: 14px;
-}
-.newsletter-form input::placeholder {
-  color: #94a2cc;
-}
-.newsletter-form input:focus {
-  outline: none;
-  border-color: var(--green);
-}
-.newsletter-form button {
-  background: var(--green);
-  color: #fff;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  font-weight: 700;
-  font-size: 14px;
-  height: 46px;
-  padding: 0 26px;
-  border-radius: 999px;
-  cursor: pointer;
-  box-shadow: var(--shadow-thin);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
-}
-.newsletter-form button:hover {
-  background: var(--green-dark);
-}
-.newsletter-msg {
-  margin-top: 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #7ce3a0;
-  min-height: 16px;
+  justify-content: center;
 }
 .footer-social {
   height: 46px;
@@ -1131,16 +1072,6 @@ footer.site-footer {
   .footer-inner {
     grid-template-columns: 1fr;
     gap: 30px;
-  }
-  .newsletter-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .newsletter-form {
-    min-width: 0;
-  }
-  .footer-social {
-    align-self: flex-start;
   }
 }
 
