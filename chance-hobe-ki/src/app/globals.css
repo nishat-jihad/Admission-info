@@ -804,7 +804,6 @@ nav.nav-links button:not(.active):hover {
 }
 .general-result-table {
   width: 100%;
-  max-width: 480px;
   border-collapse: collapse;
   background: #fff;
   border: 1.5px solid var(--black);
@@ -905,6 +904,65 @@ nav.nav-links button:not(.active):hover {
   }
   .general-fields {
     flex-direction: column;
+  }
+}
+
+/* ---------- GENERAL CHECK PAGE: desktop two-column layout ---------- */
+.general-check-page-inner {
+  max-width: 1320px;
+}
+.general-check-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+}
+.general-check-main {
+  flex: 1 1 680px;
+}
+@media (min-width: 901px) {
+  .general-check-card {
+    padding: 34px 30px;
+  }
+}
+.general-check-about {
+  flex: 0 0 300px;
+  position: sticky;
+  top: 20px;
+}
+.general-about-title {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(24px, 3.6vw, 34px);
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+.general-check-about p {
+  font-size: 15.5px;
+  color: var(--black);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.general-check-about ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 18px;
+  margin: 0 0 12px;
+}
+.general-check-about li {
+  font-size: 15.5px;
+  color: var(--black);
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .general-check-layout {
+    flex-direction: column;
+  }
+  .general-check-main {
+    max-width: 100%;
+  }
+  .general-check-about {
+    display: none;
   }
 }
 
