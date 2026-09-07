@@ -871,6 +871,74 @@ nav.nav-links button:not(.active):hover {
   }
 }
 
+/* ---------- HSC GPA CALCULATOR: side-by-side grading scale ---------- */
+.hsc-page-inner {
+  max-width: 1040px;
+}
+.hsc-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+}
+.hsc-main-card {
+  flex: 1 1 620px;
+  max-width: 640px;
+  margin-bottom: 0;
+}
+.hsc-grading-panel {
+  flex: 0 0 300px;
+  position: sticky;
+  top: 20px;
+}
+.hsc-grading-mobile {
+  display: none;
+}
+.grading-panel-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--black);
+  margin-bottom: 10px;
+}
+.grading-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1.5px solid var(--black);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-hard);
+}
+.grading-table th,
+.grading-table td {
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 13.5px;
+  border-bottom: 1px solid #eee;
+}
+.grading-table th {
+  background: #0c1f3f;
+  color: #fff;
+  font-weight: 700;
+}
+.grading-table tr:last-child td {
+  border-bottom: none;
+}
+@media (max-width: 900px) {
+  .hsc-layout {
+    flex-direction: column;
+  }
+  .hsc-main-card {
+    max-width: 100%;
+  }
+  .hsc-grading-panel {
+    display: none;
+  }
+  .hsc-grading-mobile {
+    display: block;
+    margin: 18px 0 4px;
+  }
+}
+
 /* ---------- FOOTER ---------- */
 footer.site-footer {
   background: linear-gradient(180deg, #0c1f3f 0%, #0a1a38 100%);
