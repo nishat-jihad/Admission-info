@@ -93,11 +93,13 @@ export default function HscGpaCalculatorPage() {
       return;
     }
     const v = (id) => parseFloat(values[id]) || 0;
-    const optional = optionalSubject === "bio" ? v("bio") : v("hm");
-    // অফিসিয়াল বোর্ড রুল: ঐচ্ছিক (৪র্থ) বিষয়ের পুরো GPA যোগ হয় না — শুধু
-    // (GPA - 2) বোনাস হিসেবে যোগ হয়, ঋণাত্মক হলে বোনাস ০।
-    const bonus = Math.max(0, optional - 2);
-    const mainTotal = v("bn") + v("en") + v("ict") + v("phy") + v("chem");
+    const optionalVal = optionalSubject === "bio" ? v("bio") : v("hm");
+    const requiredVal = optionalSubject === "bio" ? v("hm") : v("bio");
+    // অফিসিয়াল বোর্ড রুল: ৬টা মূল বিষয় = বাংলা, ইংরেজি, ICT, পদার্থ, রসায়ন +
+    // (উচ্চতর গণিত/জীববিজ্ঞান-এর মধ্যে যেটা ঐচ্ছিক না, সেটার পুরো মান)।
+    // ঐচ্ছিক (৪র্থ) হিসেবে বেছে নেওয়াটা শুধু (GPA - 2) বোনাস হিসেবে যোগ হয়।
+    const bonus = Math.max(0, optionalVal - 2);
+    const mainTotal = v("bn") + v("en") + v("ict") + v("phy") + v("chem") + requiredVal;
     const netGpa = Math.min(5, (mainTotal + bonus) / 6);
     setResult({ type: "info", gpa: netGpa.toFixed(2), grade: gpaToGrade(netGpa) });
   }
