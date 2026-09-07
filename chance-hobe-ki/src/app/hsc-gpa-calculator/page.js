@@ -185,23 +185,24 @@ export default function HscGpaCalculatorPage() {
                 GPA বের করো
               </button>
 
-              <div className="hsc-grading-mobile">
-                <div className="grading-panel-title">গ্রেডিং স্কেল</div>
-                <GradingScaleTable />
-              </div>
-
               {result && (
               <div className={`result-box ${result.type}`}>
                 {result.gpa ? (
                   <>
-                    <div className="result-line">তোমার নেট HSC GPA: {result.gpa}</div>
-                    <div className="result-line result-grade">GRADE: {result.grade}</div>
+                    <div className="hsc-result-title">তোমার HSC মোট GPA</div>
+                    <div className="hsc-result-number">{result.gpa}</div>
+                    <div className="hsc-result-grade">{result.grade}</div>
                   </>
                 ) : (
                   result.msg
                 )}
               </div>
             )}
+
+              <div className="hsc-grading-mobile">
+                <div className="grading-panel-title">গ্রেডিং স্কেল</div>
+                <GradingScaleTable />
+              </div>
             </div>
 
             <aside className="hsc-grading-panel hsc-about-panel">
