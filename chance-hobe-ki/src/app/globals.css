@@ -705,13 +705,15 @@ nav.nav-links button:not(.active):hover {
 .hsc-result-number {
   font-family: var(--font-baloo), sans-serif;
   font-weight: 800;
-  font-size: clamp(40px, 7vw, 60px);
+  font-size: clamp(28px, 4vw, 34px);
   line-height: 1.1;
   margin-bottom: 6px;
 }
 .hsc-result-grade {
-  font-size: 14.5px;
-  font-weight: 700;
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(28px, 4vw, 34px);
+  font-weight: 800;
+  line-height: 1.1;
   color: var(--black);
 }
 
@@ -1001,7 +1003,8 @@ nav.nav-links button:not(.active):hover {
 }
 .result-heading-sub {
   font-size: 14.5px;
-  color: #666;
+  font-weight: 700;
+  color: var(--green);
 }
 @media (min-width: 901px) {
   .general-check-about .general-about-title {
