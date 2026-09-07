@@ -107,7 +107,7 @@ export default function HscGpaCalculatorPage() {
   return (
     <>
       <Navbar />
-      <section className="general-page open">
+      <section className="general-page hsc-calc-page open">
         <div className="general-page-inner hsc-page-inner">
           <Link className="general-back-btn" href="/">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
