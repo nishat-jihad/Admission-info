@@ -799,6 +799,35 @@ nav.nav-links button:not(.active):hover {
 .uni-chip .tick {
   font-size: 17px;
 }
+.general-result-table-wrap {
+  margin-top: 4px;
+}
+.general-result-table {
+  width: 100%;
+  max-width: 480px;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1.5px solid var(--black);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-hard);
+}
+.general-result-table td {
+  padding: 13px 18px;
+  border-bottom: 1px solid #eee;
+}
+.general-result-table tr:last-child td {
+  border-bottom: none;
+}
+.general-result-link {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: underline;
+}
+.general-result-link:hover {
+  color: var(--blue-dark);
+}
 .general-empty {
   margin-top: 18px;
   font-size: 14px;
