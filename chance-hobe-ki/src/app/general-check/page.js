@@ -19,7 +19,7 @@ export default function GeneralCheckPage() {
     const eligibleUnis = [];
     const excludedUnis = [];
 
-    Object.values(generalCriteria).forEach((c) => {
+    Object.entries(generalCriteria).forEach(([slug, c]) => {
       if (c.requiresScience) {
         excludedUnis.push(c.name);
         return;
@@ -33,7 +33,7 @@ export default function GeneralCheckPage() {
       } else {
         eligible = combined >= c.minCombined;
       }
-      if (eligible) eligibleUnis.push(c.name);
+      if (eligible) eligibleUnis.push({ name: c.name, slug });
     });
 
     setResult({ eligibleUnis, excludedUnis });
@@ -97,13 +97,20 @@ export default function GeneralCheckPage() {
           </div>
 
           {result && result.eligibleUnis.length > 0 && (
-            <div className="uni-chip-grid">
-              {result.eligibleUnis.map((name) => (
-                <div className="uni-chip" key={name}>
-                  <span>{name}</span>
-                  <span className="tick">✅</span>
-                </div>
-              ))}
+            <div className="general-result-table-wrap">
+              <table className="general-result-table">
+                <tbody>
+                  {result.eligibleUnis.map((u) => (
+                    <tr key={u.slug}>
+                      <td>
+                        <Link href={`/university/${u.slug}`} className="general-result-link">
+                          {u.name}
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
 
