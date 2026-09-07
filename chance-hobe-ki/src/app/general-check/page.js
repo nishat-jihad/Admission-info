@@ -43,7 +43,7 @@ export default function GeneralCheckPage() {
     <>
       <Navbar />
       <section className="general-page open">
-        <div className="general-page-inner">
+        <div className="general-page-inner general-check-page-inner">
           <Link className="general-back-btn" href="/">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -57,78 +57,111 @@ export default function GeneralCheckPage() {
             <p className="general-page-sub">নিচে GPA বসাও — ফলাফল সাথে সাথে নিচে দেখতে পাবে</p>
           </div>
 
-          <div className="general-card">
-            <div className="general-intro">
-              যেসব ভার্সিটিতে ভর্তির জন্য <b>Physics / Chemistry / Higher&nbsp;Math</b>-এ
-              আলাদা ন্যূনতম GPA (বিষয়ভিত্তিক যোগ্যতা) লাগে — যেমন BUET, BUTex, IUT,
-              Medical — সেগুলো এই তালিকা থেকে বাদ দিয়ে বাকি ভার্সিটিগুলো দেখানো হবে।
+          <div className="general-check-layout">
+            <div className="general-check-main">
+              <div className="general-card general-check-card">
+                <div className="general-intro">
+                  যেসব ভার্সিটিতে ভর্তির জন্য <b>Physics / Chemistry / Higher&nbsp;Math</b>-এ
+                  আলাদা ন্যূনতম GPA (বিষয়ভিত্তিক যোগ্যতা) লাগে — যেমন BUET, BUTex, IUT,
+                  Medical — সেগুলো এই তালিকা থেকে বাদ দিয়ে বাকি ভার্সিটিগুলো দেখানো হবে।
+                </div>
+
+                <div className="general-fields">
+                  <div className="field">
+                    <label>SSC GPA</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="5"
+                      placeholder="যেমন: 5.00"
+                      value={ssc}
+                      onChange={(e) => setSsc(e.target.value)}
+                    />
+                  </div>
+                  <div className="field">
+                    <label>HSC GPA</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="5"
+                      placeholder="যেমন: 5.00"
+                      value={hsc}
+                      onChange={(e) => setHsc(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <button className="check-btn wide" onClick={handleCheck}>
+                  দেখাও
+                </button>
+              </div>
+
+              {result && result.eligibleUnis.length > 0 && (
+                <div className="general-result-table-wrap">
+                  <table className="general-result-table">
+                    <tbody>
+                      {result.eligibleUnis.map((u) => (
+                        <tr key={u.slug}>
+                          <td>
+                            <Link href={`/university/${u.slug}`} className="general-result-link">
+                              {u.name}
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {result && result.eligibleUnis.length === 0 && (
+                <div className="general-empty">
+                  তোমার দেওয়া GPA দিয়ে এই তালিকার কোনো ভার্সিটিতে সাধারণভাবে আবেদনযোগ্যতা
+                  পূরণ হচ্ছে না।
+                </div>
+              )}
+
+              {result && (
+                <div className="excluded-note">
+                  ⚠️ এই তালিকায় নেই: <b>{result.excludedUnis.join(", ")}</b> — ইঞ্জিনিয়ারিং,
+                  মেডিকেল ও এরকম আরও কিছু নির্দিষ্ট বিশ্ববিদ্যালয়ে Physics, Chemistry, Higher
+                  Math/Biology-তে আলাদা GPA বা নম্বর লাগে, তাই এগুলো এখানে সাধারণভাবে দেখানো
+                  হচ্ছে না। এগুলোর জন্য নির্দিষ্ট ভার্সিটি চেক করো।
+                </div>
+              )}
             </div>
 
-            <div className="general-fields">
-              <div className="field">
-                <label>SSC GPA</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  max="5"
-                  placeholder="যেমন: 5.00"
-                  value={ssc}
-                  onChange={(e) => setSsc(e.target.value)}
-                />
-              </div>
-              <div className="field">
-                <label>HSC GPA</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  max="5"
-                  placeholder="যেমন: 5.00"
-                  value={hsc}
-                  onChange={(e) => setHsc(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <button className="check-btn wide" onClick={handleCheck}>
-              দেখাও
-            </button>
+            <aside className="general-check-about">
+              <div className="general-about-title">About Universitys</div>
+              <p>
+                বাংলাদেশে প্রতি বছর HSC/সমমান পাস করা শিক্ষার্থীর সংখ্যা লাখের বেশি, অথচ
+                সরকারি বিশ্ববিদ্যালয়গুলোতে মোট আসনসংখ্যা তুলনামূলকভাবে অনেক কম — তাই
+                পাবলিক ভার্সিটি ভর্তি পরীক্ষা প্রতি বছরই বেশ প্রতিযোগিতামূলক থাকে।
+              </p>
+              <p>
+                বিশ্ববিদ্যালয়ভেদে আসনসংখ্যা অনেক তারতম্য হয় — কোনোটায় কয়েকশ, আবার কোনোটায়
+                (যেমন DU, RU, CU) হাজারের বেশি। বড় গুচ্ছ পরীক্ষাগুলোতে (GST, কৃষি গুচ্ছ)
+                একসাথে অনেকগুলো বিশ্ববিদ্যালয়ের আসন থাকায় প্রতি আসনে প্রতিযোগীর সংখ্যা
+                তুলনামূলক কম থাকে।
+              </p>
+              <p>
+                তুলনামূলক কম GPA নিয়েও আবেদনযোগ্যতা পাওয়া যায় এমন কয়েকটা ভার্সিটির উদাহরণ:
+              </p>
+              <ul>
+                <li>SUST — SSC+HSC মোট GPA ৬.৫০ হলেই আবেদন করা যায়</li>
+                <li>Comilla University — মোট GPA ৭.০০</li>
+                <li>GST গুচ্ছ (২০টি বিশ্ববিদ্যালয়) — মোট GPA ৭.০০</li>
+                <li>Jagannath University — মোট GPA ৭.৫০</li>
+                <li>HSTU — মোট GPA ৭.৫০</li>
+              </ul>
+              <p>
+                তবে শুধু আবেদনযোগ্যতা পূরণ হওয়া মানেই চান্স পাওয়া নিশ্চিত না — আসনসংখ্যা,
+                প্রতিযোগীর সংখ্যা ও ভর্তি পরীক্ষার প্রস্তুতির উপর আসল ফলাফল নির্ভর করে।
+              </p>
+            </aside>
           </div>
-
-          {result && result.eligibleUnis.length > 0 && (
-            <div className="general-result-table-wrap">
-              <table className="general-result-table">
-                <tbody>
-                  {result.eligibleUnis.map((u) => (
-                    <tr key={u.slug}>
-                      <td>
-                        <Link href={`/university/${u.slug}`} className="general-result-link">
-                          {u.name}
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          {result && result.eligibleUnis.length === 0 && (
-            <div className="general-empty">
-              তোমার দেওয়া GPA দিয়ে এই তালিকার কোনো ভার্সিটিতে সাধারণভাবে আবেদনযোগ্যতা
-              পূরণ হচ্ছে না।
-            </div>
-          )}
-
-          {result && (
-            <div className="excluded-note">
-              ⚠️ এই তালিকায় নেই: <b>{result.excludedUnis.join(", ")}</b> — ইঞ্জিনিয়ারিং,
-              মেডিকেল ও এরকম আরও কিছু নির্দিষ্ট বিশ্ববিদ্যালয়ে Physics, Chemistry, Higher
-              Math/Biology-তে আলাদা GPA বা নম্বর লাগে, তাই এগুলো এখানে সাধারণভাবে দেখানো
-              হচ্ছে না। এগুলোর জন্য নির্দিষ্ট ভার্সিটি চেক করো।
-            </div>
-          )}
         </div>
       </section>
       <Footer />
