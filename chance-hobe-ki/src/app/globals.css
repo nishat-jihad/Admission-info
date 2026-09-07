@@ -965,6 +965,19 @@ nav.nav-links button:not(.active):hover {
     display: none;
   }
 }
+.gpa-scale-block {
+  margin: 22px 0 26px;
+}
+@media (min-width: 901px) {
+  .general-check-about .general-about-title {
+    font-size: clamp(20px, 2.4vw, 24px);
+  }
+  .general-check-about p,
+  .general-check-about li {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+}
 
 /* ---------- HSC GPA CALCULATOR: side-by-side grading scale ---------- */
 .hsc-page-inner {
