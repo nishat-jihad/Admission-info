@@ -20,9 +20,9 @@ const balooDa2 = Baloo_Da_2({
 });
 
 export const metadata = {
-  title: "Chance hobe ki?",
+  title: "Admission Info",
   description:
-    "তোমার SSC আর HSC-র GPA দিয়ে তুমি কোন কোন ভার্সিটি, ইঞ্জিনিয়ারিং আর মেডিকেলে আবেদন করতে পারবে — সেটা এক নজরে জানিয়ে দেয় Chance hobe ki?",
+    "তোমার SSC আর HSC-র GPA দিয়ে তুমি কোন কোন ভার্সিটি, ইঞ্জিনিয়ারিং আর মেডিকেলে আবেদন করতে পারবে — সেটা এক নজরে জানিয়ে দেয় Admission Info",
 };
 
 export default function RootLayout({ children }) {
