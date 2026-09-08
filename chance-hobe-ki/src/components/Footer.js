@@ -56,14 +56,14 @@ export default function Footer() {
             <Image
               src="/images/admission-info-logo.png"
               alt="Admission Info"
-              width={200}
-              height={82}
+              width={342}
+              height={141}
               className="footer-logo-img"
             />
           </Link>
           <p>
             তোমার SSC আর HSC-র GPA দিয়ে তুমি কোন কোন ভার্সিটি, ইঞ্জিনিয়ারিং আর মেডিকেলে
-            আবেদন করতে পারবে — সেটা এক নজরে জানিয়ে দেয় Chance hobe ki?। সিট সংখ্যা,
+            আবেদন করতে পারবে — সেটা এক নজরে জানিয়ে দেয় Admission Info। সিট সংখ্যা,
             পরীক্ষার নিয়ম আর GPA ক্যালকুলেটর — সব একসাথে, একদম সহজ ভাষায়।
           </p>
           {/* Desktop: sits right under the logo + description */}
@@ -93,7 +93,7 @@ export default function Footer() {
         <SocialIcons />
       </div>
 
-      <div className="footer-bottom">© ২০২৬ Chance hobe ki? — সব স্বত্ব সংরক্ষিত।</div>
+      <div className="footer-bottom">© ২০২৬ Admission Info — সব স্বত্ব সংরক্ষিত।</div>
     </footer>
   );
 }
