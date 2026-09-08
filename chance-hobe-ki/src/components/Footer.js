@@ -56,8 +56,8 @@ export default function Footer() {
             <Image
               src="/images/admission-info-logo.png"
               alt="Admission Info"
-              width={342}
-              height={141}
+              width={346}
+              height={145}
               className="footer-logo-img"
             />
           </Link>
