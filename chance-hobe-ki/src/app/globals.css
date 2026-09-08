@@ -50,7 +50,7 @@ header.navbar {
   z-index: 50;
   background: var(--nav-bg);
   border-bottom: 1px solid #eee;
-  padding: 14px 28px;
+  padding: 11px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -64,12 +64,12 @@ header.navbar {
   text-decoration: none;
 }
 .navbar-logo {
-  height: 84px;
+  height: 66px;
   width: auto;
 }
 @media (max-width: 640px) {
   .navbar-logo {
-    height: 58px;
+    height: 48px;
   }
 }
 .logo-block .brand {
