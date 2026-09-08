@@ -52,8 +52,8 @@ function NavbarInner() {
         <Image
           src="/images/admission-info-logo.png"
           alt="Admission Info"
-          width={220}
-          height={90}
+          width={342}
+          height={141}
           className="navbar-logo"
           priority
         />
