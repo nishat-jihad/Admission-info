@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -48,8 +49,14 @@ function NavbarInner() {
       </button>
 
       <Link href="/" className="logo-block">
-        <span className="brand">Chance</span>
-        <span className="tagline">hobe ki?</span>
+        <Image
+          src="/images/admission-info-logo.png"
+          alt="Admission Info"
+          width={220}
+          height={90}
+          className="navbar-logo"
+          priority
+        />
       </Link>
 
       <nav className={`nav-links${open ? " open" : ""}`}>
