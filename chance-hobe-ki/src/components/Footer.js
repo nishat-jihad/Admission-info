@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 // Single source for the icon set so the same markup can be rendered twice
@@ -52,9 +53,14 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-brand">
           <Link href="/" style={{ textDecoration: "none" }}>
-            <span className="footer-logo">Chance</span>
+            <Image
+              src="/images/admission-info-logo.png"
+              alt="Admission Info"
+              width={200}
+              height={82}
+              className="footer-logo-img"
+            />
           </Link>
-          <div className="footer-tagline">hobe ki?</div>
           <p>
             তোমার SSC আর HSC-র GPA দিয়ে তুমি কোন কোন ভার্সিটি, ইঞ্জিনিয়ারিং আর মেডিকেলে
             আবেদন করতে পারবে — সেটা এক নজরে জানিয়ে দেয় Chance hobe ki?। সিট সংখ্যা,
