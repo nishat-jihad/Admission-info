@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { universities } from "@/data/universities";
@@ -30,7 +31,13 @@ export default function UniversitySidebar({ activeId }) {
     <>
       <div className="mobile-topbar">
         <Link className="brand" href="/">
-          CHANCE
+          <Image
+            src="/images/admission-info-logo.png"
+            alt="Admission Info"
+            width={342}
+            height={141}
+            className="topbar-logo-img"
+          />
         </Link>
         <button
           className="hamburger-btn"
@@ -71,8 +78,13 @@ export default function UniversitySidebar({ activeId }) {
       <aside className={`sidebar${collapsed ? " collapsed" : ""}${mobileOpen ? " open" : ""}`}>
         <div className="sidebar-logo">
           <Link href="/">
-            <span className="brand">Chance</span>
-            <span className="tagline">hobe ki?</span>
+            <Image
+              src="/images/admission-info-logo.png"
+              alt="Admission Info"
+              width={342}
+              height={141}
+              className="sidebar-logo-img"
+            />
           </Link>
         </div>
 
