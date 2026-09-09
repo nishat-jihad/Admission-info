@@ -126,7 +126,7 @@ function HomePageContent() {
                 এখনই চেক করো
               </button>
               <Link href="/general-check" className="fill-btn" style={{ textDecoration: "none" }}>
-                শুধু SSC+HSC দিয়ে সব দেখাও
+                SSC+HSC দিয়ে ভার্সিটির যোগ্যতা চেক করো
               </Link>
             </div>
           </div>
