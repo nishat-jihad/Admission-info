@@ -94,7 +94,7 @@ export default function AboutPage() {
 
           <div className="dev-card">
             <h3 className="dev-sub-title">Marketing Manager</h3>
-            <h3 className="dev-name">আমানুল্লাহ আমান</h3>
+            <h3 className="dev-name">আমানুল্লাহ</h3>
             <p>
               I am Amanullah Aman, I am also an admission candidate of HSC 2026 batch.
               This I work on website marketing. 
