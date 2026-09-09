@@ -1,5 +1,6 @@
 import { Bangers, Hind_Siliguri, Baloo_Da_2 } from "next/font/google";
 import SplashScreen from "@/components/SplashScreen";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 
 const bangers = Bangers({
