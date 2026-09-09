@@ -2015,7 +2015,7 @@ section.block h2 .circular-tag {
   .subject-bar-row .name {
     width: 92px;
   }
-  .calc-fields-row {
+  .calc-fields-row:has(.calc-field:nth-child(2)) {
     grid-template-columns: 1fr 1fr !important;
   }
 }
