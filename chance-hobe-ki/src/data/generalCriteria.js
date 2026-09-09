@@ -16,12 +16,12 @@ export const generalCriteria = {
   cuet: { name: "CUET", requiresScience: true },
   iut: { name: "IUT", requiresScience: true },
   mist: { name: "MIST", requiresScience: true },
-  bup: { name: "BUP (FST)", requiresScience: true },
+  sust: { name: "SUST", requiresScience: true },
 
+  bup: { name: "BUP (FST)", minSsc: 3.5, minHsc: 3.5, minCombined: 9.0 },
   du: { name: "Dhaka University", minSsc: 3.5, minHsc: 3.5, minCombined: 8.0 },
   jnu: { name: "Jagannath University", minSsc: 3.25, minHsc: 3.25, minCombined: 7.5 },
   cou: { name: "Comilla University", minSsc: 3.0, minHsc: 3.0, minCombined: 7.0 },
-  sust: { name: "SUST", minSsc: 3.0, minHsc: 3.0, minCombined: 6.5 },
   ju_a: { name: "JU (A Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 8.5 },
   ju_d: { name: "JU (D Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 9.0 },
   ru: { name: "RU (C Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 8.0 },
@@ -30,6 +30,8 @@ export const generalCriteria = {
   ku_b: { name: "KU (B Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },
   gst: { name: "GST গুচ্ছ", minSsc: 3.25, minHsc: 3.25, minCombined: 7.0 },
   krishi: { name: "কৃষি গুচ্ছ", minSsc: 4.0, minHsc: 4.0, minCombined: 8.5 },
+  hstu_a: { name: "HSTU (A Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 7.5 },
+  hstu_b: { name: "HSTU (B Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 7.5 },
 };
 
 // GST গুচ্ছ ও কৃষি গুচ্ছ — এদেরও SSC+HSC ভিত্তিক সাধারণ যোগ্যতা শর্ত থাকায়
