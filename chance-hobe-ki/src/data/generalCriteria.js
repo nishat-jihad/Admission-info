@@ -28,9 +28,12 @@ export const generalCriteria = {
   cu: { name: "CU (A Unit)", minSsc: 4.0, minHsc: 3.0, minCombined: 8.0 },
   ku_a: { name: "KU (A Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },
   ku_b: { name: "KU (B Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },
+  gst: { name: "GST গুচ্ছ", minSsc: 3.25, minHsc: 3.25, minCombined: 7.0 },
+  krishi: { name: "কৃষি গুচ্ছ", minSsc: 4.0, minHsc: 4.0, minCombined: 8.5 },
 };
 
-// GST গুচ্ছ ও কৃষি গুচ্ছ ইচ্ছাকৃতভাবে এই তালিকায় নেই — এগুলোর জন্য GPA
-// ক্যালকুলেটর ব্যবহার করা যায় না।
+// GST গুচ্ছ ও কৃষি গুচ্ছ — এদেরও SSC+HSC ভিত্তিক সাধারণ যোগ্যতা শর্ত থাকায়
+// এই তালিকায় যুক্ত করা হয়েছে; পরীক্ষার বিষয়ভিত্তিক জটিলতা এখানে প্রযোজ্য না,
+// কারণ এই checker শুধু ভর্তির ন্যূনতম GPA যোগ্যতা যাচাই করে, পরীক্ষার প্রশ্নবিন্যাস না।
 export const engineeringUniIds = ["buet", "butex", "iut", "mist", "cuet", "kuet", "ruet", "sust"];
 export const medicalUniIds = ["medical", "afmc"];
