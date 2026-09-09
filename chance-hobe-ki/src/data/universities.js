@@ -51,7 +51,7 @@ export const universities = {
       "minSsc": 3.5,
       "minHsc": 3.5,
       "minBio": 3.5,
-      "minCombined": 9
+      "minCombined": 8.5
     }
   },
   "afmc": {
@@ -103,7 +103,8 @@ export const universities = {
     "calc": {
       "minSsc": 3.5,
       "minHsc": 3.5,
-      "minBio": 3.5
+      "minBio": 3.5,
+      "minCombined": 8.5
     }
   },
   "buet": {
@@ -696,18 +697,16 @@ export const universities = {
       }
     ],
     "resultFormula": "ভর্তি পরীক্ষায় প্রাপ্ত নম্বর + (SSC GPA × ২) + (HSC GPA × ২) যোগ করে ফলাফল নির্ণয় করা হয়। লিখিত অংশে প্রতিটি প্রশ্নের মান ২ থেকে ৫ নম্বরের মধ্যে থাকে।",
-    "eligibilityText": "SSC ও HSC — ৪র্থ বিষয়সহ প্রতিটিতে আলাদাভাবে ন্যূনতম জিপিএ ৩.৫০ থাকতে হবে, এবং দুই পরীক্ষা মিলিয়ে সর্বমোট জিপিএ ন্যূনতম ৮.০০ থাকতে হবে। এছাড়া উচ্চতর গণিত/জীববিজ্ঞানে ন্যূনতম জিপিএ ৩.৫০ থাকতে হবে।",
+    "eligibilityText": "SSC ও HSC — ৪র্থ বিষয়সহ প্রতিটিতে আলাদাভাবে ন্যূনতম জিপিএ ৩.৫০ থাকতে হবে, এবং দুই পরীক্ষা মিলিয়ে সর্বমোট জিপিএ ন্যূনতম ৮.০০ থাকতে হবে।",
     "website": "https://www.du.ac.bd",
     "fields": [
       "ssc",
-      "hsc",
-      "hmbio"
+      "hsc"
     ],
     "calc": {
       "minSsc": 3.5,
       "minHsc": 3.5,
-      "minCombined": 8,
-      "minHmBio": 3.5
+      "minCombined": 8
     }
   },
   "ju_a": {
@@ -966,18 +965,16 @@ export const universities = {
     ],
     "subjectsNote": "৩টি ঐচ্ছিক বিষয় (বাংলা ও ইংরেজি, গণিত, জীববিজ্ঞান) থেকে যেকোনো ২টির উত্তর করতে হবে।",
     "resultFormula": "ভর্তি পরীক্ষায় প্রাপ্ত নম্বর + (SSC GPA × ২) + (HSC GPA × ২) যোগ করে ফলাফল নির্ণয় করা হয়।",
-    "eligibilityText": "SSC ও HSC (৪র্থ বিষয়সহ) প্রতিটিতে ন্যূনতম জিপিএ ৩.০০ সহ দুই পরীক্ষা মিলিয়ে সর্বমোট জিপিএ ৭.০০ থাকতে হবে। এছাড়া উচ্চতর গণিত/জীববিজ্ঞানে ন্যূনতম জিপিএ ৩.০০ থাকতে হবে।",
+    "eligibilityText": "SSC ও HSC (৪র্থ বিষয়সহ) প্রতিটিতে ন্যূনতম জিপিএ ৩.০০ সহ দুই পরীক্ষা মিলিয়ে সর্বমোট জিপিএ ৭.০০ থাকতে হবে।",
     "website": "https://www.cou.ac.bd",
     "fields": [
       "ssc",
-      "hsc",
-      "hmbio"
+      "hsc"
     ],
     "calc": {
       "minSsc": 3,
       "minHsc": 3,
-      "minCombined": 7,
-      "minHmBio": 3
+      "minCombined": 7
     }
   },
   "ku_a": {
