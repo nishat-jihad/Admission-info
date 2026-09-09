@@ -93,7 +93,8 @@ export function checkEligibility(uniId, vals) {
     return (
       (vals.ssc || 0) >= c.minSsc &&
       (vals.hsc || 0) >= c.minHsc &&
-      (vals.bio || 0) >= c.minBio
+      (vals.bio || 0) >= c.minBio &&
+      combined >= c.minCombined
     );
   }
 
