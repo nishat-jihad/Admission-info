@@ -1,4 +1,5 @@
 import { Bangers, Hind_Siliguri, Baloo_Da_2 } from "next/font/google";
+import SplashScreen from "@/components/SplashScreen";
 import "./globals.css";
 
 const bangers = Bangers({
@@ -29,7 +30,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="bn">
       <body className={`${bangers.variable} ${hindSiliguri.variable} ${balooDa2.variable}`}>
-        {children}
+        <SplashScreen>{children}</SplashScreen>
       </body>
     </html>
   );
