@@ -79,15 +79,16 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <h2 className="about-title about-devs-title">About Developers</h2>
+        <h2 className="about-title about-devs-title">About Creators :</h2>
 
         <div className="dev-grid">
           <div className="dev-card">
+              <h3 className="dev-sub-title">developer</h3>
             <h3 className="dev-name">নিশাত আলম</h3>
             <p>
-              আমি নিশাত আলম, HSC ২০২৬ ব্যাচের একজন ভর্তি পরীক্ষার্থী, থাকি কুমিল্লায়।
-              এই পুরো ওয়েবসাইটটা আমি নিজে বানিয়েছি। এডুকেশন-টেক, ওয়েব ডেভেলপমেন্ট,
-              বিজনেস, স্টার্টআপ আর ইঞ্জিনিয়ারিং — এই ক্ষেত্রগুলোতে আমার আগ্রহ।
+              I am Nishat Alam, an admission candidate of HSC 2026 batch, in Comilla.
+              I created this whole website myself. 
+              If you want to contact me, please mail us.
             </p>
           </div>
 
@@ -95,9 +96,9 @@ export default function AboutPage() {
             <h3 className="dev-sub-title">Marketing Manager</h3>
             <h3 className="dev-name">আমানুল্লাহ আমান</h3>
             <p>
-              আমি আমানুল্লাহ আমান, আমিও HSC ২০২৬ ব্যাচের একজন ভর্তি পরীক্ষার্থী। এই
-              ওয়েবসাইটের মার্কেটিং নিয়ে কাজ করি। আর্ট, বিজনেস, স্টার্টআপ, রোবোটিক্স আর
-              কোডিং-এ আগ্রহ আছে আমার। ভবিষ্যতে একজন উদ্যোক্তা (entrepreneur) হতে চাই।
+              I am Amanullah Aman, I am also an admission candidate of HSC 2026 batch.
+              This I work on website marketing. 
+              If you want to contact me, please contact with us, we will reply as soon as possible.
             </p>
           </div>
         </div>
