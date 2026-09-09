@@ -858,14 +858,12 @@ export const universities = {
     "website": "https://www.ru.ac.bd",
     "fields": [
       "ssc",
-      "hsc",
-      "hmbio"
+      "hsc"
     ],
     "calc": {
       "minSsc": 3.5,
       "minHsc": 3.5,
-      "minCombined": 8,
-      "minHmBio": 3.5
+      "minCombined": 8
     }
   },
   "cu": {
@@ -895,14 +893,12 @@ export const universities = {
     "website": "https://www.cu.ac.bd",
     "fields": [
       "ssc",
-      "hsc",
-      "hmbio"
+      "hsc"
     ],
     "calc": {
       "minSsc": 4,
       "minHsc": 3,
-      "minCombined": 8,
-      "minHmBio": 3.5
+      "minCombined": 8
     }
   },
   "jnu": {
