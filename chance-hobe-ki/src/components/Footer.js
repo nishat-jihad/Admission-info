@@ -84,6 +84,7 @@ export default function Footer() {
           <h4>আরও</h4>
           <Link href="/hsc-gpa-calculator">HSC GPA ক্যালকুলেটর</Link>
           <Link href="/general-check">শুধু SSC+HSC দিয়ে চেক করো</Link>
+          <Link href="/about">আমাদের সম্পর্কে</Link>
           <Link href="/contact">যোগাযোগ করুন</Link>
         </div>
       </div>
