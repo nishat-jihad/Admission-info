@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import { Bangers, Hind_Siliguri, Baloo_Da_2 } from "next/font/google";
 import SplashScreen from "@/components/SplashScreen";
 import "./globals.css";
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
     <html lang="bn">
       <body className={`${bangers.variable} ${hindSiliguri.variable} ${balooDa2.variable}`}>
         <SplashScreen>{children}</SplashScreen>
+  <Analytics />
       </body>
     </html>
   );
