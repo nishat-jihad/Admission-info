@@ -86,9 +86,14 @@ export default function AboutPage() {
               <h3 className="dev-sub-title">developer</h3>
             <h3 className="dev-name">নিশাত আলম</h3>
             <p>
-              I am Nishat Alam, an admission candidate of HSC 2026 batch, in Comilla.
-              I created this whole website myself. 
-              If you want to contact me, please mail us.
+              I&apos;m Nishat Alam, a member of the HSC 2026 batch based in Comilla,
+              Bangladesh. I designed and built this entire platform independently —
+              from the eligibility calculators to the university database. My
+              interests span EdTech, web development, business, startups, and
+              engineering, and Admission Info reflects my effort to make the
+              university admission process simpler and more transparent for
+              students like myself. Feel free to reach out through our contact
+              page with any feedback or questions.
             </p>
           </div>
 
@@ -96,9 +101,13 @@ export default function AboutPage() {
             <h3 className="dev-sub-title">Marketing Manager</h3>
             <h3 className="dev-name">আমানুল্লাহ</h3>
             <p>
-              I am Amanullah Aman, I am also an admission candidate of HSC 2026 batch.
-              This I work on website marketing. 
-              If you want to contact me, please contact with us, we will reply as soon as possible.
+              I&apos;m Amanullah Aman, also part of the HSC 2026 batch and an
+              admission candidate myself. I lead marketing and outreach for
+              Admission Info, helping more students discover and benefit from
+              the platform. Beyond this, I have a strong interest in art,
+              business, startups, robotics, and coding, and I aspire to build
+              my own venture in the future. You can reach me anytime through
+              our contact page.
             </p>
           </div>
         </div>
