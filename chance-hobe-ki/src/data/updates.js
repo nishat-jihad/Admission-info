@@ -3,6 +3,12 @@
 // universityId must match a key in src/data/universities.js so the
 // name links straight to that university's detail page.
 // `schedule` renders as a table: each row is { unit, date }.
+// `category` drives the filter buttons on the updates page:
+//   "versity"     -> সাধারণ বিশ্ববিদ্যালয়
+//   "medical"     -> মেডিকেল
+//   "engineering" -> ইঞ্জিনিয়ারিং
+// A schedule row can set `tentative: true` when the date is a সম্ভাব্য
+// (probable, not-yet-confirmed) date — it renders in blue for attention.
 
 export const updates = [
   {
@@ -11,6 +17,7 @@ export const updates = [
     date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "du",
     universityName: "ঢাকা বিশ্ববিদ্যালয় (ঢাবি)",
+    category: "versity",
     applicationStart: "১১ নভেম্বর",
     applicationEnd: "২৫ নভেম্বর",
     schedule: [
@@ -27,6 +34,7 @@ export const updates = [
     date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "ru",
     universityName: "রাজশাহী বিশ্ববিদ্যালয় (রাবি)",
+    category: "versity",
     applicationStart: "১২ নভেম্বর",
     applicationEnd: "২৭ নভেম্বর",
     schedule: [
@@ -41,6 +49,7 @@ export const updates = [
     date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "jnu",
     universityName: "জগন্নাথ বিশ্ববিদ্যালয় (জবি)",
+    category: "versity",
     applicationStart: "১৫ নভেম্বর",
     applicationEnd: "১০ ডিসেম্বর",
     schedule: [
@@ -57,6 +66,7 @@ export const updates = [
     date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "cu",
     universityName: "চট্টগ্রাম বিশ্ববিদ্যালয় (চবি)",
+    category: "versity",
     applicationStart: "১৫ নভেম্বর",
     applicationEnd: "১০ ডিসেম্বর",
     schedule: [
@@ -75,6 +85,7 @@ export const updates = [
     date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "bup",
     universityName: "বাংলাদেশ ইউনিভার্সিটি অব প্রফেশনালস (BUP)",
+    category: "versity",
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
@@ -88,11 +99,107 @@ export const updates = [
     date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "krishi",
     universityName: "কৃষি গুচ্ছ",
+    category: "versity",
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
       { unit: "ভর্তি পরীক্ষা", date: "০২ জানুয়ারি" },
       { unit: "নেতৃত্বদানকারী বিশ্ববিদ্যালয়", date: "শেরে-বাংলা কৃষি বিশ্ববিদ্যালয় (শেকৃবি)" },
+    ],
+  },
+  {
+    id: "mist-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "mist",
+    universityName: "মিলিটারি ইনস্টিটিউট অব সায়েন্স অ্যান্ড টেকনোলজি (MIST)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "'সি' ইউনিট", date: "১৮ ডিসেম্বর" },
+      { unit: "'এ' ইউনিট", date: "১৯ ডিসেম্বর" },
+      { unit: "'বি' ইউনিট", date: "১৯ ডিসেম্বর" },
+    ],
+  },
+  {
+    id: "kuet-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "kuet",
+    universityName: "খুলনা প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (KUET)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা", date: "০৮ জানুয়ারি" },
+      { unit: "পরীক্ষার কেন্দ্র", date: "খুলনা, ঢাকা ও রাজশাহী" },
+    ],
+  },
+  {
+    id: "ruet-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "ruet",
+    universityName: "রাজশাহী প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (RUET)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা (সম্ভাব্য তারিখ)", date: "১৪ জানুয়ারি", tentative: true },
+      { unit: "পরীক্ষার কেন্দ্র", date: "রুয়েট ও বুয়েট" },
+    ],
+  },
+  {
+    id: "sust-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "sust",
+    universityName: "শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (SUST)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা", date: "২৫ ও ২৬ জানুয়ারি" },
+    ],
+  },
+  {
+    id: "hstu-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "hstu_a",
+    universityName: "হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (HSTU)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা (A ও B ইউনিট)", date: "২৪ থেকে ২৮ জানুয়ারি" },
+    ],
+  },
+  {
+    id: "buet-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "buet",
+    universityName: "বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয় (BUET)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা", date: "১৬ জানুয়ারি" },
+    ],
+  },
+  {
+    id: "butex-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "butex",
+    universityName: "বাংলাদেশ টেক্সটাইল বিশ্ববিদ্যালয় (BUTex)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা", date: "২৯ জানুয়ারি" },
     ],
   },
 ];
