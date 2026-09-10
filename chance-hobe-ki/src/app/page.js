@@ -140,8 +140,8 @@ function HomePageContent() {
             />
             <img
               className="vc-2"
-              src="https://ku.ac.bd/uploads/khulna-university.jpg"
-              alt="খুলনা বিশ্ববিদ্যালয় ক্যাম্পাস"
+              src="https://commons.wikimedia.org/wiki/Special:FilePath/Curzon%20Hall,%20Dhaka%20University,%20Bangladesh%202.jpg?width=400"
+              alt="ঢাকা বিশ্ববিদ্যালয় ক্যাম্পাস"
               loading="lazy"
             />
             <img
@@ -152,8 +152,8 @@ function HomePageContent() {
             />
             <img
               className="vc-4"
-              src={universities.butex.photo}
-              alt="BUTex ক্যাম্পাস"
+              src="https://ku.ac.bd/uploads/khulna-university.jpg"
+              alt="খুলনা বিশ্ববিদ্যালয় ক্যাম্পাস"
               loading="lazy"
             />
           </div>
