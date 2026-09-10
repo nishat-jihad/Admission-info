@@ -140,8 +140,8 @@ function HomePageContent() {
             />
             <img
               className="vc-2"
-              src="https://wallpaperaccess.com/full/10014812.jpg"
-              alt="ঢাকা বিশ্ববিদ্যালয়, কার্জন হল"
+              src="https://ku.ac.bd/uploads/khulna-university.jpg"
+              alt="খুলনা বিশ্ববিদ্যালয় ক্যাম্পাস"
               loading="lazy"
             />
             <img
