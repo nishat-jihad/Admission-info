@@ -77,6 +77,13 @@ function NavbarInner() {
         >
           HSC GPA Calculator
         </Link>
+        <Link
+          href="/updates"
+          className={pathname === "/updates" ? "active" : ""}
+          onClick={() => setOpen(false)}
+        >
+          আপডেট
+        </Link>
       </nav>
     </header>
   );
