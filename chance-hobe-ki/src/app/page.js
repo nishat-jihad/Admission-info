@@ -102,7 +102,7 @@ function HomePageContent() {
                 <input
                   type="text"
                   className="search-input"
-                  placeholder="ভার্সিটির নাম লিখে খুঁজো — যেমন BUET, DU..."
+                  placeholder="ভার্সিটির নাম লিখে খুঁজো"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
@@ -152,7 +152,7 @@ function HomePageContent() {
             />
             <img
               className="vc-4"
-              src="https://ku.ac.bd/uploads/khulna-university.jpg"
+              src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhm5cjDf2-gTr2nLPvRQn_IsKIUdnJKCwukzJFA1vr4B6_OG6B0FAZu2QpAdY5Xbyc45n89t7F55r67F6irsjYcozratK4SDpd1Un38kdKDuRM0MoybojbRLF1kBqeBrrwfsLNw9Q9LXNDTCO_BU6gT8T7IRqBHiZiFDwvfOpqRNMLANsdhHWBmW4y2pQ/w1200-h630-p-k-no-nu/CUET%20IT%20Business%20Incubator,chittagong.jpg"
               alt="খুলনা বিশ্ববিদ্যালয় ক্যাম্পাস"
               loading="lazy"
             />
