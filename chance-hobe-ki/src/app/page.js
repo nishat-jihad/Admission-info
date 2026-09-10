@@ -140,7 +140,7 @@ function HomePageContent() {
             />
             <img
               className="vc-2"
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/Curzon%20Hall,%20Dhaka%20University,%20Bangladesh%202.jpg?width=400"
+              src="https://admissioninfo.vercel.app/_next/image?url=https%3A%2F%2Fwallpaperaccess.com%2Ffull%2F10014812.jpg&w=640&q=75"
               alt="ঢাকা বিশ্ববিদ্যালয় ক্যাম্পাস"
               loading="lazy"
             />
