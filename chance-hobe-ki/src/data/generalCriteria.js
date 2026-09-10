@@ -37,5 +37,5 @@ export const generalCriteria = {
 // GST গুচ্ছ ও কৃষি গুচ্ছ — এদেরও SSC+HSC ভিত্তিক সাধারণ যোগ্যতা শর্ত থাকায়
 // এই তালিকায় যুক্ত করা হয়েছে; পরীক্ষার বিষয়ভিত্তিক জটিলতা এখানে প্রযোজ্য না,
 // কারণ এই checker শুধু ভর্তির ন্যূনতম GPA যোগ্যতা যাচাই করে, পরীক্ষার প্রশ্নবিন্যাস না।
-export const engineeringUniIds = ["buet", "butex", "iut", "mist", "cuet", "kuet", "ruet", "sust"];
+export const engineeringUniIds = ["buet", "butex", "iut", "mist", "cuet", "kuet", "ruet", "sust", "hstu_a", "hstu_b"];
 export const medicalUniIds = ["medical", "afmc"];
