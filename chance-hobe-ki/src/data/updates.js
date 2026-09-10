@@ -69,4 +69,30 @@ export const updates = [
       { unit: "'ডি১' ইউনিট", date: "০৮ জানুয়ারি" },
     ],
   },
+  {
+    id: "bup-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "bup",
+    universityName: "বাংলাদেশ ইউনিভার্সিটি অব প্রফেশনালস (BUP)",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "'ডি' ইউনিট (FST)", date: "০৮ জানুয়ারি" },
+      { unit: "পরীক্ষার কেন্দ্র", date: "BUP ক্যাম্পাস ও অন্যান্য নির্ধারিত কলেজ" },
+    ],
+  },
+  {
+    id: "krishi-guccho-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের কৃষি গুচ্ছ ভর্তি পরীক্ষার তারিখ ঘোষণা",
+    date: "১০ সেপ্টেম্বর, ২০২৬",
+    universityId: "krishi",
+    universityName: "কৃষি গুচ্ছ",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা", date: "০২ জানুয়ারি" },
+      { unit: "নেতৃত্বদানকারী বিশ্ববিদ্যালয়", date: "শেরে-বাংলা কৃষি বিশ্ববিদ্যালয় (শেকৃবি)" },
+    ],
+  },
 ];
