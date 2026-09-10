@@ -48,7 +48,12 @@ function HomePageContent() {
 
     if (query.trim()) {
       const q = query.trim().toLowerCase();
-      ids = ids.filter((id) => universities[id].name.toLowerCase().includes(q));
+      ids = ids.filter((id) => {
+        const uni = universities[id];
+        const nameMatch = uni.name.toLowerCase().includes(q);
+        const fullNameMatch = uni.fullName ? uni.fullName.toLowerCase().includes(q) : false;
+        return nameMatch || fullNameMatch;
+      });
     } else if (category !== "all") {
       ids = ids.filter((id) => {
         if (category === "engineering") return engineeringUniIds.includes(id);
@@ -102,7 +107,7 @@ function HomePageContent() {
                 <input
                   type="text"
                   className="search-input"
-                  placeholder="ভার্সিটির নাম লিখে খুঁজো — যেমন BUET, DU..."
+                  placeholder="ভার্সিটিগুলোর সংক্ষিপ্ত নাম লিখে খুঁজো — যেমন BUET, DU..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
