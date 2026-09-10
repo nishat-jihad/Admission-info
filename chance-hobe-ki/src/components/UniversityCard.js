@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const FALLBACK_ICON = (
@@ -26,10 +27,11 @@ export default function UniversityCard({ id, uni }) {
         }}
       >
         {showPhoto ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={uni.photo}
             alt={`${uni.name} campus`}
+            fill
+            sizes="(max-width: 640px) 100vw, 340px"
             onError={() => setImgFailed(true)}
           />
         ) : (
