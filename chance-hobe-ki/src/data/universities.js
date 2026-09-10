@@ -54,57 +54,49 @@ export const universities = {
       "minCombined": 8.5
     }
   },
-  "afmc": {
-    "name": "AFMC, AMC & Navy",
-    "fullName": "আর্মড ফোর্সেস, আর্মি মেডিকেল কলেজ ও নেভি মেডিকেল কলেজ",
-    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Academic_building_of_Armed_Forces_Medical_College_%28Bangladesh%29.jpg/960px-Academic_building_of_Armed_Forces_Medical_College_%28Bangladesh%29.jpg",
-    "color": "#0E7C4A",
-    "seats": "৪৩৫ টি (আর্মড ফোর্সেস মেডিকেল কলেজ ১২৫ টি + আর্মি ও নেভি মেডিকেল কলেজ ৩১০ টি)",
-    "examTime": "১ ঘণ্টা ১৫ মিনিট",
-    "examType": "১০০ নম্বর (MCQ), পাশ নম্বর ৪০",
+  "du": {
+    "name": "DU",
+    "fullName": "ঢাকা বিশ্ববিদ্যালয় — 'ক' ইউনিট",
+    "photo": "https://wallpaperaccess.com/full/10014812.jpg",
+    "color": "#152B6B",
+    "seats": "১৮৯১ টি",
+    "examTime": "১ ঘণ্টা ৩০ মিনিট",
+    "examType": "১০০ নম্বর (MCQ ৬০ + লিখিত ৪০)",
     "calcAllowed": false,
-    "subjectsHeading": "বিষয়ভিত্তিক নম্বর বণ্টন",
-    "circularYear": "২০২৫",
+    "subjectsHeading": "বিষয় ও প্রশ্ন সংখ্যা (MCQ প্রতি বিষয়ে ১৫ নম্বর, লিখিত প্রতি বিষয়ে ১০ নম্বর)",
     "subjects": [
-      {
-        "name": "জীববিজ্ঞান",
-        "count": 30,
-        "unit": "নম্বর"
-      },
-      {
-        "name": "রসায়ন",
-        "count": 25,
-        "unit": "নম্বর"
-      },
       {
         "name": "পদার্থবিজ্ঞান",
         "count": 15,
         "unit": "নম্বর"
       },
       {
-        "name": "ইংরেজি",
+        "name": "রসায়ন",
         "count": 15,
         "unit": "নম্বর"
       },
       {
-        "name": "সাধারণ জ্ঞান, প্রবণতা ও মানবিক গুণাবলি",
+        "name": "নির্বাচনিক বিষয়",
+        "count": 15,
+        "unit": "নম্বর"
+      },
+      {
+        "name": "৪র্থ বিষয়/বাংলা/ইংরেজি (যেকোনো ১টি)",
         "count": 15,
         "unit": "নম্বর"
       }
     ],
-    "resultFormula": "(SSC GPA × ৮) + (HSC GPA × ১২) + ভর্তি পরীক্ষায় প্রাপ্ত ১০০ নম্বর = সর্বমোট ২০০ নম্বরের মধ্যে মেধাতালিকা প্রকাশ করা হয়।",
-    "eligibilityText": "SSC ও HSC — উভয় পরীক্ষাতেই ন্যূনতম জিপিএ ৩.৫০ থাকতে হবে, এবং HSC পরীক্ষায় জীববিজ্ঞানে জিপিএ ৩.৫০ এর কম হওয়া যাবে না।",
-    "website": "https://www.afmc.edu.bd",
+    "resultFormula": "ভর্তি পরীক্ষায় প্রাপ্ত নম্বর + (SSC GPA × ২) + (HSC GPA × ২) যোগ করে ফলাফল নির্ণয় করা হয়। লিখিত অংশে প্রতিটি প্রশ্নের মান ২ থেকে ৫ নম্বরের মধ্যে থাকে।",
+    "eligibilityText": "SSC ও HSC — ৪র্থ বিষয়সহ প্রতিটিতে আলাদাভাবে ন্যূনতম জিপিএ ৩.৫০ থাকতে হবে, এবং দুই পরীক্ষা মিলিয়ে সর্বমোট জিপিএ ন্যূনতম ৮.০০ থাকতে হবে।",
+    "website": "https://www.du.ac.bd",
     "fields": [
       "ssc",
-      "hsc",
-      "bio"
+      "hsc"
     ],
     "calc": {
       "minSsc": 3.5,
       "minHsc": 3.5,
-      "minBio": 3.5,
-      "minCombined": 8.5
+      "minCombined": 8
     }
   },
   "buet": {
@@ -664,49 +656,57 @@ export const universities = {
       "minEng": 3.5
     }
   },
-  "du": {
-    "name": "DU",
-    "fullName": "ঢাকা বিশ্ববিদ্যালয় — 'ক' ইউনিট",
-    "photo": "https://wallpaperaccess.com/full/10014812.jpg",
-    "color": "#152B6B",
-    "seats": "১৮৯১ টি",
-    "examTime": "১ ঘণ্টা ৩০ মিনিট",
-    "examType": "১০০ নম্বর (MCQ ৬০ + লিখিত ৪০)",
+  "afmc": {
+    "name": "AFMC, AMC & Navy",
+    "fullName": "আর্মড ফোর্সেস, আর্মি মেডিকেল কলেজ ও নেভি মেডিকেল কলেজ",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Academic_building_of_Armed_Forces_Medical_College_%28Bangladesh%29.jpg/960px-Academic_building_of_Armed_Forces_Medical_College_%28Bangladesh%29.jpg",
+    "color": "#0E7C4A",
+    "seats": "৪৩৫ টি (আর্মড ফোর্সেস মেডিকেল কলেজ ১২৫ টি + আর্মি ও নেভি মেডিকেল কলেজ ৩১০ টি)",
+    "examTime": "১ ঘণ্টা ১৫ মিনিট",
+    "examType": "১০০ নম্বর (MCQ), পাশ নম্বর ৪০",
     "calcAllowed": false,
-    "subjectsHeading": "বিষয় ও প্রশ্ন সংখ্যা (MCQ প্রতি বিষয়ে ১৫ নম্বর, লিখিত প্রতি বিষয়ে ১০ নম্বর)",
+    "subjectsHeading": "বিষয়ভিত্তিক নম্বর বণ্টন",
+    "circularYear": "২০২৫",
     "subjects": [
+      {
+        "name": "জীববিজ্ঞান",
+        "count": 30,
+        "unit": "নম্বর"
+      },
+      {
+        "name": "রসায়ন",
+        "count": 25,
+        "unit": "নম্বর"
+      },
       {
         "name": "পদার্থবিজ্ঞান",
         "count": 15,
         "unit": "নম্বর"
       },
       {
-        "name": "রসায়ন",
+        "name": "ইংরেজি",
         "count": 15,
         "unit": "নম্বর"
       },
       {
-        "name": "নির্বাচনিক বিষয়",
-        "count": 15,
-        "unit": "নম্বর"
-      },
-      {
-        "name": "৪র্থ বিষয়/বাংলা/ইংরেজি (যেকোনো ১টি)",
+        "name": "সাধারণ জ্ঞান, প্রবণতা ও মানবিক গুণাবলি",
         "count": 15,
         "unit": "নম্বর"
       }
     ],
-    "resultFormula": "ভর্তি পরীক্ষায় প্রাপ্ত নম্বর + (SSC GPA × ২) + (HSC GPA × ২) যোগ করে ফলাফল নির্ণয় করা হয়। লিখিত অংশে প্রতিটি প্রশ্নের মান ২ থেকে ৫ নম্বরের মধ্যে থাকে।",
-    "eligibilityText": "SSC ও HSC — ৪র্থ বিষয়সহ প্রতিটিতে আলাদাভাবে ন্যূনতম জিপিএ ৩.৫০ থাকতে হবে, এবং দুই পরীক্ষা মিলিয়ে সর্বমোট জিপিএ ন্যূনতম ৮.০০ থাকতে হবে।",
-    "website": "https://www.du.ac.bd",
+    "resultFormula": "(SSC GPA × ৮) + (HSC GPA × ১২) + ভর্তি পরীক্ষায় প্রাপ্ত ১০০ নম্বর = সর্বমোট ২০০ নম্বরের মধ্যে মেধাতালিকা প্রকাশ করা হয়।",
+    "eligibilityText": "SSC ও HSC — উভয় পরীক্ষাতেই ন্যূনতম জিপিএ ৩.৫০ থাকতে হবে, এবং HSC পরীক্ষায় জীববিজ্ঞানে জিপিএ ৩.৫০ এর কম হওয়া যাবে না।",
+    "website": "https://www.afmc.edu.bd",
     "fields": [
       "ssc",
-      "hsc"
+      "hsc",
+      "bio"
     ],
     "calc": {
       "minSsc": 3.5,
       "minHsc": 3.5,
-      "minCombined": 8
+      "minBio": 3.5,
+      "minCombined": 8.5
     }
   },
   "ju_a": {
