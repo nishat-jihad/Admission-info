@@ -11,7 +11,27 @@ export default function EligibilityCalculator({ id, uni }) {
   const fieldRows = uni.fields.length > 2 ? [uni.fields.slice(0, 2), uni.fields.slice(2)] : [uni.fields];
 
   function handleChange(field, raw) {
+    // GPA বাস্তবে কখনো 5 এর বেশি হয় না, তাই টাইপ করার সময়ই 5 এর বেশি হলে আটকে দেওয়া হচ্ছে
+    if (raw !== "") {
+      const num = parseFloat(raw);
+      if (!isNaN(num) && num > 5) {
+        raw = "5";
+      }
+    }
     setValues((v) => ({ ...v, [field]: raw }));
+  }
+
+  function handleBlur(field) {
+    // ফিল্ড থেকে বের হওয়ার সময় 1 এর কম হলে 1 এ ঠিক করে দেওয়া হচ্ছে (GPA এর সর্বনিম্ন মান 1)
+    setValues((v) => {
+      const raw = v[field];
+      if (raw === undefined || raw === "") return v;
+      const num = parseFloat(raw);
+      if (!isNaN(num) && num < 1) {
+        return { ...v, [field]: "1" };
+      }
+      return v;
+    });
   }
 
   function handleCheck() {
@@ -60,12 +80,13 @@ export default function EligibilityCalculator({ id, uni }) {
                   <input
                     type="number"
                     step="0.01"
-                    min="0"
+                    min="1"
                     max="5"
                     id={`f_${f}`}
                     placeholder="0.00"
                     value={values[f] || ""}
                     onChange={(e) => handleChange(f, e.target.value)}
+                    onBlur={() => handleBlur(f)}
                   />
                 </div>
               ))}
