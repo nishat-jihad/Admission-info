@@ -47,6 +47,26 @@ export default function GeneralCheckPage() {
   const [hsc, setHsc] = useState("");
   const [result, setResult] = useState(null);
 
+  // GPA বাস্তবে কখনো 5 এর বেশি হয় না, তাই টাইপ করার সময়ই 5 এর বেশি হলে আটকে দেওয়া হচ্ছে
+  function handleGpaChange(setter, raw) {
+    if (raw !== "") {
+      const num = parseFloat(raw);
+      if (!isNaN(num) && num > 5) {
+        raw = "5";
+      }
+    }
+    setter(raw);
+  }
+
+  // ফিল্ড থেকে বের হওয়ার সময় 1 এর কম হলে 1 এ ঠিক করে দেওয়া হচ্ছে (GPA এর সর্বনিম্ন মান 1)
+  function handleGpaBlur(value, setter) {
+    if (value === "") return;
+    const num = parseFloat(value);
+    if (!isNaN(num) && num < 1) {
+      setter("1");
+    }
+  }
+
   function handleCheck() {
     const sscVal = parseFloat(ssc) || 0;
     const hscVal = parseFloat(hsc) || 0;
@@ -107,11 +127,12 @@ export default function GeneralCheckPage() {
                     <input
                       type="number"
                       step="0.01"
-                      min="0"
+                      min="1"
                       max="5"
                       placeholder="যেমন: 5.00"
                       value={ssc}
-                      onChange={(e) => setSsc(e.target.value)}
+                      onChange={(e) => handleGpaChange(setSsc, e.target.value)}
+                      onBlur={() => handleGpaBlur(ssc, setSsc)}
                     />
                   </div>
                   <div className="field">
@@ -119,11 +140,12 @@ export default function GeneralCheckPage() {
                     <input
                       type="number"
                       step="0.01"
-                      min="0"
+                      min="1"
                       max="5"
                       placeholder="যেমন: 5.00"
                       value={hsc}
-                      onChange={(e) => setHsc(e.target.value)}
+                      onChange={(e) => handleGpaChange(setHsc, e.target.value)}
+                      onBlur={() => handleGpaBlur(hsc, setHsc)}
                     />
                   </div>
                 </div>
