@@ -2305,17 +2305,37 @@ section.block h2 .circular-tag {
 .exam-uni-link:hover {
   color: var(--blue-dark);
 }
-@media (max-width: 480px) {
+.exam-uni-short {
+  display: none;
+}
+@media (max-width: 640px) {
   main.page.exam-dates-page {
     padding: 40px 16px 60px;
   }
+  /* মোবাইলে শুধু শর্ট ফর্ম (DU, CU, ইত্যাদি) দেখানো হয়, যাতে টেবিল প্রস্থে
+     এঁটে যায় আর ডানে scroll করা না লাগে। */
+  .exam-unit-table {
+    min-width: 0;
+    table-layout: fixed;
+  }
   .exam-unit-table th,
   .exam-unit-table td {
-    padding: 11px 12px;
-    font-size: 13.5px;
+    word-break: break-word;
+  }
+  .exam-uni-full {
+    display: none;
+  }
+  .exam-uni-short {
+    display: inline;
+  }
+  .exam-unit-table th,
+  .exam-unit-table td {
+    padding: 10px 6px;
+    font-size: 12.5px;
   }
   .exam-unit-header {
     font-size: 16px;
+    padding: 12px 10px;
   }
 }
 
