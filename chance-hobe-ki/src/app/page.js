@@ -139,25 +139,25 @@ function HomePageContent() {
           <div className="hero-visual">
             <img
               className="vc-1"
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/ECE%20Building,%20BUET.jpg?width=400"
+              src="/images/hero-1.jpg"
               alt="BUET ক্যাম্পাস"
               loading="lazy"
             />
             <img
               className="vc-2"
-              src="https://admissioninfo.vercel.app/_next/image?url=https%3A%2F%2Fwallpaperaccess.com%2Ffull%2F10014812.jpg&w=640&q=75"
+              src="/images/hero-2.jpg"
               alt="ঢাকা বিশ্ববিদ্যালয় ক্যাম্পাস"
               loading="lazy"
             />
             <img
               className="vc-3"
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/West%20entrance%20of%20Dhaka%20medical%20college%20.jpg?width=400"
+              src="/images/hero-3.jpg"
               alt="ঢাকা মেডিকেল কলেজ"
               loading="lazy"
             />
             <img
               className="vc-4"
-              src="https://admissioninfo.vercel.app/_next/image?url=https%3A%2F%2Fecdn.dhakatribune.net%2Fcontents%2Fcache%2Fimages%2F1200x630x1xxxxx1x694528%2Fuploads%2Fdten%2F2022%2F07%2F05%2Fsheikh-kamal-it-business-incubator-feature-image.jpeg%3Fwatermark%3Dmedia%252F2023%252F05%252F28%252F1280px-Dhaka_Tribune_Logo.svg-1-a9e61c86dded62d74300fef48fee558f.png&w=640&q=75"
+              src="/images/hero-4.jpg"
               alt="CUET ক্যাম্পাস"
               loading="lazy"
             />

@@ -4,7 +4,7 @@ export const universities = {
   "medical": {
     "name": "Medical (MBBS)",
     "fullName": "সরকারি মেডিকেল ও ডেন্টাল কলেজ ভর্তি পরীক্ষা",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/West%20entrance%20of%20Dhaka%20medical%20college%20.jpg?width=600",
+    "photo": "/images/medical.jpg",
     "color": "#B3261E",
     "seats": "৫৬৪৫ টি (মেডিকেল ৫১০০ টি + ডেন্টাল ৫৪৫ টি)",
     "examTime": "১ ঘণ্টা ১৫ মিনিট",
@@ -57,7 +57,7 @@ export const universities = {
   "du": {
     "name": "DU",
     "fullName": "ঢাকা বিশ্ববিদ্যালয় — 'ক' ইউনিট",
-    "photo": "https://wallpaperaccess.com/full/10014812.jpg",
+    "photo": "/images/du.jpg",
     "color": "#152B6B",
     "seats": "১৮৯১ টি",
     "examTime": "১ ঘণ্টা ৩০ মিনিট",
@@ -102,7 +102,7 @@ export const universities = {
   "buet": {
     "name": "BUET",
     "fullName": "Bangladesh University of Engineering and Technology",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/ECE%20Building,%20BUET.jpg?width=600",
+    "photo": "/images/buet.jpg",
     "color": "#7A1F2B",
     "seats": "১৩০৯ টি (সংরক্ষিত ৪ সহ)",
     "examTime": "গ্রুপ 'ক': ৩ ঘণ্টা, গ্রুপ 'খ' (আর্কিটেকচার): ১ ঘণ্টা ৩০ মিনিট",
@@ -196,7 +196,7 @@ export const universities = {
   "iut": {
     "name": "IUT",
     "fullName": "Islamic University of Technology",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/View%20of%20IUT%20at%20Gazipur%2C%20Bangladesh%20at%202014.JPG?width=600",
+    "photo": "/images/iut.jpg",
     "color": "#0A6E4E",
     "seats": "৫৫০ টি",
     "examTime": "২ ঘণ্টা",
@@ -248,7 +248,7 @@ export const universities = {
   "cuet": {
     "name": "CUET",
     "fullName": "Chittagong University of Engineering & Technology",
-    "photo": "https://ecdn.dhakatribune.net/contents/cache/images/1200x630x1xxxxx1x694528/uploads/dten/2022/07/05/sheikh-kamal-it-business-incubator-feature-image.jpeg?watermark=media%2F2023%2F05%2F28%2F1280px-Dhaka_Tribune_Logo.svg-1-a9e61c86dded62d74300fef48fee558f.png",
+    "photo": "/images/cuet.jpg",
     "color": "#0F7D5C",
     "seats": "৯৩১ টি (সংরক্ষিত ১১ সহ)",
     "examTime": "গ্রুপ 'ক': ২ ঘণ্টা ৩০ মিনিট, গ্রুপ 'খ' (আর্কিটেকচার): ১ ঘণ্টা",
@@ -307,7 +307,7 @@ export const universities = {
   "kuet": {
     "name": "KUET",
     "fullName": "Khulna University of Engineering & Technology",
-    "photo": "https://bdtalika.com/assets/images/1715564306.webp",
+    "photo": "/images/kuet.webp",
     "color": "#5B2A86",
     "seats": "১০৬৫ টি (সংরক্ষিত ৫ সহ)",
     "examTime": "গ্রুপ 'ক': ৩ ঘণ্টা, গ্রুপ 'খ' (আর্কিটেকচার): ১ ঘণ্টা",
@@ -366,7 +366,7 @@ export const universities = {
   "ruet": {
     "name": "RUET",
     "fullName": "Rajshahi University of Engineering & Technology",
-    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/RUET_2023_main_gate.jpg/960px-RUET_2023_main_gate.jpg",
+    "photo": "/images/ruet.jpg",
     "color": "#1E4D8C",
     "seats": "১২৩৫ টি (সংরক্ষিত ৫ সহ)",
     "examTime": "গ্রুপ 'ক': ২ ঘণ্টা ৩০ মিনিট, গ্রুপ 'খ' (আর্কিটেকচার): ১ ঘণ্টা",
@@ -416,7 +416,7 @@ export const universities = {
   "mist": {
     "name": "MIST",
     "fullName": "Military Institute of Science and Technology",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Tower%20Building-I%2C%20MIST.JPG?width=600",
+    "photo": "/images/mist.jpg",
     "color": "#6A1B9A",
     "seats": "৫৭০ টি",
     "examTime": "'A' Unit: ৩ ঘণ্টা, 'B' Unit (আর্কিটেকচার): ২ ঘণ্টা",
@@ -467,7 +467,7 @@ export const universities = {
   "sust": {
     "name": "SUST ('A' Unit)",
     "fullName": "Shahjalal University of Science and Technology",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/West%20side%20of%20main%20entrance%2C%20SUST.jpg?width=600",
+    "photo": "/images/sust.jpg",
     "color": "#C1440E",
     "seats": "৯৮৫ টি",
     "examTime": "Group-1 (A1): ১ ঘণ্টা ৩০ মিনিট, Group-2 (A2): ১ ঘণ্টা",
@@ -515,7 +515,7 @@ export const universities = {
   "hstu_a": {
     "name": "HSTU (A Unit)",
     "fullName": "হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় — A Unit",
-    "photo": "https://www.hstu.ac.bd/img/home/slider/dmwazed.jpg",
+    "photo": "/images/hstu_a.jpg",
     "color": "#0E6E8A",
     "seats": "১২৭৫ টি (A ও B ইউনিট মিলিয়ে)",
     "examTime": "১ ঘণ্টা",
@@ -560,7 +560,7 @@ export const universities = {
   "hstu_b": {
     "name": "HSTU (B Unit)",
     "fullName": "হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় — B Unit",
-    "photo": "https://www.hstu.ac.bd/img/home/slider/dmwazed.jpg",
+    "photo": "/images/hstu_b.jpg",
     "color": "#0E6E8A",
     "seats": "১২৭৫ টি (A ও B ইউনিট মিলিয়ে)",
     "examTime": "১ ঘণ্টা",
@@ -605,7 +605,7 @@ export const universities = {
   "bup": {
     "name": "BUP (FST)",
     "fullName": "বাংলাদেশ ইউনিভার্সিটি অব প্রফেশনালস — Faculty of Science & Technology",
-    "photo": "https://files.thedailycampus.com/assets/english/img/202510/1759306472_944efeccf7ac297085a0.jpg",
+    "photo": "/images/bup.jpg",
     "color": "#4B1E78",
     "seats": "৩০০ টি",
     "examTime": "১ ঘণ্টা",
@@ -659,7 +659,7 @@ export const universities = {
   "afmc": {
     "name": "AFMC, AMC & Navy",
     "fullName": "আর্মড ফোর্সেস, আর্মি মেডিকেল কলেজ ও নেভি মেডিকেল কলেজ",
-    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Academic_building_of_Armed_Forces_Medical_College_%28Bangladesh%29.jpg/960px-Academic_building_of_Armed_Forces_Medical_College_%28Bangladesh%29.jpg",
+    "photo": "/images/afmc.jpg",
     "color": "#0E7C4A",
     "seats": "৪৩৫ টি (আর্মড ফোর্সেস মেডিকেল কলেজ ১২৫ টি + আর্মি ও নেভি মেডিকেল কলেজ ৩১০ টি)",
     "examTime": "১ ঘণ্টা ১৫ মিনিট",
@@ -712,7 +712,7 @@ export const universities = {
   "ju_a": {
     "name": "JU (A Unit)",
     "fullName": "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় — A ইউনিট",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/New%20arts%20building%2C%20Jahangirnagar%20University.jpg?width=600",
+    "photo": "/images/ju_a.jpg",
     "color": "#B3261E",
     "seats": "৭৩৬ টি (ছেলে ৩৬৮ এবং মেয়ে ৩৬৮)",
     "examTime": "৫৫ মিনিট",
@@ -767,7 +767,7 @@ export const universities = {
   "ju_d": {
     "name": "JU (D Unit)",
     "fullName": "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় — D ইউনিট",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/New%20arts%20building%2C%20Jahangirnagar%20University.jpg?width=600",
+    "photo": "/images/ju_d.jpg",
     "color": "#B3261E",
     "seats": "৭৩৬ টি (ছেলে ৩৬৮ এবং মেয়ে ৩৬৮)",
     "examTime": "৫৫ মিনিট",
@@ -822,7 +822,7 @@ export const universities = {
   "ru": {
     "name": "RU (C Unit)",
     "fullName": "রাজশাহী বিশ্ববিদ্যালয় — C ইউনিট",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Central%20library,%20University%20of%20Rajshahi.jpg?width=600",
+    "photo": "/images/ru.jpg",
     "color": "#7A1F2B",
     "seats": "১৫৩৬ টি",
     "examTime": "১ ঘণ্টা",
@@ -868,7 +868,7 @@ export const universities = {
   "cu": {
     "name": "CU (A Unit)",
     "fullName": "চট্টগ্রাম বিশ্ববিদ্যালয় — A ইউনিট",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Faculty%20of%20Arts%20and%20Humanities%20at%20University%20of%20Chittagong%20(15).jpg?width=600",
+    "photo": "/images/cu.jpg",
     "color": "#0E5C36",
     "seats": "১০৯৩ টি",
     "examTime": "১ ঘণ্টা",
@@ -903,7 +903,7 @@ export const universities = {
   "jnu": {
     "name": "JnU (A Unit)",
     "fullName": "জগন্নাথ বিশ্ববিদ্যালয় — A ইউনিট",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Jagannath%20University%20Campus.JPG?width=600",
+    "photo": "/images/jnu.jpg",
     "color": "#7A4A0E",
     "seats": "৮৪০ টি",
     "examTime": "১ ঘণ্টা",
@@ -939,7 +939,7 @@ export const universities = {
   "cou": {
     "name": "CoU (A Unit)",
     "fullName": "কুমিল্লা বিশ্ববিদ্যালয় — 'A' ইউনিট",
-    "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Comilla%20University%20campus%20building.jpg?width=600",
+    "photo": "/images/cou.jpg",
     "color": "#8B1E3F",
     "seats": "৩০০ টি",
     "examTime": "১ ঘণ্টা",
@@ -980,7 +980,7 @@ export const universities = {
   "ku_a": {
     "name": "KU (A Unit)",
     "fullName": "খুলনা বিশ্ববিদ্যালয় — 'A' ইউনিট",
-    "photo": "https://ku.ac.bd/uploads/khulna-university.jpg",
+    "photo": "/images/ku_a.jpg",
     "color": "#D9531E",
     "seats": "৬০১ টি (A ও B ইউনিট মিলিয়ে)",
     "examTime": "১ ঘণ্টা ৩০ মিনিট",
@@ -1031,7 +1031,7 @@ export const universities = {
   "ku_b": {
     "name": "KU (B Unit)",
     "fullName": "খুলনা বিশ্ববিদ্যালয় — 'B' ইউনিট",
-    "photo": "https://ku.ac.bd/uploads/khulna-university.jpg",
+    "photo": "/images/ku_b.jpg",
     "color": "#D9531E",
     "seats": "৬০১ টি (A ও B ইউনিট মিলিয়ে)",
     "examTime": "১ ঘণ্টা ৩০ মিনিট",
@@ -1082,7 +1082,7 @@ export const universities = {
   "gst": {
     "name": "GST গুচ্ছ",
     "fullName": "সাধারণ বিশ্ববিদ্যালয় ভর্তি গুচ্ছ পরীক্ষা (GST) — বিজ্ঞান বিভাগ",
-    "photo": "https://just.edu.bd/img.800px.jpg",
+    "photo": "/images/gst.jpg",
     "galleryPhotos": [
       "https://just.edu.bd/img.800px.jpg",
       "https://mbstu.ac.bd/wp-content/uploads/2024/11/Visit-MBSTU-13.jpeg"
@@ -1149,7 +1149,7 @@ export const universities = {
   "krishi": {
     "name": "কৃষি গুচ্ছ",
     "fullName": "কৃষি বিশ্ববিদ্যালয় ভর্তি গুচ্ছ পরীক্ষা",
-    "photo": "https://1.bp.blogspot.com/-n_2wU8guYMc/WgE444q5VyI/AAAAAAAACAY/1q-jXKjc53c9tuIFKFHSHqtz6fce_eukwCLcBGAs/s1600/Bangladesh-Agricultural-University.jpg",
+    "photo": "/images/krishi.jpg",
     "color": "#B3197A",
     "seats": "৩৭০১ টি",
     "examTime": "১ ঘণ্টা",
