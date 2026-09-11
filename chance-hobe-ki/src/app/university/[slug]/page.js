@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { universities } from "@/data/universities";
+import { updates } from "@/data/updates";
 import UniversitySidebar from "@/components/UniversitySidebar";
 import EligibilityCalculator from "@/components/EligibilityCalculator";
 
@@ -11,17 +12,23 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const uni = universities[params.slug];
   if (!uni) return {};
-  const title = `${uni.name} ভর্তি যোগ্যতা ও Admission Requirements ২০২৬`;
-  const description = `${uni.fullName || uni.name}-এ ভর্তির যোগ্যতা, আসনসংখ্যা (${uni.seats || ""}), পরীক্ষার ধরন ও তোমার SSC-HSC GPA দিয়ে চান্স হবে কিনা যাচাই করো — ${uni.name} admission requirements 2026।`;
+  const examDate = updates.find((u) => u.universityId === params.slug);
+  const title = `${uni.name} Eligibility Checker — ভর্তি যোগ্যতা, Requirements ও Exam Date 2026`;
+  const description = `${uni.fullName || uni.name}-এর admission requirements, আসনসংখ্যা (${uni.seats || ""})${
+    examDate ? `, ২০২৬-২৭ সেশনের ভর্তি পরীক্ষার তারিখ` : ""
+  } এবং তোমার SSC-HSC GPA দিয়ে ${uni.name} এ চান্স হবে কিনা তা যাচাই করো — ${uni.name} eligibility checker।`;
   const url = `/university/${params.slug}`;
   return {
     title,
     description,
     keywords: [
-      `${uni.name} admission requirement 2026`,
+      `${uni.name} eligibility checker`,
+      `${uni.name} admission requirement`,
+      `${uni.name} requirement 2026`,
       `${uni.name} ভর্তি যোগ্যতা`,
+      `${uni.name} admission exam date 2026`,
+      `${uni.name} exam date 2026`,
       `${uni.name} circular ${uni.circularYear || "2026"}`,
-      `${uni.name} exam date`,
     ],
     alternates: { canonical: url },
     openGraph: {
@@ -86,6 +93,7 @@ export default function UniversityDetailPage({ params }) {
   if (!uni) notFound();
 
   const maxCount = uni.subjects ? Math.max(...uni.subjects.map((s) => s.count)) : 0;
+  const examDate = updates.find((u) => u.universityId === params.slug);
 
   return (
     <div className="layout uni-detail">
@@ -199,6 +207,38 @@ export default function UniversityDetailPage({ params }) {
             </div>
           )}
         </section>
+
+        {examDate && (
+          <section className="block">
+            <h2>{uni.name} ভর্তি পরীক্ষার তারিখ (২০২৬-২৭ সেশন)</h2>
+            <p>
+              আবেদন শুরু: <strong>{examDate.applicationStart}</strong> — আবেদন শেষ:{" "}
+              <strong>{examDate.applicationEnd}</strong>
+            </p>
+            <table className="exam-date-table">
+              <thead>
+                <tr>
+                  <th>ইউনিট</th>
+                  <th>পরীক্ষার তারিখ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {examDate.schedule.map((row) => (
+                  <tr key={row.unit}>
+                    <td>{row.unit}</td>
+                    <td>
+                      {row.date}
+                      {row.tentative ? " (সম্ভাব্য)" : ""}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <Link className="back-link" href="/updates">
+              সব ভার্সিটির আপডেট দেখুন →
+            </Link>
+          </section>
+        )}
 
         <EligibilityCalculator id={params.slug} uni={uni} />
       </main>
