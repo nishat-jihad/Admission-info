@@ -437,6 +437,38 @@ nav.nav-links button:not(.active):hover {
   width: 100%;
 }
 
+/* ---------- "একত্রে ভর্তি পরীক্ষার তারিখসমূহ" বাটন (তিয়া পাখির রঙ) ---------- */
+.hero-cta-secondary {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.tia-btn {
+  display: inline-block;
+  background: #4cbb17;
+  color: var(--black);
+  border: 1.5px solid var(--black);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: var(--shadow-hard);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.15s ease;
+}
+.tia-btn:hover {
+  filter: brightness(1.06);
+}
+.tia-btn:active {
+  transform: translate(2px, 3px);
+  box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.85);
+}
+@media (max-width: 900px) {
+  .hero-cta-secondary {
+    justify-content: center;
+  }
+}
+
 /* ---------- CARDS ---------- */
 .cards-wrap {
   max-width: 1200px;
@@ -2210,6 +2242,21 @@ section.block h2 .circular-tag {
 .tentative-date {
   color: var(--blue);
   font-weight: 700;
+}
+
+/* ---------- EXAM DATES PAGE (একত্রে ভর্তি পরীক্ষার তারিখসমূহ) ---------- */
+.exam-dates-app-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+@media (max-width: 480px) {
+  main.page.exam-dates-page {
+    padding: 40px 16px 60px;
+  }
+  .update-card {
+    padding: 18px 16px;
+  }
 }
 
 .updates-filter-row {
