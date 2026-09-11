@@ -2245,17 +2245,65 @@ section.block h2 .circular-tag {
 }
 
 /* ---------- EXAM DATES PAGE (একত্রে ভর্তি পরীক্ষার তারিখসমূহ) ---------- */
-.exam-dates-app-dates {
+.exam-unit-groups {
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px 16px;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 32px;
+}
+.exam-unit-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+}
+.exam-unit-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  border: 2px solid var(--black);
+  background: #ffffff;
+}
+.exam-unit-table th,
+.exam-unit-table td {
+  border: 1.5px solid var(--black);
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 15px;
+}
+.exam-unit-header {
+  font-family: var(--font-baloo), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  background: #eef1f6;
+  padding: 14px 16px;
+}
+.exam-unit-table thead tr:nth-child(2) th {
+  font-weight: 700;
+  font-size: 15px;
+  background: #f7f8fa;
+}
+.exam-uni-cell {
+  font-weight: 700;
+}
+.exam-uni-link {
+  color: var(--blue);
+  text-decoration: underline;
+  font-weight: 700;
+}
+.exam-uni-link:hover {
+  color: var(--blue-dark);
 }
 @media (max-width: 480px) {
   main.page.exam-dates-page {
     padding: 40px 16px 60px;
   }
-  .update-card {
-    padding: 18px 16px;
+  .exam-unit-table th,
+  .exam-unit-table td {
+    padding: 11px 12px;
+    font-size: 13.5px;
+  }
+  .exam-unit-header {
+    font-size: 16px;
   }
 }
 
