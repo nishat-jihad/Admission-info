@@ -24,6 +24,7 @@ function groupByUnit(data) {
       groups[indexByUnit[row.unit]].rows.push({
         universityId: u.universityId,
         universityName: u.universityName,
+        shortName: u.shortName,
         examDate: row.date,
         applicationRange: `${u.applicationStart} - ${u.applicationEnd}`,
       });
@@ -70,7 +71,8 @@ export default function ExamDatesPage() {
                           href={`/university/${row.universityId}`}
                           className="exam-uni-link"
                         >
-                          {row.universityName}
+                          <span className="exam-uni-full">{row.universityName}</span>
+                          <span className="exam-uni-short">{row.shortName}</span>
                         </Link>
                       </td>
                       <td>{row.examDate}</td>
