@@ -95,6 +95,9 @@ export default function HscGpaCalculatorPage() {
     const v = (id) => parseFloat(values[id]) || 0;
     const optionalVal = optionalSubject === "bio" ? v("bio") : v("hm");
     const requiredVal = optionalSubject === "bio" ? v("hm") : v("bio");
+    // অফিসিয়াল বোর্ড রুল: ৬টা মূল বিষয় = বাংলা, ইংরেজি, ICT, পদার্থ, রসায়ন +
+    // (উচ্চতর গণিত/জীববিজ্ঞান-এর মধ্যে যেটা ঐচ্ছিক না, সেটার পুরো মান)।
+    // ঐচ্ছিক (৪র্থ) হিসেবে বেছে নেওয়াটা শুধু (GPA - 2) বোনাস হিসেবে যোগ হয়।
     const bonus = Math.max(0, optionalVal - 2);
     const mainTotal = v("bn") + v("en") + v("ict") + v("phy") + v("chem") + requiredVal;
     const netGpa = Math.min(5, (mainTotal + bonus) / 6);
@@ -107,4 +110,124 @@ export default function HscGpaCalculatorPage() {
       <section className="general-page hsc-calc-page open">
         <div className="general-page-inner hsc-page-inner">
           <Link className="general-back-btn" href="/">
-            <svg
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            হোমে ফিরে যাও
+          </Link>
+
+          <div className="general-page-header">
+            <span className="hero-eyebrow">বিষয়ভিত্তিক GPA দিয়ে</span>
+            <h2 className="general-page-title">HSC GPA Calculator</h2>
+            <p className="general-page-sub">
+              প্রতিটা বিষয়ের GPA সিলেক্ট করো — নিচে তোমার নেট HSC GPA দেখতে পাবে
+            </p>
+          </div>
+
+          <div className="hsc-layout">
+            <div className="general-card hsc-main-card">
+              <div className="general-intro">
+                সবগুলো বিষয়ের GPA দাও — <b>Higher Math</b> আর <b>Biology</b> দুটোই HSC-তে
+                পড়ে থাকলে দুটোই দিয়ে দাও। এরপর নিচে কোনটা তোমার <b>ঐচ্ছিক (৪র্থ) বিষয়</b>{" "}
+                ছিল সেটা বেছে নাও — বোর্ডের নিয়ম অনুযায়ী সেটার GPA থেকে ২ বাদ দিয়ে বোনাস
+                হিসেবে যোগ হবে (২-এর কম হলে বোনাস শূন্য)।
+              </div>
+
+              <div className="hsc-subject-group">
+                <div className="hsc-fields-grid">
+                  <GpaSelect id="bn" label="বাংলা" value={values.bn || ""} onChange={(v) => setField("bn", v)} />
+                  <GpaSelect id="en" label="ইংরেজি" value={values.en || ""} onChange={(v) => setField("en", v)} />
+                  <GpaSelect
+                    id="ict"
+                    label="ICT"
+                    value={values.ict || ""}
+                    onChange={(v) => setField("ict", v)}
+                    fullWidth
+                  />
+                </div>
+              </div>
+
+              <div className="hsc-subject-group">
+                <div className="hsc-fields-grid">
+                  <GpaSelect id="phy" label="পদার্থবিজ্ঞান" value={values.phy || ""} onChange={(v) => setField("phy", v)} />
+                  <GpaSelect id="chem" label="রসায়ন" value={values.chem || ""} onChange={(v) => setField("chem", v)} />
+                </div>
+              </div>
+
+              <div className="hsc-subject-group">
+                <div className="hsc-fields-grid">
+                  <GpaSelect id="hm" label="উচ্চতর গণিত" value={values.hm || ""} onChange={(v) => setField("hm", v)} />
+                  <GpaSelect id="bio" label="জীববিজ্ঞান" value={values.bio || ""} onChange={(v) => setField("bio", v)} />
+                </div>
+              </div>
+
+              <div className="optional-select">
+                <div className="optional-select-title">
+                  উচ্চতর গণিত ও জীববিজ্ঞান — কোনটা তোমার ঐচ্ছিক (৪র্থ) বিষয় ছিল, সেটা বেছে নাও
+                </div>
+                <div className="optional-toggle-row">
+                  <div
+                    className={`optional-toggle${optionalSubject === "hm" ? " selected" : ""}`}
+                    onClick={() => setOptionalSubject("hm")}
+                  >
+                    উচ্চতর গণিত
+                  </div>
+                  <div
+                    className={`optional-toggle${optionalSubject === "bio" ? " selected" : ""}`}
+                    onClick={() => setOptionalSubject("bio")}
+                  >
+                    জীববিজ্ঞান
+                  </div>
+                </div>
+              </div>
+
+              <button className="check-btn wide" onClick={handleCheck}>
+                GPA বের করো
+              </button>
+
+              {result && (
+                <div className={`result-box ${result.type}`}>
+                  {result.gpa ? (
+                    <>
+                      <div className="hsc-result-title">তোমার HSC মোট GPA</div>
+                      <div className="hsc-result-number">
+                        {result.gpa} <span className="hsc-result-grade">({result.grade})</span>
+                      </div>
+                    </>
+                  ) : (
+                    result.msg
+                  )}
+                </div>
+              )}
+
+              <div className="hsc-grading-mobile">
+                <div className="grading-panel-title">গ্রেডিং স্কেল</div>
+                <GradingScaleTable />
+              </div>
+            </div>
+
+            <aside className="hsc-grading-panel hsc-about-panel">
+              <div className="grading-panel-title">About HSC GPA Calculation</div>
+              <p>
+                The Higher Secondary Certificate (HSC) examination is a crucial milestone in
+                Bangladesh&apos;s education system. This calculator helps students accurately
+                determine their Grade Point Average (GPA) based on the standardized grading
+                system used by all education boards in Bangladesh.
+              </p>
+              <p>The HSC GPA calculation considers:</p>
+              <ul>
+                <li>
+                  Compulsory subjects: Bangla, English, and Information &amp; Communication
+                  Technology
+                </li>
+                <li>Group-specific subjects: Different for Science, Humanities, and Business Studies groups</li>
+                <li>Fourth subject: Additional grade points if scored above grade C (2.00)</li>
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+      <Footer />
+    </>
+  );
+}
