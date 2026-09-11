@@ -438,11 +438,6 @@ nav.nav-links button:not(.active):hover {
 }
 
 /* ---------- "একত্রে ভর্তি পরীক্ষার তারিখসমূহ" বাটন (তিয়া পাখির রঙ) ---------- */
-.hero-cta-secondary {
-  margin-top: 12px;
-  display: flex;
-  flex-wrap: wrap;
-}
 .tia-btn {
   display: inline-block;
   background: #4cbb17;
@@ -463,9 +458,15 @@ nav.nav-links button:not(.active):hover {
   transform: translate(2px, 3px);
   box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.85);
 }
-@media (max-width: 900px) {
-  .hero-cta-secondary {
-    justify-content: center;
+
+/* ডেস্কটপে ৩টা বাটনই এক সারিতে রাখার জন্য একটু ছোট করা হলো (মোবাইলে আগের
+   সাইজই থাকছে — এই rule টা শুধু 900px+ স্ক্রিনে কাজ করে)। */
+@media (min-width: 900px) {
+  .hero-cta .primary,
+  .hero-cta .fill-btn,
+  .hero-cta .tia-btn {
+    font-size: 13.5px;
+    padding: 10px 18px;
   }
 }
 
