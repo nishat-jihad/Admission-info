@@ -11,8 +11,25 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const uni = universities[params.slug];
   if (!uni) return {};
+  const title = `${uni.name} ভর্তি যোগ্যতা ও Admission Requirements ২০২৬`;
+  const description = `${uni.fullName || uni.name}-এ ভর্তির যোগ্যতা, আসনসংখ্যা (${uni.seats || ""}), পরীক্ষার ধরন ও তোমার SSC-HSC GPA দিয়ে চান্স হবে কিনা যাচাই করো — ${uni.name} admission requirements 2026।`;
+  const url = `/university/${params.slug}`;
   return {
-    title: `${uni.name} | Chance Hobe Ki?`,
+    title,
+    description,
+    keywords: [
+      `${uni.name} admission requirement 2026`,
+      `${uni.name} ভর্তি যোগ্যতা`,
+      `${uni.name} circular ${uni.circularYear || "2026"}`,
+      `${uni.name} exam date`,
+    ],
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      images: uni.photo ? [{ url: uni.photo }] : undefined,
+    },
   };
 }
 
