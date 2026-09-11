@@ -9,7 +9,16 @@ import UniversityCard from "@/components/UniversityCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const VISIBLE_COUNT = 3;
+const VISIBLE_COUNT = 5;
+
+// হোমপেজে "সকল ভার্সিটি দেখো"-এর আগে এই ৫টাই সবার প্রথমে দেখানো হয় — বাকিগুলো
+// এর পরে আগের মতোই universities.js-এর original অর্ডারে থাকে।
+const FEATURED_IDS = ["medical", "du", "buet", "gst", "cu"];
+const ALL_IDS = (() => {
+  const featured = FEATURED_IDS.filter((id) => universities[id]);
+  const rest = Object.keys(universities).filter((id) => !featured.includes(id));
+  return [...featured, ...rest];
+})();
 
 export default function HomePage() {
   return (
@@ -41,7 +50,7 @@ function HomePageContent() {
     }
   }, [searchParams]);
 
-  const allIds = Object.keys(universities);
+  const allIds = ALL_IDS;
 
   const filteredIds = useMemo(() => {
     let ids = allIds;
@@ -185,7 +194,7 @@ function HomePageContent() {
               onClick={() => setShowAll((s) => !s)}
             >
               <span className="btn-text">
-                {showAll ? "Show Less" : "View All Universities"}
+                {showAll ? "কম দেখাও" : "সকল ভার্সিটি দেখো"}
               </span>
               <span className="btn-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
