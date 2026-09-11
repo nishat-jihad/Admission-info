@@ -480,6 +480,18 @@ nav.nav-links button:not(.active):hover {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 26px;
 }
+/* প্রিভিউ গ্রিড (হোমপেজের প্রথম ৬টা কার্ড, "সকল ভার্সিটি দেখো"-এর আগে):
+   মোবাইলে ৫টা কার্ড দেখায় (৬ নম্বরটা লুকানো), ডেস্কটপে ৩+৩ করে ৬টাই। */
+@media (max-width: 899px) {
+  .cards-grid-preview > *:nth-child(6) {
+    display: none;
+  }
+}
+@media (min-width: 900px) {
+  .cards-grid-preview {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 .uni-card {
   background: var(--card-bg);
   border-radius: 20px;
