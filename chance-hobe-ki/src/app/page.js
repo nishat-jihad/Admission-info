@@ -9,11 +9,13 @@ import UniversityCard from "@/components/UniversityCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const VISIBLE_COUNT = 5;
+const VISIBLE_COUNT = 6;
 
-// হোমপেজে "সকল ভার্সিটি দেখো"-এর আগে এই ৫টাই সবার প্রথমে দেখানো হয় — বাকিগুলো
-// এর পরে আগের মতোই universities.js-এর original অর্ডারে থাকে।
-const FEATURED_IDS = ["medical", "du", "buet", "gst", "cu"];
+// হোমপেজে "সকল ভার্সিটি দেখো"-এর আগে এই ৬টাই সবার প্রথমে দেখানো হয় — বাকিগুলো
+// এর পরে আগের মতোই universities.js-এর original অর্ডারে থাকে। মোবাইলে এখান
+// থেকে ৫টা দেখানো হয় (৬ নম্বরটা CSS দিয়ে লুকানো, globals.css দেখো), ডেস্কটপে
+// ৬টাই ৩+৩ করে দুই সারিতে দেখা যায়।
+const FEATURED_IDS = ["medical", "du", "buet", "gst", "cu", "sust"];
 const ALL_IDS = (() => {
   const featured = FEATURED_IDS.filter((id) => universities[id]);
   const rest = Object.keys(universities).filter((id) => !featured.includes(id));
@@ -181,7 +183,11 @@ function HomePageContent() {
       </section>
 
       <section className="cards-wrap" id="cards-wrap">
-        <div className="cards-grid">
+        <div
+          className={`cards-grid${
+            !isFiltering && !showAll ? " cards-grid-preview" : ""
+          }`}
+        >
           {visibleIds.map((id) => (
             <UniversityCard key={id} id={id} uni={universities[id]} />
           ))}
