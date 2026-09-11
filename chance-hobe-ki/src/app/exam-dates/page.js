@@ -9,7 +9,32 @@ export const metadata = {
     "সব বিশ্ববিদ্যালয়ের আবেদন শুরু-শেষের তারিখ আর ইউনিট অনুযায়ী পরীক্ষার তারিখ একসাথে এক পেজে।",
 };
 
+// examDates.js (per-university) থেকে ইউনিট অনুযায়ী গ্রুপ করা হচ্ছে, যাতে
+// একই ইউনিটের ভার্সিটিগুলো একটা টেবিলের নিচে একসাথে দেখানো যায় (যেমন
+// 'এ' ইউনিট-এ ঢাবি, জবি, চবি — সবাই একই টেবিলে)।
+function groupByUnit(data) {
+  const groups = [];
+  const indexByUnit = {};
+  data.forEach((u) => {
+    u.schedule.forEach((row) => {
+      if (!(row.unit in indexByUnit)) {
+        indexByUnit[row.unit] = groups.length;
+        groups.push({ unit: row.unit, rows: [] });
+      }
+      groups[indexByUnit[row.unit]].rows.push({
+        universityId: u.universityId,
+        universityName: u.universityName,
+        examDate: row.date,
+        applicationRange: `${u.applicationStart} - ${u.applicationEnd}`,
+      });
+    });
+  });
+  return groups;
+}
+
 export default function ExamDatesPage() {
+  const unitGroups = groupByUnit(examDates);
+
   return (
     <>
       <Navbar />
@@ -21,38 +46,40 @@ export default function ExamDatesPage() {
           বিশ্ববিদ্যালয়ের বিস্তারিত তথ্য পাবে।
         </p>
 
-        <div className="updates-list exam-dates-list">
-          {examDates.map((u) => (
-            <article key={u.id} className="update-card">
-              <h2 className="update-title">
-                <Link href={`/university/${u.universityId}`} className="about-link">
-                  {u.universityName}
-                </Link>
-              </h2>
-              <p className="update-app-dates exam-dates-app-dates">
-                <strong>আবেদন শুরু:</strong> {u.applicationStart}
-                {"  "}
-                <strong>আবেদন শেষ:</strong> {u.applicationEnd}
-              </p>
-              <div className="update-table-wrap">
-                <table className="update-table">
-                  <thead>
-                    <tr>
-                      <th>ইউনিট</th>
-                      <th>পরীক্ষার তারিখ</th>
+        <div className="exam-unit-groups">
+          {unitGroups.map((group) => (
+            <div key={group.unit} className="exam-unit-table-wrap">
+              <table className="exam-unit-table">
+                <thead>
+                  <tr>
+                    <th colSpan={3} className="exam-unit-header">
+                      {group.unit}
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>বিশ্ববিদ্যালয়</th>
+                    <th>পরীক্ষার তারিখ</th>
+                    <th>আবেদন (শুরু-শেষ)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {group.rows.map((row) => (
+                    <tr key={row.universityId}>
+                      <td className="exam-uni-cell">
+                        <Link
+                          href={`/university/${row.universityId}`}
+                          className="exam-uni-link"
+                        >
+                          {row.universityName}
+                        </Link>
+                      </td>
+                      <td>{row.examDate}</td>
+                      <td>{row.applicationRange}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {u.schedule.map((row, i) => (
-                      <tr key={i} className={i % 2 === 0 ? "row-white" : "row-grey"}>
-                        <td>{row.unit}</td>
-                        <td>{row.date}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </article>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ))}
         </div>
       </main>
