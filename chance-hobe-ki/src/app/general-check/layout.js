@@ -6,7 +6,7 @@ export const metadata = {
     "SSC HSC GPA দিয়ে ভর্তি যোগ্যতা যাচাই",
     "ভার্সিটি ভর্তি যোগ্যতা চেক",
     "চান্স হবে কিনা",
-    "admission eligibility checker"
+    "admission eligibility checker",
     "admission eligibility checker by SSC and HSC GPA",
   ],
   alternates: {
