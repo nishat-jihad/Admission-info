@@ -82,7 +82,7 @@ function NavbarInner() {
           className={pathname === "/updates" ? "active" : ""}
           onClick={() => setOpen(false)}
         >
-          আপডেট
+          Updates(admission)
         </Link>
       </nav>
     </header>
