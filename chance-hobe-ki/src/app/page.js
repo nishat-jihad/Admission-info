@@ -134,6 +134,12 @@ function HomePageContent() {
                 SSC+HSC দিয়ে ভার্সিটির যোগ্যতা চেক করো
               </Link>
             </div>
+
+            <div className="hero-cta-secondary">
+              <Link href="/exam-dates" className="tia-btn" style={{ textDecoration: "none" }}>
+                একত্রে ভর্তি পরীক্ষার তারিখসমূহ
+              </Link>
+            </div>
           </div>
 
           <div className="hero-visual">
