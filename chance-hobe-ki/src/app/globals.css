@@ -465,7 +465,11 @@ nav.nav-links button:not(.active):hover {
   .hero-cta {
     gap: 8px;
   }
-  .hero-cta .primary,
+  /* "এখনই চেক করো" বাটনটা শুধু নিচে scroll করে, তাই ডেস্কটপে এটা বাদ —
+     মোবাইলে আগের মতোই থাকছে। */
+  .hero-cta .primary {
+    display: none;
+  }
   .hero-cta .fill-btn,
   .hero-cta .tia-btn {
     font-size: 12.5px;
