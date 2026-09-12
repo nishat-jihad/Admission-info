@@ -2290,23 +2290,8 @@ section.block h2 .circular-tag {
 .exam-notice-link:hover {
   color: #a9d2ff;
 }
-.exam-category-section {
-  margin-top: 44px;
-}
-.exam-category-section:first-of-type {
-  margin-top: 36px;
-}
-.exam-category-title {
-  font-family: var(--font-baloo), sans-serif;
-  font-weight: 800;
-  font-size: clamp(20px, 3vw, 26px);
-  color: var(--black);
-  border-bottom: 3px solid var(--black);
-  padding-bottom: 8px;
-  display: inline-block;
-}
 .exam-category-empty {
-  margin-top: 16px;
+  margin-top: 24px;
   font-size: 14.5px;
   color: #666;
   font-style: italic;
@@ -2315,7 +2300,7 @@ section.block h2 .circular-tag {
   display: flex;
   flex-direction: column;
   gap: 28px;
-  margin-top: 24px;
+  margin-top: 32px;
 }
 .exam-unit-table-wrap {
   overflow-x: auto;
