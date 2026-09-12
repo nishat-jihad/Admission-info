@@ -54,7 +54,7 @@ export default function ExamDatesPage() {
                 <thead>
                   <tr>
                     <th colSpan={3} className="exam-unit-header">
-                      {group.unit}
+                      Unit {group.unit}
                     </th>
                   </tr>
                   <tr>
