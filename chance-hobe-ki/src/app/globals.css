@@ -2272,23 +2272,18 @@ section.block h2 .circular-tag {
 /* ---------- EXAM DATES PAGE (একত্রে ভর্তি পরীক্ষার তারিখসমূহ) ---------- */
 .exam-notice {
   margin-top: 20px;
-  background: var(--red);
-  color: #fff;
-  border: 2px solid var(--black);
-  border-radius: 10px;
-  padding: 14px 18px;
+  color: var(--red);
   font-size: 14.5px;
   font-weight: 700;
   line-height: 1.6;
-  box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.85);
 }
 .exam-notice-link {
-  color: #6fb1ff;
+  color: var(--blue);
   text-decoration: underline;
   font-weight: 800;
 }
 .exam-notice-link:hover {
-  color: #a9d2ff;
+  color: var(--blue-dark);
 }
 .exam-category-empty {
   margin-top: 24px;
