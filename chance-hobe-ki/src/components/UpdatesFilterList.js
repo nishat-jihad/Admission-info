@@ -70,7 +70,6 @@ function buildSearchWords(update) {
     uni?.fullName,
     EXTRA_ALIASES[update.universityId] || "",
     update.title,
-    update.date,
     update.applicationStart,
     update.applicationEnd,
     ...(update.schedule || []).flatMap((row) => [row.unit, row.date]),
@@ -190,7 +189,6 @@ export default function UpdatesFilterList({ updates }) {
         {filtered.map((u) => (
           <article key={u.id} className="update-card">
             <h2 className="update-title">{u.title}</h2>
-            <p className="update-date">{u.date}</p>
             <p className="update-uni">
               <Link href={`/university/${u.universityId}`} className="about-link">
                 {u.universityName}
