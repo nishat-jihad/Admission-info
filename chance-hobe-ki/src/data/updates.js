@@ -14,7 +14,6 @@ export const updates = [
   {
     id: "du-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "du",
     universityName: "ঢাকা বিশ্ববিদ্যালয় (ঢাবি)",
     category: "versity",
@@ -31,7 +30,6 @@ export const updates = [
   {
     id: "ru-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "ru",
     universityName: "রাজশাহী বিশ্ববিদ্যালয় (রাবি)",
     category: "versity",
@@ -46,7 +44,6 @@ export const updates = [
   {
     id: "jnu-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "jnu",
     universityName: "জগন্নাথ বিশ্ববিদ্যালয় (জবি)",
     category: "versity",
@@ -63,7 +60,6 @@ export const updates = [
   {
     id: "cu-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "cu",
     universityName: "চট্টগ্রাম বিশ্ববিদ্যালয় (চবি)",
     category: "versity",
@@ -82,21 +78,37 @@ export const updates = [
   {
     id: "bup-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "bup",
     universityName: "বাংলাদেশ ইউনিভার্সিটি অব প্রফেশনালস (BUP)",
     category: "versity",
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
+      { unit: "FBS", date: "০১ ও ০৯ জানুয়ারি" },
+      { unit: "FASS", date: "০২ জানুয়ারি" },
       { unit: "'ডি' ইউনিট (FST)", date: "০৮ জানুয়ারি" },
+      { unit: "FET", date: "০৮ জানুয়ারি" },
+      { unit: "FMS", date: "০৮ জানুয়ারি" },
+      { unit: "FSSS", date: "০৮ জানুয়ারি" },
       { unit: "পরীক্ষার কেন্দ্র", date: "BUP ক্যাম্পাস ও অন্যান্য নির্ধারিত কলেজ" },
+    ],
+  },
+  {
+    id: "ku-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    universityId: "ku_a",
+    universityName: "খুলনা বিশ্ববিদ্যালয় (খুবি)",
+    category: "versity",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "'সি' ও 'ডি' ইউনিট", date: "১৭ ডিসেম্বর" },
+      { unit: "'এ' ও 'বি' ইউনিট", date: "১৮ ডিসেম্বর" },
     ],
   },
   {
     id: "krishi-guccho-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের কৃষি গুচ্ছ ভর্তি পরীক্ষার তারিখ ঘোষণা",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "krishi",
     universityName: "কৃষি গুচ্ছ",
     category: "versity",
@@ -110,7 +122,6 @@ export const updates = [
   {
     id: "mist-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "mist",
     universityName: "মিলিটারি ইনস্টিটিউট অব সায়েন্স অ্যান্ড টেকনোলজি (MIST)",
     category: "engineering",
@@ -125,7 +136,6 @@ export const updates = [
   {
     id: "kuet-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "kuet",
     universityName: "খুলনা প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (KUET)",
     category: "engineering",
@@ -139,7 +149,6 @@ export const updates = [
   {
     id: "ruet-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "ruet",
     universityName: "রাজশাহী প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (RUET)",
     category: "engineering",
@@ -153,20 +162,18 @@ export const updates = [
   {
     id: "sust-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "sust",
     universityName: "শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (SUST)",
     category: "engineering",
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
-      { unit: "ভর্তি পরীক্ষা", date: "২৫ ও ২৬ জানুয়ারি" },
+      { unit: "ভর্তি পরীক্ষা", date: "২৬ ও ২৭ জানুয়ারি" },
     ],
   },
   {
     id: "hstu-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "hstu_a",
     universityName: "হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (HSTU)",
     category: "engineering",
@@ -179,7 +186,6 @@ export const updates = [
   {
     id: "buet-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "buet",
     universityName: "বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয় (BUET)",
     category: "engineering",
@@ -192,7 +198,6 @@ export const updates = [
   {
     id: "butex-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    date: "১০ সেপ্টেম্বর, ২০২৬",
     universityId: "butex",
     universityName: "বাংলাদেশ টেক্সটাইল বিশ্ববিদ্যালয় (BUTex)",
     category: "engineering",
