@@ -263,7 +263,7 @@ nav.nav-links button:not(.active):hover {
   min-height: calc(100vh - 74px);
   display: flex;
   align-items: center;
-  padding: 40px 24px;
+  padding: 10px 24px 40px;
   position: relative;
 }
 .hero-inner {
@@ -402,14 +402,14 @@ nav.nav-links button:not(.active):hover {
 .hero-banner-row {
   width: 100%;
   max-width: 1200px;
-  margin: 10px auto 0;
+  margin: 6px auto 0;
   padding: 0 24px;
 }
 .social-promo-banner {
   background: transparent;
   border: 1.5px solid var(--black);
   border-radius: 10px;
-  padding: 6px 12px;
+  padding: 4px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -482,10 +482,10 @@ nav.nav-links button:not(.active):hover {
 }
 @media (max-width: 640px) {
   .hero-banner-row {
-    margin-top: 8px;
+    margin-top: 4px;
   }
   .social-promo-banner {
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 9px;
     gap: 8px;
   }
