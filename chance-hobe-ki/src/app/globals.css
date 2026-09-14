@@ -414,6 +414,8 @@ nav.nav-links button:not(.active):hover {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  width: fit-content;
+  max-width: 100%;
 }
 .social-promo-text {
   font-size: 12.5px;
@@ -475,6 +477,7 @@ nav.nav-links button:not(.active):hover {
   }
   .social-promo-banner {
     grid-column: 1;
+    justify-self: start;
   }
 }
 @media (max-width: 640px) {
