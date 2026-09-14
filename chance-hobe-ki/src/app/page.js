@@ -8,6 +8,7 @@ import { engineeringUniIds, medicalUniIds } from "@/data/generalCriteria";
 import UniversityCard from "@/components/UniversityCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SocialPromoBanner from "@/components/SocialPromoBanner";
 
 const VISIBLE_COUNT = 6;
 
@@ -92,6 +93,7 @@ function HomePageContent() {
       <Navbar />
 
       <section className="hero">
+        <SocialPromoBanner />
         <div className="hero-inner">
           <div className="hero-text">
             <h1>
