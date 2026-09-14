@@ -92,8 +92,11 @@ function HomePageContent() {
     <>
       <Navbar />
 
-      <section className="hero">
+      <div className="hero-banner-row">
         <SocialPromoBanner />
+      </div>
+
+      <section className="hero">
         <div className="hero-inner">
           <div className="hero-text">
             <h1>
