@@ -262,7 +262,9 @@ nav.nav-links button:not(.active):hover {
 .hero {
   min-height: calc(100vh - 74px);
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 40px 24px;
   position: relative;
 }
@@ -390,6 +392,101 @@ nav.nav-links button:not(.active):hover {
     order: -1;
     max-width: 460px;
     margin: 0 auto;
+  }
+}
+
+/* ---------- SOCIAL PROMO BANNER (Telegram + Facebook) ----------
+   ডেস্কটপে .hero-inner-এর ঠিক উপরে বসে, তাই টাইটেলের উপরে দেখায়।
+   মোবাইলে .hero-visual-কে order:-1 দিয়ে উপরে তোলা হয়েছে (উপরের rule
+   দেখো), তাই একই জায়গায় বসানো এই ব্যানার তখন কোলাজের উপরে দেখায়। */
+.social-promo-banner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  background: #f4f4f2;
+  border: 1.5px solid var(--black);
+  border-radius: 14px;
+  box-shadow: var(--shadow-thin);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.social-promo-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+}
+.social-promo-text-short {
+  display: none;
+}
+.social-promo-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.social-promo-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.12s ease;
+}
+.social-promo-icon-btn:hover {
+  transform: translateY(-2px);
+}
+.social-promo-telegram {
+  background: #229ed9;
+}
+.social-promo-facebook {
+  background: #1877f2;
+}
+.social-promo-icon-btn .social-promo-icon {
+  width: 18px;
+  height: 18px;
+  fill: #fff;
+}
+.social-promo-close-btn {
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.social-promo-close-btn .social-promo-icon {
+  width: 18px;
+  height: 18px;
+}
+@media (max-width: 640px) {
+  .social-promo-banner {
+    padding: 10px 12px;
+    border-radius: 12px;
+    gap: 10px;
+  }
+  .social-promo-text-full {
+    display: none;
+  }
+  .social-promo-text-short {
+    display: inline;
+  }
+  .social-promo-text {
+    font-size: 13px;
+  }
+  .social-promo-icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+  .social-promo-icon-btn .social-promo-icon {
+    width: 16px;
+    height: 16px;
   }
 }
 
