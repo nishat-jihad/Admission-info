@@ -262,9 +262,7 @@ nav.nav-links button:not(.active):hover {
 .hero {
   min-height: calc(100vh - 74px);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 40px 24px;
   position: relative;
 }
@@ -396,25 +394,29 @@ nav.nav-links button:not(.active):hover {
 }
 
 /* ---------- SOCIAL PROMO BANNER (Telegram + Facebook) ----------
-   ডেস্কটপে .hero-inner-এর ঠিক উপরে বসে, তাই টাইটেলের উপরে দেখায়।
-   মোবাইলে .hero-visual-কে order:-1 দিয়ে উপরে তোলা হয়েছে (উপরের rule
-   দেখো), তাই একই জায়গায় বসানো এই ব্যানার তখন কোলাজের উপরে দেখায়। */
-.social-promo-banner {
+   Navbar-এর ঠিক নিচে, hero-এর viewport-centering-এর বাইরে বসানো — এতে
+   উপরের গ্যাপ নির্দিষ্ট (margin-top দিয়ে কন্ট্রোল করা) থাকে, hero-section
+   vertically-center হওয়ার কারণে বড় ফাঁকা জায়গা তৈরি হয় না।
+   ডেস্কটপে hero-inner-এর গ্রিড কলাম (1.05fr/0.95fr) কপি করে বসানো হয়েছে,
+   তাই বক্সটা শুধু টাইটেল-কলামের সমান জায়গা জুড়ে থাকে, কোলাজ পর্যন্ত না গিয়ে। */
+.hero-banner-row {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto 24px;
-  background: #f4f4f2;
+  margin: 10px auto 0;
+  padding: 0 24px;
+}
+.social-promo-banner {
+  background: transparent;
   border: 1.5px solid var(--black);
-  border-radius: 14px;
-  box-shadow: var(--shadow-thin);
-  padding: 12px 18px;
+  border-radius: 10px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 .social-promo-text {
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--black);
 }
@@ -424,12 +426,12 @@ nav.nav-links button:not(.active):hover {
 .social-promo-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-shrink: 0;
 }
 .social-promo-icon-btn {
-  width: 36px;
-  height: 36px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -447,8 +449,8 @@ nav.nav-links button:not(.active):hover {
   background: #1877f2;
 }
 .social-promo-icon-btn .social-promo-icon {
-  width: 18px;
-  height: 18px;
+  width: 13px;
+  height: 13px;
   fill: #fff;
 }
 .social-promo-close-btn {
@@ -456,20 +458,33 @@ nav.nav-links button:not(.active):hover {
   border: none;
   color: #666;
   cursor: pointer;
-  padding: 4px;
+  padding: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .social-promo-close-btn .social-promo-icon {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
+}
+@media (min-width: 901px) {
+  .hero-banner-row {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+  }
+  .social-promo-banner {
+    grid-column: 1;
+  }
 }
 @media (max-width: 640px) {
+  .hero-banner-row {
+    margin-top: 8px;
+  }
   .social-promo-banner {
-    padding: 10px 12px;
-    border-radius: 12px;
-    gap: 10px;
+    padding: 5px 10px;
+    border-radius: 9px;
+    gap: 8px;
   }
   .social-promo-text-full {
     display: none;
@@ -478,15 +493,15 @@ nav.nav-links button:not(.active):hover {
     display: inline;
   }
   .social-promo-text {
-    font-size: 13px;
+    font-size: 11.5px;
   }
   .social-promo-icon-btn {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
   }
   .social-promo-icon-btn .social-promo-icon {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
   }
 }
 
