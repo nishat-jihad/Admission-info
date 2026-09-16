@@ -12,6 +12,18 @@
 
 export const updates = [
   {
+    id: "medical-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের মেডিকেল ও ডেন্টাল ভর্তি পরীক্ষার তারিখ ঘোষণা",
+    universityId: "medical",
+    universityName: "সরকারি মেডিকেল ও ডেন্টাল কলেজ ভর্তি পরীক্ষা",
+    category: "medical",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা", date: "৪ ডিসেম্বর" },
+    ],
+  },
+  {
     id: "du-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
     universityId: "du",
