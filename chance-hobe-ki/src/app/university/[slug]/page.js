@@ -215,25 +215,27 @@ export default function UniversityDetailPage({ params }) {
               আবেদন শুরু: <strong>{examDate.applicationStart}</strong> — আবেদন শেষ:{" "}
               <strong>{examDate.applicationEnd}</strong>
             </p>
-            <table className="exam-date-table">
-              <thead>
-                <tr>
-                  <th>ইউনিট</th>
-                  <th>পরীক্ষার তারিখ</th>
-                </tr>
-              </thead>
-              <tbody>
-                {examDate.schedule.map((row) => (
-                  <tr key={row.unit}>
-                    <td>{row.unit}</td>
-                    <td>
-                      {row.date}
-                      {row.tentative ? " (সম্ভাব্য)" : ""}
-                    </td>
+            <div className="exam-date-table-wrap">
+              <table className="exam-date-table">
+                <thead>
+                  <tr>
+                    <th>ইউনিট</th>
+                    <th>পরীক্ষার তারিখ</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {examDate.schedule.map((row, i) => (
+                    <tr key={row.unit} className={i % 2 === 0 ? "row-white" : "row-grey"}>
+                      <td>{row.unit}</td>
+                      <td>
+                        {row.date}
+                        {row.tentative ? " (সম্ভাব্য)" : ""}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <Link className="back-link" href="/updates">
               সব ভার্সিটির আপডেট দেখুন →
             </Link>
