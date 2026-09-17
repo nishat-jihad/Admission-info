@@ -84,6 +84,9 @@ export const metadata = {
   verification: {
     google: "PASTE_YOUR_GOOGLE_SITE_VERIFICATION_CODE_HERE",
   },
+  other: {
+    "google-adsense-account": "ca-pub-9647169735443685",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -92,6 +95,12 @@ export default function RootLayout({ children }) {
       <body className={`${bangers.variable} ${hindSiliguri.variable} ${balooDa2.variable}`}>
         {children}
         <Analytics />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9647169735443685"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
