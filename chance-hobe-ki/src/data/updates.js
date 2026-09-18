@@ -21,7 +21,7 @@ export const updates = [
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
       { unit: "'বি' ইউনিট", date: "১৯ মার্চ" },
-      { unit: "'এ' ইউনিট", date: "২৭ মার্চ" },
+      { unit: "'এ' ইউনিট (বিজ্ঞান)", date: "২৭ মার্চ" },
       { unit: "'সি' ইউনিট", date: "২০ মার্চ" },
     ],
   },
