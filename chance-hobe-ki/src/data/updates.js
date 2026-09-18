@@ -12,6 +12,20 @@
 
 export const updates = [
   {
+    id: "gst-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের GST গুচ্ছ ভর্তি পরীক্ষার তারিখ ঘোষণা",
+    universityId: "gst",
+    universityName: "GST গুচ্ছ",
+    category: "versity",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "'বি' ইউনিট", date: "১৯ মার্চ" },
+      { unit: "'এ' ইউনিট", date: "২৭ মার্চ" },
+      { unit: "'সি' ইউনিট", date: "২০ মার্চ" },
+    ],
+  },
+  {
     id: "medical-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের মেডিকেল ও ডেন্টাল ভর্তি পরীক্ষার তারিখ ঘোষণা",
     universityId: "medical",
