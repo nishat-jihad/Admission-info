@@ -15,9 +15,9 @@ export const examDates = [
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
+      { unit: "A", date: "27 মার্চ" },
       { unit: "B", date: "19 মার্চ" },
       { unit: "C", date: "20 মার্চ" },
-      { unit: "A", date: "27 মার্চ" },
     ],
   },
   {
