@@ -1083,10 +1083,6 @@ export const universities = {
     "name": "GST গুচ্ছ",
     "fullName": "সাধারণ বিশ্ববিদ্যালয় ভর্তি গুচ্ছ পরীক্ষা (GST) — বিজ্ঞান বিভাগ",
     "photo": "/images/gst.jpg",
-    "galleryPhotos": [
-      "https://just.edu.bd/img.800px.jpg",
-      "https://mbstu.ac.bd/wp-content/uploads/2024/11/Visit-MBSTU-13.jpeg"
-    ],
     "color": "#1D4ED8",
     "seats": "বিজ্ঞান বিভাগের আসন সংখ্যা প্রায় ৫৯৯৪ টি",
     "examTime": "১ ঘণ্টা",
