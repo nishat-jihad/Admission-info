@@ -7,6 +7,20 @@
 // সেকশনে ভাগ করে দেখানোর জন্য ব্যবহার হয়।
 export const examDates = [
   {
+    id: "gst",
+    universityId: "gst",
+    universityName: "GST গুচ্ছ",
+    shortName: "GST",
+    category: "university",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "B", date: "19 মার্চ" },
+      { unit: "C", date: "20 মার্চ" },
+      { unit: "A", date: "27 মার্চ" },
+    ],
+  },
+  {
     id: "medical",
     universityId: "medical",
     universityName: "সরকারি মেডিকেল ও ডেন্টাল কলেজ ভর্তি পরীক্ষা",
