@@ -545,7 +545,7 @@ nav.nav-links button:not(.active):hover {
 .btn3d {
   /* Variables */
   --button_radius: 0.75em;
-  --button_color: transparent;
+  --button_color: #fff;
   --button_outline_color: #000000;
   font-size: 19px;
   font-weight: bold;
