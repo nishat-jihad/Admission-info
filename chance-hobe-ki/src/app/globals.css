@@ -387,24 +387,34 @@ nav.nav-links button:not(.active):hover {
     justify-content: center;
   }
   /* মোবাইলে "এখনই চেক করো" আর "একত্রে ভর্তি পরীক্ষার তারিখসমূহ" এক লাইনে,
-     আর "SSC+HSC দিয়ে ভার্সিটির যোগ্যতা চেক করো" একা পরের লাইনে */
+     আর "SSC+HSC দিয়ে ভার্সিটির যোগ্যতা চেক করো" একা পরের লাইনে — সব কয়টার
+     লেখা যেন এক লাইনেই থাকে তাই ফন্ট-সাইজ স্ক্রিনের প্রস্থ অনুযায়ী ছোট-বড়
+     হবে (clamp) আর white-space: nowrap দেওয়া আছে। */
   .hero-cta .primary {
     order: 1;
     flex: 1 1 auto;
-    font-size: 12.5px;
-    padding: 10px 12px;
+    font-size: clamp(11px, 3.2vw, 13px);
+    padding: 0.55em 0.9em;
+    white-space: nowrap;
   }
   .hero-cta .btn3d-exam {
     order: 2;
     flex: 1 1 auto;
   }
   .hero-cta .btn3d-exam .button_top {
-    font-size: 12.5px;
-    padding: 0.6em 0.7em;
+    font-size: clamp(11px, 3.2vw, 13px);
+    padding: 0.55em 0.9em;
+    white-space: nowrap;
   }
   .hero-cta .btn3d-ssc {
     order: 3;
     flex-basis: 100%;
+  }
+  .hero-cta .btn3d-ssc .button_top {
+    font-size: clamp(10px, 2.8vw, 13px);
+    padding: 0.55em 0.8em;
+    white-space: nowrap;
+    text-align: center;
   }
   .hero-visual {
     order: -1;
@@ -535,9 +545,9 @@ nav.nav-links button:not(.active):hover {
 .btn3d {
   /* Variables */
   --button_radius: 0.75em;
-  --button_color: #e8e8e8;
+  --button_color: transparent;
   --button_outline_color: #000000;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: bold;
   border: none;
   cursor: pointer;
@@ -551,7 +561,7 @@ nav.nav-links button:not(.active):hover {
   box-sizing: border-box;
   border: 2px solid var(--button_outline_color);
   border-radius: var(--button_radius);
-  padding: 0.75em 1.5em;
+  padding: 0.9em 1.8em;
   background: var(--button_color);
   color: var(--button_outline_color);
   transform: translateY(-0.2em);
@@ -573,9 +583,9 @@ nav.nav-links button:not(.active):hover {
   --button_outline_color: #000000;
 }
 
-/* বাটন ২ — একত্রে ভর্তি পরীক্ষার তারিখসমূহ (লাল) */
+/* বাটন ২ — একত্রে ভর্তি পরীক্ষার তারিখসমূহ (সফট ব্রাউন-রেড, উজ্জ্বল লাল না) */
 .btn3d-exam {
-  --button_outline_color: red;
+  --button_outline_color: #A5442A;
 }
 
 /* ডেস্কটপে ৩টা বাটনই এক সারিতে রাখার জন্য আরেকটু ছোট করা হলো (মোবাইলে আগের
@@ -588,11 +598,6 @@ nav.nav-links button:not(.active):hover {
      মোবাইলে আগের মতোই থাকছে। */
   .hero-cta .primary {
     display: none;
-  }
-  .hero-cta .btn3d-ssc .button_top,
-  .hero-cta .btn3d-exam .button_top {
-    font-size: 12.5px;
-    padding: 0.6em 1em;
   }
   /* ডানপাশের ৪-ছবির কোলাজ একটু উপরে তুলে দেওয়া হলো (আগে vertical-center
      ছিল, এখন উপরের দিকে থাকবে)। */
