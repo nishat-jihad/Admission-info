@@ -599,6 +599,14 @@ nav.nav-links button:not(.active):hover {
   .hero-cta .primary {
     display: none;
   }
+  /* ডেস্কটপে বাটন ২টা যেন পাশাপাশি এক লাইনে বসে, তাই মাঝারি (professional)
+     সাইজ — মোবাইলের বড় সাইজটা এখানে প্রযোজ্য না। */
+  .hero-cta .btn3d-ssc .button_top,
+  .hero-cta .btn3d-exam .button_top {
+    font-size: 14px;
+    padding: 0.6em 1.2em;
+    white-space: nowrap;
+  }
   /* ডানপাশের ৪-ছবির কোলাজ একটু উপরে তুলে দেওয়া হলো (আগে vertical-center
      ছিল, এখন উপরের দিকে থাকবে)। */
   .hero-visual {
