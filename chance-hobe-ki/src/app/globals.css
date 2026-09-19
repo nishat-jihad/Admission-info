@@ -391,6 +391,7 @@ nav.nav-links button:not(.active):hover {
      লেখা যেন এক লাইনেই থাকে তাই ফন্ট-সাইজ স্ক্রিনের প্রস্থ অনুযায়ী ছোট-বড়
      হবে (clamp) আর white-space: nowrap দেওয়া আছে। */
   .hero-cta .primary {
+    display: none;
     order: 1;
     flex: 1 1 auto;
     font-size: clamp(11px, 3.2vw, 13px);
