@@ -46,7 +46,7 @@ export default function UniversityCard({ id, uni }) {
       </ul>
       <div className="uni-actions">
         <Link href={`/university/${id}`} className="btn-details">
-          বিস্তারিত দেখুন
+          বিস্তারিত দেখো
         </Link>
       </div>
     </article>
