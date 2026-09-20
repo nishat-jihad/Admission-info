@@ -2536,11 +2536,11 @@ section.block h2 .circular-tag {
   font-weight: 700;
   font-size: 14.5px;
   padding: 11px 14px;
-  background: #ffffff;
+  background: transparent;
   color: var(--black);
   border: 1.5px solid var(--black);
-  border-radius: 10px;
-  box-shadow: var(--shadow-thin);
+  border-radius: 999px;
+  box-shadow: none;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
@@ -2552,9 +2552,9 @@ section.block h2 .circular-tag {
 }
 .updates-filter-btn-active,
 .updates-filter-btn-active:hover {
-  background: var(--blue);
+  background: var(--black);
   color: #ffffff;
-  border-color: var(--blue-dark);
+  border-color: var(--black);
 }
 .updates-empty {
   font-size: 14.5px;
