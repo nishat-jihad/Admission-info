@@ -23,7 +23,7 @@ export default function ExamDatesPage() {
         </p>
 
         <p className="exam-notice">
-          এখানে শুধু পরীক্ষার তারিখ দেওয়া আছে। আরও বেশি তথ্যের জন্য নজর রাখুন{" "}
+          এখানে শুধু পরীক্ষার তারিখ দেওয়া আছে। আরও বেশি তথ্যের জন্য নজর রাখো{" "}
           <Link href="/updates" className="exam-notice-link">
             Updates(admission)
           </Link>{" "}
