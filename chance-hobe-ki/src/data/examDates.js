@@ -135,6 +135,16 @@ export const examDates = [
     schedule: [{ unit: "A", date: "08 জানুয়ারি" }],
   },
   {
+    id: "cuet",
+    universityId: "cuet",
+    universityName: "চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (কুয়েট)",
+    shortName: "CUET",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [{ unit: "A", date: "23 জানুয়ারি" }],
+  },
+  {
     id: "sust",
     universityId: "sust",
     universityName: "শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (শাবিপ্রবি)",
