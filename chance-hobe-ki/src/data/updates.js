@@ -173,6 +173,18 @@ export const updates = [
     ],
   },
   {
+    id: "cuet-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    universityId: "cuet",
+    universityName: "চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (CUET)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "'এ' ইউনিট", date: "২৩ জানুয়ারি" },
+    ],
+  },
+  {
     id: "ruet-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
     universityId: "ruet",
