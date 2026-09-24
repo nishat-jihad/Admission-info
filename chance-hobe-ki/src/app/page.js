@@ -53,6 +53,13 @@ function HomePageContent() {
     }
   }, [searchParams]);
 
+  // Homepage-Below-Universities ad unit ঠেলে দেয় (adsbygoogle.js layout.js-এ আগে থেকেই লোড করা আছে)
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {}
+  }, []);
+
   const allIds = ALL_IDS;
 
   const filteredIds = useMemo(() => {
@@ -220,6 +227,16 @@ function HomePageContent() {
           </p>
         )}
       </section>
+
+      {/* Homepage-Below-Universities ad unit */}
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client="ca-pub-9647169735443685"
+        data-ad-slot="1703132276"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
 
       <Footer />
     </>
