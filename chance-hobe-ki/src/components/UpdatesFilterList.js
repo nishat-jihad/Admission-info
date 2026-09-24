@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { universities } from "@/data/universities";
 
@@ -101,6 +101,13 @@ export default function UpdatesFilterList({ updates }) {
   const [activeCategory, setActiveCategory] = useState("versity");
   const [query, setQuery] = useState("");
 
+  // Updates-Below-Search ad unit ঠেলে দেয় (adsbygoogle.js layout.js-এ আগে থেকেই লোড করা আছে)
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {}
+  }, []);
+
   const searchIndex = useMemo(
     () => updates.map((u) => ({ update: u, words: buildSearchWords(u) })),
     [updates]
@@ -157,6 +164,16 @@ export default function UpdatesFilterList({ updates }) {
           </button>
         </div>
       </form>
+
+      {/* Updates-Below-Search ad unit */}
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client="ca-pub-9647169735443685"
+        data-ad-slot="1358597477"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
 
       {!isSearching && (
         <div className="updates-filter-row" role="tablist" aria-label="বিভাগ অনুযায়ী ফিল্টার">
