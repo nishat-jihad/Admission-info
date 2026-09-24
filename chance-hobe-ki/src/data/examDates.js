@@ -101,6 +101,20 @@ export const examDates = [
     schedule: [{ unit: "A", date: "30 জানুয়ারি" }],
   },
   {
+    id: "cou",
+    universityId: "cou",
+    universityName: "কুমিল্লা বিশ্ববিদ্যালয় (কুবি)",
+    shortName: "CoU",
+    category: "university",
+    applicationStart: "15 নভেম্বর",
+    applicationEnd: "10 ডিসেম্বর",
+    schedule: [
+      { unit: "A", date: "5 ফেব্রুয়ারি" },
+      { unit: "B", date: "6 ফেব্রুয়ারি" },
+      { unit: "C", date: "7 ফেব্রুয়ারি" },
+    ],
+  },
+  {
     id: "bup",
     universityId: "bup",
     universityName: "বাংলাদেশ ইউনিভার্সিটি অব প্রফেশনালস (BUP)",
