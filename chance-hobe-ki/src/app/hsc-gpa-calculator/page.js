@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -80,6 +80,13 @@ export default function HscGpaCalculatorPage() {
   const [optionalSubject, setOptionalSubject] = useState(null); // "hm" | "bio"
   const [result, setResult] = useState(null);
 
+  // HSC-GPA-Below-Bar ad unit ঠেলে দেয় (adsbygoogle.js layout.js-এ আগে থেকেই লোড করা আছে)
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {}
+  }, []);
+
   function setField(id, val) {
     setValues((v) => ({ ...v, [id]: val }));
   }
@@ -101,7 +108,13 @@ export default function HscGpaCalculatorPage() {
     const bonus = Math.max(0, optionalVal - 2);
     const mainTotal = v("bn") + v("en") + v("ict") + v("phy") + v("chem") + requiredVal;
     const netGpa = Math.min(5, (mainTotal + bonus) / 6);
-    setResult({ type: "info", gpa: netGpa.toFixed(2), grade: gpaToGrade(netGpa) });
+    const grade = gpaToGrade(netGpa);
+    setResult({
+      type: "info",
+      gpa: netGpa.toFixed(2),
+      grade,
+      status: grade === "F" ? "fail" : "pass",
+    });
   }
 
   return (
@@ -190,15 +203,40 @@ export default function HscGpaCalculatorPage() {
                   {result.gpa ? (
                     <>
                       <div className="hsc-result-title">তোমার HSC মোট GPA</div>
-                      <div className="hsc-result-number">
-                        {result.gpa} <span className="hsc-result-grade">({result.grade})</span>
-                      </div>
+                      <table className="grading-table hsc-result-table">
+                        <thead>
+                          <tr>
+                            <th>GPA</th>
+                            <th>গ্রেড</th>
+                            <th>অবস্থা</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{result.gpa}</td>
+                            <td>{result.grade}</td>
+                            <td className={`hsc-status hsc-status-${result.status}`}>
+                              {result.status === "fail" ? "ফেল" : "পাস"}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </>
                   ) : (
                     result.msg
                   )}
                 </div>
               )}
+
+              {/* HSC-GPA-Below-Bar ad unit */}
+              <ins
+                className="adsbygoogle"
+                style={{ display: "block" }}
+                data-ad-client="ca-pub-9647169735443685"
+                data-ad-slot="1595321065"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+              ></ins>
 
               <div className="hsc-grading-mobile">
                 <div className="grading-panel-title">গ্রেডিং স্কেল</div>
