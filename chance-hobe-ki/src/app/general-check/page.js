@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { generalCriteria } from "@/data/generalCriteria";
@@ -17,28 +17,47 @@ const GPA_SCALE = [
 ];
 
 function GpaScaleChart() {
+  // General-Check-Above-GPA-Scale ad unit ঠেলে দেয় (adsbygoogle.js layout.js-এ আগে থেকেই লোড করা আছে)
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {}
+  }, []);
+
   return (
-    <div className="gpa-scale-block">
-      <div className="grading-panel-title">GPA Scale</div>
-      <table className="grading-table">
-        <thead>
-          <tr>
-            <th>Marks (%)</th>
-            <th>Grade</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {GPA_SCALE.map((row) => (
-            <tr key={row.grade}>
-              <td>{row.marks}</td>
-              <td>{row.grade}</td>
-              <td>{row.points}</td>
+    <>
+      {/* General-Check-Above-GPA-Scale ad unit */}
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client="ca-pub-9647169735443685"
+        data-ad-slot="6607054721"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+
+      <div className="gpa-scale-block">
+        <div className="grading-panel-title">GPA Scale</div>
+        <table className="grading-table">
+          <thead>
+            <tr>
+              <th>Marks (%)</th>
+              <th>Grade</th>
+              <th>Points</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {GPA_SCALE.map((row) => (
+              <tr key={row.grade}>
+                <td>{row.marks}</td>
+                <td>{row.grade}</td>
+                <td>{row.points}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 
