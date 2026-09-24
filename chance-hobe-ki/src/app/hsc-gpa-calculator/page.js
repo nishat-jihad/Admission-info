@@ -227,21 +227,6 @@ export default function HscGpaCalculatorPage() {
                   )}
                 </div>
               )}
-
-              {/* HSC-GPA-Below-Bar ad unit */}
-              <ins
-                className="adsbygoogle"
-                style={{ display: "block" }}
-                data-ad-client="ca-pub-9647169735443685"
-                data-ad-slot="1595321065"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-              ></ins>
-
-              <div className="hsc-grading-mobile">
-                <div className="grading-panel-title">গ্রেডিং স্কেল</div>
-                <GradingScaleTable />
-              </div>
             </div>
 
             <aside className="hsc-grading-panel hsc-about-panel">
@@ -262,6 +247,21 @@ export default function HscGpaCalculatorPage() {
                 <li>Fourth subject: Additional grade points if scored above grade C (2.00)</li>
               </ul>
             </aside>
+          </div>
+
+          {/* HSC-GPA-Below-Bar ad unit */}
+          <ins
+            className="adsbygoogle"
+            style={{ display: "block" }}
+            data-ad-client="ca-pub-9647169735443685"
+            data-ad-slot="1595321065"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+
+          <div className="general-card hsc-grading-mobile">
+            <div className="grading-panel-title">গ্রেডিং স্কেল</div>
+            <GradingScaleTable />
           </div>
         </div>
       </section>
