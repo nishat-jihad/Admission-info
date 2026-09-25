@@ -236,11 +236,13 @@ export default function UniversityDetailPage({ params }) {
                 </tbody>
               </table>
             </div>
-            <Link className="back-link" href="/updates">
+            <Link className="back-link back-link-pill" href="/updates">
               সব ভার্সিটির আপডেট দেখুন →
             </Link>
           </section>
         )}
+
+        {uni.calcNote && <div className="placeholder-note calc-pre-note">{uni.calcNote}</div>}
 
         <EligibilityCalculator id={params.slug} uni={uni} />
       </main>
