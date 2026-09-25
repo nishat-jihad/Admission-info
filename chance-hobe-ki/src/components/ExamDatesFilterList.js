@@ -11,6 +11,13 @@ const CATEGORIES = [
   { key: "medical", label: "মেডিকেল" },
 ];
 
+// ইউনিট A মানে সায়েন্স, ইউনিট B মানে আর্টস ও কমার্স — হেডারে সেটা
+// বন্ধনীতে দেখানোর জন্য।
+const UNIT_LABEL_SUFFIX = {
+  A: " (Science)",
+  B: " (Arts and Commerce)",
+};
+
 // examDates.js (per-university) থেকে ইউনিট অনুযায়ী গ্রুপ করা হচ্ছে, যাতে
 // একই ইউনিটের ভার্সিটিগুলো একটা টেবিলের নিচে একসাথে দেখানো যায় (যেমন
 // 'এ' ইউনিট-এ ঢাবি, জবি, চবি — সবাই একই টেবিলে)।
@@ -43,6 +50,7 @@ function ExamUnitTable({ group }) {
           <tr>
             <th colSpan={3} className="exam-unit-header">
               Unit {group.unit}
+              {UNIT_LABEL_SUFFIX[group.unit] || ""}
             </th>
           </tr>
           <tr>
