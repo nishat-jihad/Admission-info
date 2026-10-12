@@ -4,7 +4,7 @@ A Next.js (App Router) rewrite of the original static HTML site. Same features,
 now organized into reusable components with a single shared data source for
 all 24 universities.
 
-## Project structure
+## Project structure-
 
 ```
 src/
