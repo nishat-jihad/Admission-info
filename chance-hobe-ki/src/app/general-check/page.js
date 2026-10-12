@@ -17,25 +17,8 @@ const GPA_SCALE = [
 ];
 
 function GpaScaleChart() {
-  // General-Check-Above-GPA-Scale ad unit ঠেলে দেয় (adsbygoogle.js layout.js-এ আগে থেকেই লোড করা আছে)
-  useEffect(() => {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {}
-  }, []);
-
   return (
     <>
-      {/* General-Check-Above-GPA-Scale ad unit */}
-      <ins
-        className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client="ca-pub-9647169735443685"
-        data-ad-slot="6607054721"
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins>
-
       <div className="gpa-scale-block">
         <div className="grading-panel-title">GPA Scale</div>
         <table className="grading-table">
