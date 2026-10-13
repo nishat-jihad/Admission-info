@@ -140,7 +140,10 @@ export default function UniversityDetailPage({ params }) {
           <div className="calc-note not-allowed">এই পরীক্ষায় ক্যালকুলেটর ব্যবহার করা যাবে না।</div>
         )}
         {uni.calcAllowed === true && (
-          <div className="calc-note allowed">এই পরীক্ষায় ক্যালকুলেটর ব্যবহার করা যাবে।</div>
+          <div className="calc-note allowed">
+            এই পরীক্ষায় ক্যালকুলেটর ব্যবহার করা যাবে।
+            {params.slug === "cu" && " (১০০ এমএস)"}
+          </div>
         )}
 
         {uni.subjects && (
