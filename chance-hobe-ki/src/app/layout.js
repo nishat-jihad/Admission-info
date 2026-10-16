@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/react';
 import Script from "next/script";
-import { Bangers, Hind_Siliguri, Baloo_Da_2 } from "next/font/google";
+import { Bangers, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 
 const bangers = Bangers({
@@ -9,16 +9,10 @@ const bangers = Bangers({
   variable: "--font-bangers",
 });
 
-const hindSiliguri = Hind_Siliguri({
+const notoBengali = Noto_Sans_Bengali({
   subsets: ["bengali", "latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-hind",
-});
-
-const balooDa2 = Baloo_Da_2({
-  subsets: ["bengali", "latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-baloo",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-noto-bn",
 });
 
 const SITE_URL = "https://admissioninfo.vercel.app";
@@ -89,7 +83,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="bn">
-      <body className={`${bangers.variable} ${hindSiliguri.variable} ${balooDa2.variable}`}>
+      <body className={`${bangers.variable} ${notoBengali.variable}`}>
         {children}
         <Analytics />
         <Script id="microsoft-clarity" strategy="afterInteractive">
