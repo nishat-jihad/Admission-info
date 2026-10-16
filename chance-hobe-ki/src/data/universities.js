@@ -40,7 +40,7 @@ export const universities = {
       }
     ],
     "resultFormula": "(SSC GPA × ৮) + (HSC GPA × ১২) + ভর্তি পরীক্ষায় প্রাপ্ত ১০০ নম্বর = সর্বমোট ২০০ নম্বরের মধ্যে মেধাতালিকা প্রকাশ করা হয়।",
-    "eligibilityText": "SSC ও HSC — উভয় পরীক্ষাতেই ন্যূনতম জিপিএ ৩.৫০ থাকতে হবে, HSC পরীক্ষায় জীববিজ্ঞানে জিপিএ ৩.৫০ এর কম হওয়া যাবে না, এবং SSC ও HSC মিলিয়ে সম্মিলিত জিপিএ ন্যূনতম ৯.০০ থাকতে হবে।",
+    "eligibilityText": "SSC ও HSC — উভয় পরীক্ষাতেই ন্যূনতম জিপিএ ৪.০০ থাকতে হবে, HSC পরীক্ষায় জীববিজ্ঞানে জিপিএ ৩.৫০ এর কম হওয়া যাবে না, এবং SSC ও HSC মিলিয়ে সম্মিলিত জিপিএ ন্যূনতম ৯.০০ থাকতে হবে।",
     "website": "https://www.dgme.gov.bd",
     "fields": [
       "ssc",
@@ -48,10 +48,10 @@ export const universities = {
       "bio"
     ],
     "calc": {
-      "minSsc": 3.5,
-      "minHsc": 3.5,
+      "minSsc": 4,
+      "minHsc": 4,
       "minBio": 3.5,
-      "minCombined": 8.5
+      "minCombined": 9
     }
   },
   "du": {
