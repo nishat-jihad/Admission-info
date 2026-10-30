@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { universities } from "@/data/universities";
 import { updates } from "@/data/updates";
@@ -49,8 +50,14 @@ function Photo({ uni }) {
     );
   }
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className="uni-hero-photo" src={uni.photo} alt={`${uni.name} campus`} />
+    <Image
+      className="uni-hero-photo"
+      src={uni.photo}
+      alt={`${uni.name} campus`}
+      width={220}
+      height={140}
+      sizes="(max-width: 640px) 100vw, 220px"
+    />
   );
 }
 
@@ -62,8 +69,14 @@ function HeroGallery({ uni }) {
       style={{ gridTemplateColumns: `repeat(${count}, 1fr)` }}
     >
       {uni.galleryPhotos.map((src, i) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img key={i} src={src} alt={`${uni.name} campus ${i + 1}`} />
+        <Image
+          key={i}
+          src={src}
+          alt={`${uni.name} campus ${i + 1}`}
+          width={600}
+          height={360}
+          sizes="(max-width: 640px) 34vw, 400px"
+        />
       ))}
     </div>
   );
