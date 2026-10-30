@@ -73,11 +73,6 @@ export const metadata = {
       "SSC ও HSC-র GPA দিয়ে কোন কোন ভার্সিটিতে আবেদন করা যাবে তা যাচাই করো — বিনামূল্যে।",
     images: ["/images/admission-info-logo.png"],
   },
-  // TODO: Google Search Console থেকে পাওয়া verification কোডটি এখানে বসাও
-  // (Settings > Ownership verification > HTML tag > শুধু content="..." ভ্যালুটুকু নাও)
-  verification: {
-    google: "PASTE_YOUR_GOOGLE_SITE_VERIFICATION_CODE_HERE",
-  },
 };
 
 export default function RootLayout({ children }) {
