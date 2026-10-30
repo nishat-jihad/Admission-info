@@ -23,19 +23,11 @@ const ALL_IDS = (() => {
   return [...featured, ...rest];
 })();
 
-export default function HomePage() {
-  return (
-    <Suspense fallback={null}>
-      <HomePageContent />
-    </Suspense>
-  );
-}
-
-function HomePageContent() {
+// URL-এর ?category= / ?q= পড়ার কাজটা আলাদা ছোট কম্পোনেন্টে রাখা হলো, যাতে
+// useSearchParams-এর কারণে পুরো হোমপেজ Suspense-এর ভেতরে ঢুকে ফাঁকা (null)
+// না হয় — মূল কনটেন্ট এখন সার্ভার থেকেই HTML হিসেবে আসে (SEO-র জন্য)।
+function SearchParamsSync({ setCategory, setQuery, setShowAll }) {
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("all");
-  const [showAll, setShowAll] = useState(false);
 
   // Re-runs every time the ?category= / ?q= params change, even when
   // navigating client-side between "/" and "/?category=...#cards-wrap"
@@ -51,7 +43,15 @@ function HomePageContent() {
     if (window.location.hash === "#cards-wrap") {
       document.getElementById("cards-wrap")?.scrollIntoView({ block: "start" });
     }
-  }, [searchParams]);
+  }, [searchParams, setCategory, setQuery, setShowAll]);
+
+  return null;
+}
+
+export default function HomePage() {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("all");
+  const [showAll, setShowAll] = useState(false);
 
   const allIds = ALL_IDS;
 
@@ -90,6 +90,14 @@ function HomePageContent() {
 
   return (
     <>
+      <Suspense fallback={null}>
+        <SearchParamsSync
+          setCategory={setCategory}
+          setQuery={setQuery}
+          setShowAll={setShowAll}
+        />
+      </Suspense>
+
       <Navbar />
 
       <div className="hero-banner-row">
