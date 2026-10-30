@@ -7,6 +7,7 @@ export default function sitemap() {
     "",
     "/hsc-gpa-calculator",
     "/general-check",
+    "/exam-dates",
     "/updates",
     "/about",
     "/contact",
