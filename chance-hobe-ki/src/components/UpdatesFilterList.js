@@ -219,6 +219,45 @@ export default function UpdatesFilterList({ updates }) {
                 </tbody>
               </table>
             </div>
+            {u.sourceImage && (
+              <details
+                style={{
+                  marginTop: 16,
+                  border: "1px solid #e2e2e2",
+                  borderRadius: 8,
+                  background: "#f5f6f8",
+                }}
+              >
+                <summary
+                  style={{
+                    cursor: "pointer",
+                    padding: "10px 14px",
+                    fontWeight: 700,
+                    fontSize: 14,
+                  }}
+                >
+                  View exam date source
+                </summary>
+                <div style={{ padding: "0 14px 14px" }}>
+                  <a href={u.sourceImage} target="_blank" rel="noopener noreferrer">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={u.sourceImage}
+                      alt={`${u.universityName} — ভর্তি পরীক্ষার তারিখের নোটিশ`}
+                      loading="lazy"
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        height: "auto",
+                        borderRadius: 6,
+                        border: "1px solid #e2e2e2",
+                        background: "#fff",
+                      }}
+                    />
+                  </a>
+                </div>
+              </details>
+            )}
           </article>
         ))}
       </div>
