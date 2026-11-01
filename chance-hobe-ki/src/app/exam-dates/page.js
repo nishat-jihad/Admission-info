@@ -5,9 +5,9 @@ import ExamDatesFilterList from "@/components/ExamDatesFilterList";
 import { examDates } from "@/data/examDates";
 
 export const metadata = {
-  title: "একত্রে ভর্তি পরীক্ষার তারিখসমূহ — Admission Info",
+  title: "ভর্তি পরীক্ষার তারিখ ২০২৬-২৭ — সব ভার্সিটি একসাথে",
   description:
-    "সব বিশ্ববিদ্যালয়ের আবেদন শুরু-শেষের তারিখ আর ইউনিট অনুযায়ী পরীক্ষার তারিখ একসাথে এক পেজে।",
+    "২০২৬-২৭ সেশনের সব বিশ্ববিদ্যালয়, ইঞ্জিনিয়ারিং ও মেডিকেলের আবেদন শুরু-শেষের তারিখ আর ইউনিট অনুযায়ী ভর্তি পরীক্ষার তারিখ একসাথে এক পেজে।",
 };
 
 export default function ExamDatesPage() {
