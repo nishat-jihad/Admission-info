@@ -20,11 +20,11 @@ const SITE_URL = "https://admissioninfo.vercel.app";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Admission Info — HSC GPA Calculator ও ভর্তি যোগ্যতা যাচাই",
+    default: "HSC GPA Calculator ও ভর্তি যোগ্যতা যাচাই ২০২৬-২৭ | Admission Info",
     template: "%s | Admission Info",
   },
   description:
-    "তোমার SSC আর HSC-র GPA দিয়ে তুমি কোন কোন ভার্সিটি, ইঞ্জিনিয়ারিং আর মেডিকেলে আবেদন করতে পারবে — সেটা এক নজরে জানিয়ে দেয় Admission Info। বিনামূল্যে HSC GPA Calculator ও admission eligibility checker।",
+    "SSC ও HSC-র GPA দিয়ে জানো কোন ভার্সিটি, ইঞ্জিনিয়ারিং ও মেডিকেলে আবেদন করা যাবে। বিনামূল্যে HSC GPA Calculator, ভর্তি যোগ্যতা যাচাই ও ২০২৬-২৭ ভর্তি পরীক্ষার তারিখ।",
   keywords: [
     "HSC GPA Calculator",
     "SSC HSC GPA দিয়ে ভর্তি যোগ্যতা",
@@ -32,7 +32,7 @@ export const metadata = {
     "BUET admission requirement",
     "BUTEX admission requirement",
     "মেডিকেল ভর্তি পরীক্ষার তারিখ",
-    "বিশ্ববিদ্যালয় ভর্তি পরীক্ষার সময়সূচি ২০২৬",
+    "বিশ্ববিদ্যালয় ভর্তি পরীক্ষার সময়সূচি ২০২৬-২৭",
     "চান্স হবে কিনা",
   ],
   alternates: {
@@ -54,9 +54,9 @@ export const metadata = {
     locale: "bn_BD",
     url: SITE_URL,
     siteName: "Admission Info",
-    title: "Admission Info — HSC GPA Calculator ও ভর্তি যোগ্যতা যাচাই",
+    title: "HSC GPA Calculator ও ভর্তি যোগ্যতা যাচাই ২০২৬-২৭ | Admission Info",
     description:
-      "SSC ও HSC-র GPA দিয়ে কোন কোন ভার্সিটি, ইঞ্জিনিয়ারিং ও মেডিকেলে আবেদন করা যাবে তা যাচাই করো — বিনামূল্যে ও তাৎক্ষণিক।",
+      "SSC ও HSC-র GPA দিয়ে কোন কোন ভার্সিটি, ইঞ্জিনিয়ারিং ও মেডিকেলে আবেদন করা যাবে তা যাচাই করো, সাথে ২০২৬-২৭ ভর্তি পরীক্ষার তারিখ — বিনামূল্যে।",
     images: [
       {
         url: "/images/admission-info-logo.png",
@@ -68,9 +68,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Admission Info — HSC GPA Calculator ও ভর্তি যোগ্যতা যাচাই",
+    title: "HSC GPA Calculator ও ভর্তি যোগ্যতা যাচাই ২০২৬-২৭ | Admission Info",
     description:
-      "SSC ও HSC-র GPA দিয়ে কোন কোন ভার্সিটিতে আবেদন করা যাবে তা যাচাই করো — বিনামূল্যে।",
+      "SSC ও HSC-র GPA দিয়ে কোন কোন ভার্সিটিতে আবেদন করা যাবে তা যাচাই করো, সাথে ২০২৬-২৭ ভর্তি পরীক্ষার তারিখ — বিনামূল্যে।",
     images: ["/images/admission-info-logo.png"],
   },
 };
