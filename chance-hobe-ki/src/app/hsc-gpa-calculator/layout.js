@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "HSC GPA Calculator — নম্বর দিয়ে GPA বের করো",
+  title: "HSC GPA Calculator ২০২৬ — ৪র্থ বিষয় সহ GPA হিসাব",
   description:
-    "HSC পরীক্ষার প্রতিটি বিষয়ের নম্বর বসিয়ে সহজেই তোমার HSC GPA বের করো। বিনামূল্যে, দ্রুত ও নির্ভুল HSC GPA Calculator।",
+    "HSC পরীক্ষার প্রতিটি বিষয়ের গ্রেড বসিয়ে ৪র্থ বিষয় সহ তোমার HSC GPA বের করো। বিনামূল্যে, দ্রুত ও নির্ভুল HSC GPA Calculator।",
   keywords: [
     "HSC GPA Calculator",
     "HSC জিপিএ ক্যালকুলেটর",
@@ -12,9 +12,9 @@ export const metadata = {
     canonical: "/hsc-gpa-calculator",
   },
   openGraph: {
-    title: "HSC GPA Calculator — নম্বর দিয়ে GPA বের করো",
+    title: "HSC GPA Calculator ২০২৬ — ৪র্থ বিষয় সহ GPA হিসাব",
     description:
-      "HSC পরীক্ষার নম্বর বসিয়ে তাৎক্ষণিক GPA বের করো — বিনামূল্যে HSC GPA Calculator।",
+      "HSC পরীক্ষার গ্রেড বসিয়ে ৪র্থ বিষয় সহ তাৎক্ষণিক GPA বের করো — বিনামূল্যে HSC GPA Calculator।",
     url: "/hsc-gpa-calculator",
   },
 };
