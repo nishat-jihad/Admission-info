@@ -7,6 +7,8 @@
 //   "versity"     -> সাধারণ বিশ্ববিদ্যালয়
 //   "medical"     -> মেডিকেল
 //   "engineering" -> ইঞ্জিনিয়ারিং
+// An update can set `sourceImage` (path under /public) to show a
+// "View exam date source" box with the notice photo inside its card.
 // A schedule row can set `tentative: true` when the date is a সম্ভাব্য
 // (probable, not-yet-confirmed) date — it renders in blue for attention.
 
@@ -160,6 +162,19 @@ export const updates = [
     ],
   },
   {
+    id: "sust-2026-27-schedule",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    universityId: "sust",
+    universityName: "শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (SUST)",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [
+      { unit: "ভর্তি পরীক্ষা", date: "১৭ ও ১৮ জানুয়ারি" },
+    ],
+    sourceImage: "/images/sust-exam-date-notice.jpg",
+  },
+  {
     id: "mist-2026-27-schedule",
     title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
     universityId: "mist",
@@ -209,18 +224,6 @@ export const updates = [
     schedule: [
       { unit: "ভর্তি পরীক্ষা (সম্ভাব্য তারিখ)", date: "১৪ জানুয়ারি", tentative: true },
       { unit: "পরীক্ষার কেন্দ্র", date: "রুয়েট ও বুয়েট" },
-    ],
-  },
-  {
-    id: "sust-2026-27-schedule",
-    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
-    universityId: "sust",
-    universityName: "শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (SUST)",
-    category: "engineering",
-    applicationStart: "শীঘ্রই জানানো হবে",
-    applicationEnd: "শীঘ্রই জানানো হবে",
-    schedule: [
-      { unit: "ভর্তি পরীক্ষা", date: "২৬ ও ২৭ জানুয়ারি" },
     ],
   },
   {
