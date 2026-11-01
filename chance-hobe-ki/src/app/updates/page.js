@@ -4,8 +4,9 @@ import UpdatesFilterList from "@/components/UpdatesFilterList";
 import { updates } from "@/data/updates";
 
 export const metadata = {
-  title: "আপডেট — Admission Info",
-  description: "সর্বশেষ ভর্তি পরীক্ষার সময়সূচি ও admission-related আপডেট।",
+  title: "ভর্তি পরীক্ষার সর্বশেষ আপডেট ২০২৬-২৭",
+  description:
+    "২০২৬-২৭ সেশনের বিশ্ববিদ্যালয়, ইঞ্জিনিয়ারিং ও মেডিকেল ভর্তি পরীক্ষার সময়সূচি ও সর্বশেষ admission আপডেট।",
 };
 
 export default function UpdatesPage() {
