@@ -14,7 +14,7 @@ export function generateMetadata({ params }) {
   const uni = universities[params.slug];
   if (!uni) return {};
   const examDate = updates.find((u) => u.universityId === params.slug);
-  const title = `${uni.name} Eligibility Checker — ভর্তি যোগ্যতা, Requirements ও Exam Date 2026`;
+  const title = `${uni.name} Admission Requirement ও ভর্তি যোগ্যতা ২০২৬-২৭`;
   const description = `${uni.fullName || uni.name}-এর admission requirements, আসনসংখ্যা (${uni.seats || ""})${
     examDate ? `, ২০২৬-২৭ সেশনের ভর্তি পরীক্ষার তারিখ` : ""
   } এবং তোমার SSC-HSC GPA দিয়ে ${uni.name} এ চান্স হবে কিনা তা যাচাই করো — ${uni.name} eligibility checker।`;
@@ -25,10 +25,10 @@ export function generateMetadata({ params }) {
     keywords: [
       `${uni.name} eligibility checker`,
       `${uni.name} admission requirement`,
-      `${uni.name} requirement 2026`,
+      `${uni.name} requirement 2026-27`,
       `${uni.name} ভর্তি যোগ্যতা`,
-      `${uni.name} admission exam date 2026`,
-      `${uni.name} exam date 2026`,
+      `${uni.name} admission exam date 2026-27`,
+      `${uni.name} exam date 2026-27`,
       `${uni.name} circular ${uni.circularYear || "2026"}`,
     ],
     alternates: { canonical: url },
