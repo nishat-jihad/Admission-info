@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "About — Admission Info",
+  title: "About",
   description:
     "Admission Info ওয়েবসাইট কী, কীভাবে কাজ করে?",
 };
@@ -99,7 +99,7 @@ export default function AboutPage() {
 
           <div className="dev-card">
             <h3 className="dev-sub-title">Marketing Manager</h3>
-            <h3 className="dev-name">আমানুল্লাহ</h3>
+            <h3 className="dev-name">আমান উল্লাহ</h3>
             <p>
               I&apos;m Amanullah Aman, also part of the HSC 2026 batch and an
               admission candidate myself. I lead marketing and outreach for
