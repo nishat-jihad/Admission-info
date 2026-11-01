@@ -100,6 +100,23 @@ function matchesQuery(haystackWords, query) {
 export default function UpdatesFilterList({ updates }) {
   const [activeCategory, setActiveCategory] = useState("versity");
   const [query, setQuery] = useState("");
+  const [openSources, setOpenSources] = useState({});
+  const [fullImage, setFullImage] = useState(null);
+
+  // Full-screen notice viewer: lock page scroll + Esc to close.
+  useEffect(() => {
+    if (!fullImage) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => {
+      if (e.key === "Escape") setFullImage(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [fullImage]);
 
   const searchIndex = useMemo(
     () => updates.map((u) => ({ update: u, words: buildSearchWords(u) })),
@@ -220,47 +237,155 @@ export default function UpdatesFilterList({ updates }) {
               </table>
             </div>
             {u.sourceImage && (
-              <details
-                style={{
-                  marginTop: 16,
-                  border: "1px solid #e2e2e2",
-                  borderRadius: 8,
-                  background: "#f5f6f8",
-                }}
-              >
-                <summary
+              <div style={{ maxWidth: 380, margin: "16px auto 0" }}>
+                <button
+                  type="button"
+                  aria-expanded={!!openSources[u.id]}
+                  onClick={() =>
+                    setOpenSources((prev) => ({ ...prev, [u.id]: !prev[u.id] }))
+                  }
                   style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    width: "100%",
+                    textAlign: "center",
                     cursor: "pointer",
                     padding: "10px 14px",
+                    border: "1px solid #e2e2e2",
+                    borderRadius: 8,
+                    background: "#f5f6f8",
+                    color: "inherit",
+                    font: "inherit",
                     fontWeight: 700,
                     fontSize: 14,
                   }}
                 >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 4l7.07 17 2.51-7.39L21 11.07z" />
+                  </svg>
                   View exam date source
-                </summary>
-                <div style={{ padding: "0 14px 14px" }}>
-                  <a href={u.sourceImage} target="_blank" rel="noopener noreferrer">
+                </button>
+                {openSources[u.id] && (
+                  <div style={{ marginTop: 10 }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={u.sourceImage}
                       alt={`${u.universityName} — ভর্তি পরীক্ষার তারিখের নোটিশ`}
                       loading="lazy"
+                      onClick={() =>
+                        setFullImage({
+                          src: u.sourceImage,
+                          alt: `${u.universityName} — ভর্তি পরীক্ষার তারিখের নোটিশ`,
+                        })
+                      }
                       style={{
                         display: "block",
                         width: "100%",
                         height: "auto",
+                        cursor: "zoom-in",
                         borderRadius: 6,
                         border: "1px solid #e2e2e2",
                         background: "#fff",
                       }}
                     />
-                  </a>
-                </div>
-              </details>
+                  </div>
+                )}
+              </div>
             )}
           </article>
         ))}
       </div>
+
+      {fullImage && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "#000",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            style={{
+              padding: "calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px",
+              background: "#111",
+              flexShrink: 0,
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setFullImage(null)}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                cursor: "pointer",
+                padding: "8px 14px",
+                border: "1px solid #555",
+                borderRadius: 8,
+                background: "#222",
+                color: "#fff",
+                font: "inherit",
+                fontWeight: 700,
+                fontSize: 15,
+              }}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+              Back
+            </button>
+          </div>
+          <div
+            style={{
+              flex: 1,
+              overflow: "auto",
+              WebkitOverflowScrolling: "touch",
+              touchAction: "pan-x pan-y pinch-zoom",
+              display: "flex",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={fullImage.src}
+              alt={fullImage.alt}
+              style={{
+                display: "block",
+                width: "100%",
+                maxWidth: 1100,
+                height: "auto",
+                margin: "auto",
+              }}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
