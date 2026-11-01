@@ -125,6 +125,16 @@ export const examDates = [
     schedule: [{ unit: "D (FST)", date: "8 জানুয়ারি" }],
   },
   {
+    id: "sust",
+    universityId: "sust",
+    universityName: "শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (শাবিপ্রবি)",
+    shortName: "SUST",
+    category: "engineering",
+    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationEnd: "শীঘ্রই জানানো হবে",
+    schedule: [{ unit: "A", date: "17-18 জানুয়ারি" }],
+  },
+  {
     id: "mist",
     universityId: "mist",
     universityName: "মিলিটারি ইনস্টিটিউট অব সায়েন্স অ্যান্ড টেকনোলজি (মিস্ট)",
@@ -157,16 +167,6 @@ export const examDates = [
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [{ unit: "A", date: "23 জানুয়ারি" }],
-  },
-  {
-    id: "sust",
-    universityId: "sust",
-    universityName: "শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (শাবিপ্রবি)",
-    shortName: "SUST",
-    category: "engineering",
-    applicationStart: "শীঘ্রই জানানো হবে",
-    applicationEnd: "শীঘ্রই জানানো হবে",
-    schedule: [{ unit: "A", date: "26-27 জানুয়ারি" }],
   },
   {
     id: "ruet",
