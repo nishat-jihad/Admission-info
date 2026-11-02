@@ -109,9 +109,15 @@ export default function EligibilityCalculator({ id, uni }) {
           নিশ্চিত হয়ে নিও।
         </div>
       </div>
-      <div className="circular-update-note">
-        ২০২৬ সালের আপডেটেড সার্কুলার প্রকাশ হলে এই তথ্য আপডেট করা হবে।
-      </div>
+      {id === "ru" ? (
+        <div className="circular-update-note" style={{ color: "var(--green-dark)" }}>
+          এই তথ্য ২০২৬ সালের আপডেট অনুযায়ী দেওয়া হয়েছে।
+        </div>
+      ) : (
+        <div className="circular-update-note">
+          ২০২৬ সালের আপডেটেড সার্কুলার প্রকাশ হলে এই তথ্য আপডেট করা হবে।
+        </div>
+      )}
     </section>
   );
 }
