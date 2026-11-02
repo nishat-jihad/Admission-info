@@ -24,7 +24,7 @@ export const generalCriteria = {
   cou: { name: "Comilla University", minSsc: 3.0, minHsc: 3.0, minCombined: 7.0 },
   ju_a: { name: "JU (A Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 8.5 },
   ju_d: { name: "JU (D Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 9.0 },
-  ru: { name: "RU (C Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 8.0 },
+  ru: { name: "RU (C Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 7.0 },
   cu: { name: "CU (A Unit)", minSsc: 4.0, minHsc: 3.0, minCombined: 8.0 },
   ku_a: { name: "KU (A Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },
   ku_b: { name: "KU (B Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },
