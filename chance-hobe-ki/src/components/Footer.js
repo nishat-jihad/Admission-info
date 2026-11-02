@@ -83,7 +83,7 @@ function UniversityList({ idSuffix }) {
   const [open, setOpen] = useState(false);
   const listId = `footer-uni-list-${idSuffix}`;
   return (
-    <div className="footer-uni-box">
+    <div className={`footer-uni-box${open ? " is-open" : ""}`}>
       <div id={listId} className={`footer-uni-chips${open ? " is-open" : ""}`}>
         {UNI_LINKS.map((u) => (
           <Link key={u.slug} href={`/university/${u.slug}`} prefetch={false} className="footer-uni-chip">
@@ -109,7 +109,9 @@ function UniversityList({ idSuffix }) {
 
 const FOOTER_EXTRA_CSS = `
 .footer-inner{grid-template-columns:1.4fr 1fr 1fr 1fr}
-.footer-uni-box{margin-top:16px;width:100%;max-width:40ch;font-size:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px}
+.footer-uni-box{box-sizing:border-box;width:100%;max-width:40ch;font-size:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px}
+.footer-uni-box.is-open{max-width:100%}
+.footer-uni-desktop{grid-column:1 / -1;margin-top:-24px}
 .footer-uni-chips{display:flex;flex-wrap:wrap;gap:8px;max-height:64px;overflow:hidden;transition:max-height .25s ease}
 .footer-uni-chips.is-open{max-height:600px}
 .footer-uni-chips a.footer-uni-chip{display:inline-flex;align-items:center;box-sizing:border-box;height:28px;padding:0 10px;font-size:12.5px;line-height:1;white-space:nowrap;color:#fff;text-decoration:none;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;transition:background-color .15s ease,border-color .15s ease}
@@ -119,7 +121,7 @@ const FOOTER_EXTRA_CSS = `
 .footer-uni-arrow{width:14px;height:14px;transition:transform .2s ease}
 .footer-uni-arrow.is-open{transform:rotate(180deg)}
 .footer-uni-mobile{display:none}
-@media (max-width:900px){.footer-inner{gap:24px}}
+@media (max-width:900px){.footer-inner{gap:24px}.footer-uni-desktop{margin-top:-8px}}
 @media (max-width:700px){
 .footer-inner{grid-template-columns:1fr;gap:30px}
 .footer-uni-desktop{display:none}
@@ -152,10 +154,6 @@ export default function Footer() {
           <div className="footer-social-desktop">
             <SocialIcons />
           </div>
-          {/* Desktop: right below the social icons, same width as the description */}
-          <div className="footer-uni-desktop">
-            <UniversityList idSuffix="desktop" />
-          </div>
         </div>
 
         <div className="footer-col">
@@ -181,6 +179,12 @@ export default function Footer() {
           <Link href="/university/buet">BUET</Link>
           <Link href="/university/medical">MBBS</Link>
           <Link href="/university/gst">GST গুচ্ছ</Link>
+        </div>
+
+        {/* Desktop: own full-width grid row under the social icons.
+            Closed = description width, 2 rows. Open = stretches to the right edge. */}
+        <div className="footer-uni-desktop">
+          <UniversityList idSuffix="desktop" />
         </div>
       </div>
 
