@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -47,9 +48,90 @@ function SocialIcons() {
   );
 }
 
+// Most popular first: the collapsed box shows only what fits in 2 rows, so the
+// order here decides which universities are visible without clicking.
+const UNI_LINKS = [
+  { slug: "du", label: "DU" },
+  { slug: "buet", label: "BUET" },
+  { slug: "medical", label: "Medical" },
+  { slug: "gst", label: "GST গুচ্ছ" },
+  { slug: "cu", label: "CU" },
+  { slug: "ru", label: "RU" },
+  { slug: "sust", label: "SUST" },
+  { slug: "kuet", label: "KUET" },
+  { slug: "ruet", label: "RUET" },
+  { slug: "cuet", label: "CUET" },
+  { slug: "ju_a", label: "JU (A)" },
+  { slug: "jnu", label: "JnU" },
+  { slug: "butex", label: "BUTex" },
+  { slug: "iut", label: "IUT" },
+  { slug: "mist", label: "MIST" },
+  { slug: "bup", label: "BUP" },
+  { slug: "afmc", label: "AFMC" },
+  { slug: "hstu_a", label: "HSTU (A)" },
+  { slug: "ku_a", label: "KU (A)" },
+  { slug: "cou", label: "CoU" },
+  { slug: "krishi", label: "কৃষি গুচ্ছ" },
+  { slug: "ju_d", label: "JU (D)" },
+  { slug: "hstu_b", label: "HSTU (B)" },
+  { slug: "ku_b", label: "KU (B)" },
+];
+
+// Always rendered in the HTML (clipped by height, not removed), so crawlers
+// can follow every link even while the box is collapsed.
+function UniversityList({ idSuffix }) {
+  const [open, setOpen] = useState(false);
+  const listId = `footer-uni-list-${idSuffix}`;
+  return (
+    <div className="footer-uni-box">
+      <div id={listId} className={`footer-uni-chips${open ? " is-open" : ""}`}>
+        {UNI_LINKS.map((u) => (
+          <Link key={u.slug} href={`/university/${u.slug}`} prefetch={false} className="footer-uni-chip">
+            {u.label}
+          </Link>
+        ))}
+      </div>
+      <button
+        type="button"
+        className="footer-uni-toggle"
+        aria-expanded={open}
+        aria-controls={listId}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {open ? "কম দেখো" : "সকল ভার্সিটি দেখো"}
+        <svg viewBox="0 0 24 24" className={`footer-uni-arrow${open ? " is-open" : ""}`} aria-hidden="true">
+          <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
+const FOOTER_EXTRA_CSS = `
+.footer-inner{grid-template-columns:1.4fr 1fr 1fr 1fr}
+.footer-uni-box{margin-top:16px;width:100%;max-width:40ch;font-size:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px}
+.footer-uni-chips{display:flex;flex-wrap:wrap;gap:8px;max-height:64px;overflow:hidden;transition:max-height .25s ease}
+.footer-uni-chips.is-open{max-height:600px}
+.footer-uni-chips a.footer-uni-chip{display:inline-flex;align-items:center;box-sizing:border-box;height:28px;padding:0 10px;font-size:12.5px;line-height:1;white-space:nowrap;color:#fff;text-decoration:none;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;transition:background-color .15s ease,border-color .15s ease}
+.footer-uni-chips a.footer-uni-chip:hover{background:rgba(124,227,160,0.15);border-color:#7ce3a0}
+.footer-uni-toggle{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:0;background:none;border:0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:#7ce3a0}
+.footer-uni-toggle:hover{text-decoration:underline}
+.footer-uni-arrow{width:14px;height:14px;transition:transform .2s ease}
+.footer-uni-arrow.is-open{transform:rotate(180deg)}
+.footer-uni-mobile{display:none}
+@media (max-width:900px){.footer-inner{gap:24px}}
+@media (max-width:700px){
+.footer-inner{grid-template-columns:1fr;gap:30px}
+.footer-uni-desktop{display:none}
+.footer-uni-mobile{display:block;padding:0 28px 24px}
+.footer-uni-mobile .footer-uni-box{max-width:none}
+}
+`;
+
 export default function Footer() {
   return (
     <footer className="site-footer">
+      <style dangerouslySetInnerHTML={{ __html: FOOTER_EXTRA_CSS }} />
       <div className="footer-inner">
         <div className="footer-brand">
           <Link href="/" style={{ textDecoration: "none" }}>
@@ -70,6 +152,10 @@ export default function Footer() {
           <div className="footer-social-desktop">
             <SocialIcons />
           </div>
+          {/* Desktop: right below the social icons, same width as the description */}
+          <div className="footer-uni-desktop">
+            <UniversityList idSuffix="desktop" />
+          </div>
         </div>
 
         <div className="footer-col">
@@ -88,11 +174,24 @@ export default function Footer() {
           <Link href="/about">আমাদের সম্পর্কে</Link>
           <Link href="/contact">যোগাযোগ করুন</Link>
         </div>
+
+        <div className="footer-col">
+          <h4>জনপ্রিয় পেজ</h4>
+          <Link href="/university/du">DU</Link>
+          <Link href="/university/buet">BUET</Link>
+          <Link href="/university/medical">MBBS</Link>
+          <Link href="/university/gst">GST গুচ্ছ</Link>
+        </div>
       </div>
 
       {/* Mobile: pushed to the very bottom of the footer, above the copyright line */}
       <div className="footer-social-mobile">
         <SocialIcons />
+      </div>
+
+      {/* Mobile: below the social icons, above the copyright line */}
+      <div className="footer-uni-mobile">
+        <UniversityList idSuffix="mobile" />
       </div>
 
       <div className="footer-bottom">© ২০২৬ Admission Info — সব স্বত্ব সংরক্ষিত।</div>
