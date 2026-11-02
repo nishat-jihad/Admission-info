@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -77,57 +76,36 @@ const UNI_LINKS = [
   { slug: "ku_b", label: "KU (B)" },
 ];
 
-// Always rendered in the HTML (clipped by height, not removed), so crawlers
-// can follow every link even while the box is collapsed.
-function UniversityList({ idSuffix }) {
-  const [open, setOpen] = useState(false);
-  const listId = `footer-uni-list-${idSuffix}`;
+// All links are always visible (no toggle), so crawlers and visitors see every
+// university from every page. Shown as an even grid so rows end flush.
+function UniversityList() {
   return (
-    <div className={`footer-uni-box${open ? " is-open" : ""}`}>
-      <div id={listId} className={`footer-uni-chips${open ? " is-open" : ""}`}>
-        {UNI_LINKS.map((u) => (
-          <Link key={u.slug} href={`/university/${u.slug}`} prefetch={false} className="footer-uni-chip">
-            {u.label}
-          </Link>
-        ))}
-      </div>
-      <button
-        type="button"
-        className="footer-uni-toggle"
-        aria-expanded={open}
-        aria-controls={listId}
-        onClick={() => setOpen((v) => !v)}
-      >
-        {open ? "কম দেখো" : "সকল ভার্সিটি দেখো"}
-        <svg viewBox="0 0 24 24" className={`footer-uni-arrow${open ? " is-open" : ""}`} aria-hidden="true">
-          <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-    </div>
+    <nav className="footer-uni-grid" aria-label="সকল ভার্সিটি">
+      {UNI_LINKS.map((u) => (
+        <Link key={u.slug} href={`/university/${u.slug}`} prefetch={false} className="footer-uni-chip">
+          {u.label}
+        </Link>
+      ))}
+    </nav>
   );
 }
 
 const FOOTER_EXTRA_CSS = `
 .footer-inner{grid-template-columns:1.4fr 1fr 1fr 1fr}
-.footer-uni-box{box-sizing:border-box;width:100%;max-width:40ch;font-size:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px}
-.footer-uni-box.is-open{max-width:100%}
 .footer-uni-desktop{grid-column:1 / -1;margin-top:-24px}
-.footer-uni-chips{display:flex;flex-wrap:wrap;gap:8px;max-height:64px;overflow:hidden;transition:max-height .25s ease}
-.footer-uni-chips.is-open{max-height:600px}
-.footer-uni-chips a.footer-uni-chip{display:inline-flex;align-items:center;box-sizing:border-box;height:28px;padding:0 10px;font-size:12.5px;line-height:1;white-space:nowrap;color:#fff;text-decoration:none;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;transition:background-color .15s ease,border-color .15s ease}
-.footer-uni-chips a.footer-uni-chip:hover{background:rgba(124,227,160,0.15);border-color:#7ce3a0}
-.footer-uni-toggle{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:0;background:none;border:0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:#7ce3a0}
-.footer-uni-toggle:hover{text-decoration:underline}
-.footer-uni-arrow{width:14px;height:14px;transition:transform .2s ease}
-.footer-uni-arrow.is-open{transform:rotate(180deg)}
 .footer-uni-mobile{display:none}
+.footer-uni-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px}
+.footer-uni-grid a.footer-uni-chip{display:flex;align-items:center;justify-content:center;box-sizing:border-box;height:32px;padding:0 6px;font-size:12.5px;line-height:1;white-space:nowrap;color:#fff;text-decoration:none;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;transition:background-color .15s ease,border-color .15s ease}
+.footer-uni-grid a.footer-uni-chip:hover{background:rgba(124,227,160,0.15);border-color:#7ce3a0}
+@media (max-width:1100px){.footer-uni-grid{grid-template-columns:repeat(8,minmax(0,1fr))}}
 @media (max-width:900px){.footer-inner{gap:24px}.footer-uni-desktop{margin-top:-8px}}
 @media (max-width:700px){
 .footer-inner{grid-template-columns:1fr;gap:30px}
 .footer-uni-desktop{display:none}
 .footer-uni-mobile{display:block;padding:0 28px 24px}
-.footer-uni-mobile .footer-uni-box{max-width:none}
+.footer-uni-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
+@media (max-width:399px){.footer-uni-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 `;
 
 export default function Footer() {
@@ -182,9 +160,9 @@ export default function Footer() {
         </div>
 
         {/* Desktop: own full-width grid row under the social icons.
-            Closed = description width, 2 rows. Open = stretches to the right edge. */}
+            Full width, all universities visible. */}
         <div className="footer-uni-desktop">
-          <UniversityList idSuffix="desktop" />
+          <UniversityList />
         </div>
       </div>
 
@@ -195,7 +173,7 @@ export default function Footer() {
 
       {/* Mobile: below the social icons, above the copyright line */}
       <div className="footer-uni-mobile">
-        <UniversityList idSuffix="mobile" />
+        <UniversityList />
       </div>
 
       <div className="footer-bottom">© ২০২৬ Admission Info — সব স্বত্ব সংরক্ষিত।</div>
