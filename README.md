@@ -35,7 +35,8 @@ A free, Bangla-language web app that helps Bangladeshi HSC students check **whic
 | **HSC GPA calculator** | `/hsc-gpa-calculator` | Calculates HSC GPA from subject grades. |
 | **Exam dates** | `/exam-dates` | All 2026–27 admission test dates in one table, grouped by category (university / engineering / medical) and unit, with application start and end dates. Switch between categories with tabs. |
 | **Updates** | `/updates` | A news-style feed of the latest admission notices, with category filter buttons and a search box. Each card shows the schedule table, application window and — where available — a **"View exam date source"** box with the original notice photo (tap the photo to open it full screen). |
-| **About / Contact** | `/about`, `/contact` | Static information pages. |
+| **About** | `/about` | Static information page about the project. |
+| **Contact** | `/contact` | Site email, developer email, and links to the Facebook page and Telegram channel. There is no contact form — all contact is via email or social links. |
 
 Other details:
 
@@ -284,7 +285,6 @@ The site is deployed on **Vercel** straight from this GitHub repository.
 ## Known limitations
 
 - **Data is manual.** Nothing is fetched from university websites; a person has to read each circular and update the data files.
-- **Contact form and newsletter are front-end only** — no email is actually sent. To make them work, connect the form handlers in `contact/page.js` and `Footer.js` to a service such as Formspree or Resend.
 - **Some university photos are hotlinked** from third-party sites (allowed in `next.config.mjs`). For long-term reliability, download them into `public/images/` — `scripts/download-images.mjs` can do this (run it from the app folder: `node ../scripts/download-images.mjs`).
 - **Eligibility is a guide, not a guarantee.** Rules differ per unit and change every year.
 
@@ -292,7 +292,9 @@ The site is deployed on **Vercel** straight from this GitHub repository.
 
 ## Community and contact
 
+- Site email: admissioninfo26@gmail.com
+- Developer email: alamnishat456@gmail.com
 - Telegram: https://t.me/admissioninfo26
 - Facebook: https://www.facebook.com/admissioninfo26
 
-Found a wrong date or requirement? Please report it through the contact page or the channels above so the data can be corrected.
+Found a wrong date or requirement? Please report it by email or through the channels above so the data can be corrected.
