@@ -1,4 +1,4 @@
-# Admission Info — "Chance hobe ki?"
+# Admission Info "
 
 A free, Bangla-language web app that helps Bangladeshi HSC students check **which universities, engineering institutes and medical colleges they can apply to** based on their SSC and HSC GPA, and keeps track of **2026–27 admission test dates and notices** in one place.
 
