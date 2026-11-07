@@ -8,7 +8,6 @@ import { engineeringUniIds, medicalUniIds } from "@/data/generalCriteria";
 import UniversityCard from "@/components/UniversityCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SocialPromoBanner from "@/components/SocialPromoBanner";
 import NewsCorner from "@/components/NewsCorner";
 
 const VISIBLE_COUNT = 6;
@@ -100,10 +99,6 @@ export default function HomePage() {
       </Suspense>
 
       <Navbar />
-
-      <div className="hero-banner-row">
-        <SocialPromoBanner />
-      </div>
 
       <section className="hero">
         <div className="hero-inner">
