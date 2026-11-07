@@ -33,7 +33,7 @@ export const news = [
     category: "মেডিকেল",
     date: "2026-11-05",
     image: "/news/news-02.jpg",
-    imageAlt: "মেডিকেল ভর্তি পরীক্ষা পেছানোর খবরের প্রতীকী ছবি",
+    imageAlt: "ঢাকা মেডিকেল কলেজ ও হাসপাতালের ভবন",
   },
   {
     slug: "du-admission-test-december-schedule-unchanged",
@@ -46,7 +46,7 @@ export const news = [
     category: "ঢাবি",
     date: "2026-11-05",
     image: "/news/news-03.jpg",
-    imageAlt: "ঢাকা বিশ্ববিদ্যালয়ের ক্যাম্পাস",
+    imageAlt: "ঢাকা বিশ্ববিদ্যালয়ের কার্জন হল",
   },
   {
     slug: "uni-medical-admission-may-be-postponed",
@@ -59,7 +59,7 @@ export const news = [
     category: "ভর্তি",
     date: "2026-11-04",
     image: "/news/news-01.jpg",
-    imageAlt: "ভর্তি পরীক্ষার্থীদের প্রতীকী ছবি",
+    imageAlt: "পরীক্ষার হলে পরীক্ষা দিচ্ছেন শিক্ষার্থীরা",
   },
   {
     slug: "ru-admission-eligibility-lowered",
@@ -72,7 +72,7 @@ export const news = [
     category: "যোগ্যতা",
     date: "2026-11-03",
     image: "/news/news-04.jpg",
-    imageAlt: "রাজশাহী বিশ্ববিদ্যালয়ের ক্যাম্পাস",
+    imageAlt: "রাজশাহী বিশ্ববিদ্যালয়ের ফটক",
   },
   {
     slug: "jnu-admission-eligibility-may-be-lowered",
@@ -85,7 +85,7 @@ export const news = [
     category: "যোগ্যতা",
     date: "2026-11-02",
     image: "/news/news-05.jpg",
-    imageAlt: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের ক্যাম্পাস",
+    imageAlt: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের লোগো",
   },
 ];
 
