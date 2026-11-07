@@ -519,6 +519,8 @@
    লেখা শেষ হলে footer-এর সাথে উঠে যায় */
 .news-aside {
   align-self: stretch;
+  padding-left: 28px;
+  border-left: 1px solid #d9dce1;
 }
 .news-article {
   min-width: 0;
@@ -849,11 +851,8 @@
 .news-aside-box {
   position: sticky;
   top: 84px;
-  padding: 18px 20px 14px;
-  background: #fff;
-  border: 1px solid #e6eaf2;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  padding: 0;
+  background: transparent;
 }
 .news-aside-title {
   position: relative;
@@ -869,8 +868,8 @@
   left: 0;
   top: 0.2em;
   bottom: 0.9em;
-  width: 5px;
-  border-radius: 3px;
+  width: 3px;
+  border-radius: 2px;
   background: var(--red);
 }
 .news-more-list {
@@ -879,8 +878,23 @@
   padding: 0;
 }
 .news-more-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   padding: 13px 0;
   border-bottom: 1px solid #eceff4;
+}
+.news-more-num {
+  flex: 0 0 auto;
+  min-width: 1.1em;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #16a34a;
+}
+.news-more-body {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 .news-more-title {
   display: block;
@@ -926,6 +940,12 @@
   }
   .news-aside-box {
     position: static;
+  }
+  .news-aside {
+    padding-left: 0;
+    border-left: 0;
+    padding-top: 24px;
+    border-top: 1px solid #d9dce1;
   }
 }
 @media (max-width: 640px) {
