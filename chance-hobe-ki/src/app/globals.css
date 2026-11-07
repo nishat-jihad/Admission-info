@@ -216,37 +216,40 @@ nav.nav-links button:not(.active):hover {
 .nav-social-mobile {
   display: none;
 }
-a.nav-social-btn {
+.nav-social a.nav-social-btn {
   width: 32px;
   height: 32px;
+  min-width: 32px;
+  box-sizing: border-box;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   padding: 0;
+  border: 0;
   transition: transform 0.12s ease;
 }
-a.nav-social-btn:hover {
+.nav-social a.nav-social-btn:hover {
   transform: translateY(-1px);
 }
-a.nav-social-btn svg {
+.nav-social a.nav-social-btn svg {
   width: 100%;
   height: 100%;
   display: block;
 }
-a.nav-social-facebook {
+.nav-social a.nav-social-facebook {
   background: #1877f2;
 }
-a.nav-social-facebook svg {
+.nav-social a.nav-social-facebook svg {
   width: 20px;
   height: 20px;
   fill: #fff;
 }
-a.nav-social-telegram {
+.nav-social a.nav-social-telegram {
   background: #fff;
 }
-a.nav-social-telegram svg {
+.nav-social a.nav-social-telegram svg {
   fill: #229ed9;
 }
 @media (max-width: 640px) {
