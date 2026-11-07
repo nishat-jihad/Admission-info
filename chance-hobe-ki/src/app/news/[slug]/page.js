@@ -44,8 +44,8 @@ export function generateMetadata({ params }) {
   const img = shareImage(item);
 
   return {
-    title: item.title,
-    description: item.summary,
+    title: item.seoTitle || item.title,
+    description: item.seoDescription || item.summary,
     keywords: [item.title, "ভর্তি পরীক্ষা ২০২৬-২৭", "admission news", "ভর্তি নিউজ"],
     alternates: { canonical: url },
     openGraph: {
