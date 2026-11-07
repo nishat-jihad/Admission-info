@@ -211,7 +211,7 @@ nav.nav-links button:not(.active):hover {
   gap: 14px;
 }
 .nav-social-inline {
-  margin-left: 8px;
+  margin-left: 28px;
 }
 .nav-social-mobile {
   display: none;
@@ -271,6 +271,37 @@ nav.nav-links button:not(.active):hover {
   .nav-social-mobile {
     display: flex;
     justify-self: end;
+  }
+}
+
+/* ---------- MOBILE: হ্যামবার্গার মেনু — ছোট, গোল কোণার ভাসমান box ---------- */
+@media (max-width: 640px) {
+  header.navbar nav.nav-links {
+    top: calc(100% + 6px);
+    left: 16px;
+    right: auto;
+    width: max-content;
+    min-width: 210px;
+    max-width: calc(100vw - 32px);
+    padding: 8px;
+    gap: 2px;
+    background: #fff;
+    border: 1px solid #e6eaf2;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+  }
+  header.navbar nav.nav-links a {
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  header.navbar nav.nav-links a.active {
+    padding: 11px 14px;
+    background: rgba(46, 92, 230, 0.09);
+    border: none;
+    box-shadow: none;
+    font-size: 14px;
+    font-weight: 700;
   }
 }
 
