@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import NewsImage from "@/components/NewsImage";
 import NewsRichText from "@/components/NewsRichText";
 import ShareButtons from "@/components/ShareButtons";
-import { news, getNewsMeta, getMoreNews, isNewNews, formatBnDate } from "@/data/news";
+import { news, getNewsMeta, getMoreNews, formatBnDate, toBn } from "@/data/news";
 import { newsContent } from "@/data/newsContent";
 import "../../../styles/news.css";
 
@@ -185,13 +185,10 @@ export default function NewsArticlePage({ params }) {
           <Link href="/">হোম</Link>
           <span aria-hidden="true">›</span>
           <Link href="/news">সকল নিউজ</Link>
-          <span aria-hidden="true">›</span>
-          <span>{item.category}</span>
         </nav>
 
         <div className="news-layout">
           <article className="news-article">
-            <span className="news-cat">{item.category}</span>
             <h1 className="news-title">{item.title}</h1>
             <p className="news-standfirst">{item.summary}</p>
 
@@ -204,7 +201,6 @@ export default function NewsArticlePage({ params }) {
                 </svg>
                 <time dateTime={item.date}>{formatBnDate(item.date)}</time>
               </span>
-              {isNewNews(item.slug) && <span className="news-new-tag">নতুন</span>}
             </div>
 
             <figure className="news-hero">
@@ -268,15 +264,19 @@ export default function NewsArticlePage({ params }) {
                 আরও নিউজ
               </h2>
               <ol className="news-more-list">
-                {more.map((n) => (
+                {more.map((n, i) => (
                   <li key={n.slug}>
-                    <Link href={`/news/${n.slug}`}>
-                      <span className="news-more-title">{n.title}</span>
-                    </Link>
-                    <span className="news-more-meta">
-                      <time dateTime={n.date}>{formatBnDate(n.date)}</time>
-                      {isNewNews(n.slug) && <span className="news-new-tag">নতুন</span>}
+                    <span className="news-more-num" aria-hidden="true">
+                      {toBn(i + 1)}
                     </span>
+                    <div className="news-more-body">
+                      <Link href={`/news/${n.slug}`}>
+                        <span className="news-more-title">{n.title}</span>
+                      </Link>
+                      <span className="news-more-meta">
+                        <time dateTime={n.date}>{formatBnDate(n.date)}</time>
+                      </span>
+                    </div>
                   </li>
                 ))}
               </ol>
