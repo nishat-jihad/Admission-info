@@ -19,7 +19,6 @@ export default function BreakingNewsBar() {
             tabIndex={hidden ? -1 : undefined}
           >
             <span className="news-breaking-text">{n.ticker || n.title}</span>
-            <span className="news-new-tag">নতুন</span>
           </Link>
         </li>
       ))}
@@ -35,7 +34,7 @@ export default function BreakingNewsBar() {
       <div className="news-breaking-viewport">
         <div
           className="news-breaking-track"
-          style={{ "--news-marquee-duration": `${Math.max(items.length * 15, 45)}s` }}
+          style={{ "--news-marquee-duration": `${Math.max(items.length * 10, 30)}s` }}
         >
           {renderList(false)}
           {renderList(true)}
