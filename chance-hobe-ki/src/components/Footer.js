@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { getLatestNews } from "@/data/news";
 
 // Single source for the icon set so the same markup can be rendered twice
 // (once for desktop placement under the logo, once for mobile placement at
@@ -92,16 +91,6 @@ function UniversityList() {
 }
 
 const FOOTER_EXTRA_CSS = `
-.footer-news{grid-column:1 / -1;border-top:1px solid rgba(255,255,255,0.1);padding-top:22px}
-.footer-news-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.footer-news-head h4{font-size:13px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;color:#7ce3a0}
-.footer-news-head a{font-size:13.5px;font-weight:700;color:#fff;text-decoration:underline;text-underline-offset:4px;transition:color .15s ease}
-.footer-news-head a:hover{color:#7ce3a0}
-.footer-news-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 28px}
-.footer-news-list a{position:relative;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;padding-left:14px;font-size:14px;line-height:1.6;color:#e7ecfb;text-decoration:none;transition:color .15s ease}
-.footer-news-list a::before{content:"";position:absolute;left:0;top:0.62em;width:6px;height:6px;border-radius:50%;background:#ef4a3c}
-.footer-news-list a:hover{color:#7ce3a0}
-@media (max-width:700px){.footer-news-list{grid-template-columns:1fr}}
 .footer-inner{grid-template-columns:1.4fr 1fr 1fr 1fr}
 .footer-uni-desktop{grid-column:1 / -1;margin-top:-24px}
 .footer-uni-mobile{display:none}
@@ -120,8 +109,6 @@ const FOOTER_EXTRA_CSS = `
 `;
 
 export default function Footer() {
-  const latestNews = getLatestNews(3);
-
   return (
     <footer className="site-footer">
       <style dangerouslySetInnerHTML={{ __html: FOOTER_EXTRA_CSS }} />
@@ -170,24 +157,8 @@ export default function Footer() {
           <Link href="/university/buet">BUET</Link>
           <Link href="/university/medical">MBBS</Link>
           <Link href="/university/gst">GST গুচ্ছ</Link>
+          <Link href="/news">News Corner</Link>
         </div>
-
-        {/* News Corner: সর্বশেষ ৩টা নিউজ + সকল নিউজ লিংক (সব পেজের footer-এ) */}
-        {latestNews.length > 0 && (
-          <div className="footer-news">
-            <div className="footer-news-head">
-              <h4>News Corner</h4>
-              <Link href="/news">সকল নিউজ →</Link>
-            </div>
-            <div className="footer-news-list">
-              {latestNews.map((n) => (
-                <Link key={n.slug} href={`/news/${n.slug}`}>
-                  {n.ticker || n.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Desktop: own full-width grid row under the social icons.
             Full width, all universities visible. */}
