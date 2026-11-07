@@ -9,6 +9,7 @@ import UniversityCard from "@/components/UniversityCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SocialPromoBanner from "@/components/SocialPromoBanner";
+import NewsCorner from "@/components/NewsCorner";
 
 const VISIBLE_COUNT = 6;
 
@@ -228,6 +229,8 @@ export default function HomePage() {
           </p>
         )}
       </section>
+
+      <NewsCorner />
 
       <Footer />
     </>
