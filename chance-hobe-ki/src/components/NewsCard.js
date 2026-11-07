@@ -16,7 +16,7 @@ const ARROW_ICON = (
 );
 
 // variant: "home" (হোমের News Corner) | "large" (সকল নিউজ পেজ — একটু বড়)
-export default function NewsCard({ item, isNew = false, variant = "home", priority = false }) {
+export default function NewsCard({ item, variant = "home", priority = false }) {
   const href = `/news/${item.slug}`;
 
   return (
@@ -28,12 +28,10 @@ export default function NewsCard({ item, isNew = false, variant = "home", priori
           sizes="(max-width: 640px) 100vw, (max-width: 1023px) 50vw, 400px"
           priority={priority}
         />
-        {isNew && <span className="news-new-badge">নতুন</span>}
       </Link>
 
       <div className="news-card-body">
         <div className="news-card-meta">
-          <span className="news-cat">{item.category}</span>
           <span className="news-date">
             {CLOCK_ICON}
             <time dateTime={item.date}>{formatBnDate(item.date)}</time>
