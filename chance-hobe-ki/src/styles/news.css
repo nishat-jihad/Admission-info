@@ -1,0 +1,947 @@
+/* ============================================================================
+   NEWS — ব্রেকিং বার, News Corner (হোম), সকল নিউজ পেজ, নিউজের পেজ।
+   সব ক্লাসের নাম `news-` দিয়ে শুরু, তাই globals.css-এর কোনো স্টাইলের সাথে মেশে না।
+   রং/শ্যাডো globals.css-এর :root ভেরিয়েবল (--red, --black, --green ...) থেকে নেওয়া।
+   ============================================================================ */
+
+/* ---------- ছোট ট্যাগ (নতুন / ক্যাটাগরি) ---------- */
+.news-new-tag {
+  display: inline-block;
+  flex: 0 0 auto;
+  background: #fff0ee;
+  color: var(--red);
+  border: 1px solid #f5c2bc;
+  font-size: 10.5px;
+  font-weight: 800;
+  line-height: 1.5;
+  padding: 0 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.news-cat {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6;
+  padding: 2px 12px;
+  border-radius: 999px;
+}
+.news-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #666;
+  white-space: nowrap;
+}
+.news-date svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+
+/* ---------- BREAKING BAR (navbar-এর ঠিক নিচে) ---------- */
+.news-breaking {
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  min-height: 38px;
+  overflow: hidden;
+}
+.news-breaking-label {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--red);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 0 18px;
+  position: relative;
+  z-index: 2;
+}
+.news-breaking-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  animation: news-pulse 1.4s ease-in-out infinite;
+}
+@keyframes news-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+.news-breaking-viewport {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+.news-breaking-track {
+  display: flex;
+  width: max-content;
+  animation: news-marquee var(--news-marquee-duration, 55s) linear infinite;
+  will-change: transform;
+}
+@keyframes news-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.news-breaking:hover .news-breaking-track,
+.news-breaking:focus-within .news-breaking-track {
+  animation-play-state: paused;
+}
+.news-breaking-list {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  list-style: none;
+  padding-left: 22px;
+}
+.news-breaking-list li {
+  flex: 0 0 auto;
+}
+.news-breaking-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 30px 9px 0;
+  color: #111;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.news-breaking-item::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-right: 2px;
+}
+.news-breaking-item:hover .news-breaking-text {
+  color: var(--red);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .news-breaking-track {
+    animation: none;
+  }
+  .news-breaking-viewport {
+    overflow-x: auto;
+  }
+  .news-breaking-list[aria-hidden="true"] {
+    display: none;
+  }
+  .news-breaking-pulse {
+    animation: none;
+  }
+}
+@media (max-width: 640px) {
+  .news-breaking {
+    min-height: 34px;
+  }
+  .news-breaking-label {
+    font-size: 12.5px;
+    padding: 0 11px;
+    gap: 6px;
+  }
+  .news-breaking-item {
+    font-size: 13px;
+    padding: 7px 24px 7px 0;
+  }
+}
+
+/* ---------- নিউজ card (হোম + সকল নিউজ) ---------- */
+.news-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 20px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.06), 0 16px 32px rgba(15, 23, 42, 0.14);
+}
+.news-card-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #dfe7f5;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.news-card-media .news-img {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.35s ease;
+}
+.news-card:hover .news-card-media .news-img {
+  transform: scale(1.04);
+}
+.news-img-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e44b8, #0c1f3f);
+}
+.news-img-fallback svg {
+  width: 56px;
+  height: 56px;
+  opacity: 0.9;
+}
+.news-new-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  background: var(--red);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 2px 11px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+.news-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 16px 18px 20px;
+  min-width: 0;
+}
+.news-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+.news-card-title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+.news-card-title a {
+  color: var(--black);
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.news-card-title a:hover {
+  color: var(--red);
+}
+.news-card-excerpt {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+.news-card-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--black);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 9px 18px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.news-card-btn svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.2s ease;
+}
+.news-card-btn:hover {
+  background: var(--red);
+}
+.news-card-btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* সকল নিউজ পেজের card একটু বড় */
+.news-card-large .news-card-media {
+  aspect-ratio: 16 / 10;
+}
+.news-card-large .news-card-body {
+  padding: 20px 22px 24px;
+}
+.news-card-large .news-card-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.news-card-large .news-card-excerpt {
+  font-size: 14.5px;
+  -webkit-line-clamp: 4;
+}
+.news-card-large .news-card-btn {
+  font-size: 14px;
+  padding: 10px 22px;
+}
+
+/* ---------- হোমের News Corner ---------- */
+.news-corner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 28px 20px;
+}
+.news-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 2px solid var(--black);
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+}
+.news-section-title {
+  position: relative;
+  padding-left: 15px;
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--black);
+}
+.news-section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 5px;
+  border-radius: 3px;
+  background: var(--red);
+}
+.news-all-link {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--black);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  white-space: nowrap;
+  padding-bottom: 2px;
+}
+.news-all-link:hover {
+  color: var(--red);
+}
+
+/* PC: ওপরে ৩টা, নিচে ২টা বড় (পাশাপাশি, ছবি বামে-লেখা ডানে) */
+.news-home-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px;
+}
+.news-home-grid > .news-card {
+  grid-column: span 2;
+}
+.news-home-grid > .news-card:nth-child(n + 4) {
+  grid-column: span 3;
+  flex-direction: row;
+}
+.news-home-grid > .news-card:nth-child(n + 4) .news-card-media {
+  width: 44%;
+  aspect-ratio: auto;
+  min-height: 210px;
+}
+.news-home-grid > .news-card:nth-child(n + 4) .news-card-body {
+  padding: 18px 20px 20px;
+}
+/* Tablet: ২ কলাম */
+@media (max-width: 1023px) {
+  .news-home-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .news-home-grid > .news-card,
+  .news-home-grid > .news-card:nth-child(n + 4) {
+    grid-column: span 1;
+    flex-direction: column;
+  }
+  .news-home-grid > .news-card:nth-child(n + 4) .news-card-media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
+  .news-home-grid > .news-card:nth-child(n + 4) .news-card-body {
+    padding: 16px 18px 20px;
+  }
+  .news-home-grid > .news-card:nth-child(5):last-child {
+    grid-column: 1 / -1;
+  }
+}
+/* Mobile: একটার নিচে একটা */
+@media (max-width: 640px) {
+  .news-corner {
+    padding: 16px 16px 14px;
+  }
+  .news-home-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .news-home-grid > .news-card:nth-child(5):last-child {
+    grid-column: auto;
+  }
+  .news-card-title {
+    font-size: 17px;
+  }
+}
+/* "সকল নিউজ দেখো" বাটন — globals.css-এর .view-posts-btn-এর ডিজাইনই, শুধু তীর-আইকনের হোভার আলাদা */
+.news-corner .news-all-btn {
+  text-decoration: none;
+}
+.news-corner .news-all-btn:hover .btn-icon {
+  transform: translateX(3px);
+}
+
+/* ---------- সকল নিউজ পেজ + নিউজের পেজের সাধারণ কাঠামো ---------- */
+.news-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 26px 24px 20px;
+}
+.news-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #666;
+  margin-bottom: 18px;
+}
+.news-crumbs a {
+  color: #333;
+  text-decoration: none;
+}
+.news-crumbs a:hover {
+  color: var(--red);
+  text-decoration: underline;
+}
+.news-portal-head {
+  margin-bottom: 28px;
+}
+.news-portal-title {
+  position: relative;
+  padding-left: 16px;
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 800;
+  line-height: 1.25;
+}
+.news-portal-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.15em;
+  width: 6px;
+  border-radius: 3px;
+  background: var(--red);
+}
+.news-portal-lead {
+  margin-top: 12px;
+  max-width: 62ch;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: #444;
+}
+.news-portal-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.news-chip {
+  display: inline-block;
+  padding: 7px 15px;
+  border: 1.5px solid var(--black);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--black);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-thin);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.news-chip:hover {
+  background: var(--black);
+  color: #fff;
+}
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+@media (max-width: 1023px) {
+  .news-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+}
+@media (max-width: 640px) {
+  .news-page {
+    padding: 18px 16px 12px;
+  }
+  .news-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* ---------- নিউজের পেজ ---------- */
+.news-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 44px;
+  align-items: start;
+}
+.news-article {
+  min-width: 0;
+}
+.news-title {
+  margin: 12px 0 14px;
+  font-size: clamp(26px, 4.2vw, 44px);
+  font-weight: 800;
+  line-height: 1.35;
+  color: #0b1220;
+}
+.news-standfirst {
+  margin-bottom: 14px;
+  padding-left: 14px;
+  border-left: 4px solid var(--red);
+  font-size: clamp(16px, 2vw, 19px);
+  font-weight: 500;
+  line-height: 1.7;
+  color: #2b3345;
+}
+.news-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 20px;
+  font-size: 13.5px;
+  color: #666;
+}
+.news-byline-by {
+  font-weight: 700;
+  color: #333;
+}
+.news-hero {
+  margin: 0 0 26px;
+}
+.news-hero-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #dfe7f5;
+}
+.news-hero-frame .news-img {
+  object-fit: cover;
+  object-position: center;
+}
+.news-hero figcaption {
+  margin-top: 10px;
+  padding: 6px 0 6px 12px;
+  border-left: 3px solid var(--red);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #555;
+}
+.news-caption-text {
+  display: block;
+}
+.news-credit {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: #888;
+}
+
+/* ছবির নিচের বোল্ড মূল অনুচ্ছেদ (drop-cap সহ) */
+.news-lead {
+  margin-bottom: 24px;
+  font-size: clamp(17px, 2.2vw, 20px);
+  font-weight: 700;
+  line-height: 2;
+  color: #10182b;
+}
+.news-dropcap {
+  float: left;
+  margin: 0.04em 0.12em 0 0;
+  font-size: 3.4em;
+  font-weight: 800;
+  line-height: 0.95;
+  color: var(--red);
+}
+
+.news-body h2 {
+  margin: 32px 0 12px;
+  font-size: clamp(20px, 2.6vw, 25px);
+  font-weight: 800;
+  line-height: 1.45;
+  color: #0b1220;
+}
+.news-body > .news-block > p {
+  margin-bottom: 16px;
+  font-size: clamp(16px, 1.9vw, 17.5px);
+  line-height: 2;
+  color: #1b2233;
+}
+.news-body ul {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+.news-body ul li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-size: clamp(16px, 1.9vw, 17.5px);
+  line-height: 1.9;
+  color: #1b2233;
+}
+.news-body ul li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.8em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.news-inline-link {
+  color: var(--blue-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.news-inline-link:hover {
+  color: var(--red);
+}
+
+/* সাইটের পেজ প্রমোট বক্স */
+.news-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 28px 0;
+  padding: 18px 20px;
+  background: #fff;
+  border: 1.5px solid var(--black);
+  border-radius: 16px;
+  box-shadow: var(--shadow-hard);
+}
+.news-callout-title {
+  display: block;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--black);
+}
+.news-body .news-callout .news-callout-text {
+  margin: 4px 0 0;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #444;
+}
+.news-callout-btn {
+  flex: 0 0 auto;
+  display: inline-block;
+  background: var(--black);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.news-callout-btn:hover {
+  background: #a8ff39;
+  color: var(--black);
+}
+@media (max-width: 640px) {
+  .news-callout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 16px;
+  }
+  .news-callout-btn {
+    text-align: center;
+  }
+}
+
+/* মোবাইলে লেখার মাঝের "আরও পড়ুন" (PC-তে সাইডবার আছে, তাই লুকানো) */
+.news-inline-related {
+  display: none;
+  margin: 8px 0 20px;
+  padding: 12px 14px;
+  background: #f6f8fc;
+  border-left: 4px solid var(--red);
+  border-radius: 0 10px 10px 0;
+}
+@media (max-width: 1023px) {
+  .news-inline-related {
+    display: block;
+  }
+}
+.news-inline-related-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--red);
+}
+/* .news-body ul li-এর সাধারণ বুলেট-স্টাইল এখানে খাটে না — তাই .news-body দিয়ে শুরু করে ওভাররাইড */
+.news-body .news-inline-related ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.news-body .news-inline-related li {
+  margin: 0;
+  padding: 0;
+}
+.news-body .news-inline-related li + li {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #d4dbe8;
+}
+.news-body .news-inline-related li::before {
+  content: none;
+}
+.news-inline-related a {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #10182b;
+  text-decoration: none;
+}
+.news-inline-related a:hover {
+  color: var(--red);
+}
+
+/* শেয়ার */
+.news-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin: 30px 0;
+  padding: 14px 0;
+  border-top: 1px solid #e3e7ee;
+  border-bottom: 1px solid #e3e7ee;
+}
+.news-share-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--black);
+}
+.news-share-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.news-share-btn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.news-share-btn svg {
+  width: 19px;
+  height: 19px;
+}
+.news-share-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+.news-share-btn:active {
+  transform: scale(0.92);
+}
+.news-share-copy {
+  background: #333;
+}
+.news-share-facebook {
+  background: #1877f2;
+}
+.news-share-whatsapp {
+  background: #25d366;
+}
+.news-share-telegram {
+  background: #229ed9;
+}
+.news-share-status {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green-dark);
+}
+
+/* তথ্যসূত্র (উইকিপিডিয়ার ধাঁচে) */
+.news-refs h2 {
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #d9dee8;
+  font-size: 20px;
+  font-weight: 800;
+}
+.news-refs-list {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: #333;
+}
+.news-refs-list a {
+  color: var(--blue-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: break-word;
+}
+.news-refs-note {
+  padding: 12px 14px;
+  background: #f6f8fc;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* আরও নিউজ — PC: ডানে, Mobile: তথ্যসূত্রের নিচে */
+.news-aside-box {
+  position: sticky;
+  top: 84px;
+  padding: 18px 18px 14px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+.news-aside-title {
+  position: relative;
+  margin-bottom: 6px;
+  padding: 0 0 12px 14px;
+  border-bottom: 2px solid var(--black);
+  font-size: 20px;
+  font-weight: 800;
+}
+.news-aside-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.9em;
+  width: 5px;
+  border-radius: 3px;
+  background: var(--red);
+}
+.news-more-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.news-more-list li {
+  padding: 13px 0;
+  border-bottom: 1px solid #eceff4;
+}
+.news-more-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #10182b;
+}
+.news-more-list a {
+  text-decoration: none;
+}
+.news-more-list a:hover .news-more-title {
+  color: var(--red);
+}
+.news-more-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  font-size: 12.5px;
+  color: #777;
+}
+.news-aside-all {
+  display: block;
+  margin-top: 12px;
+  padding: 10px 0 4px;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-align: center;
+}
+.news-aside-all:hover {
+  color: var(--red);
+}
+
+@media (max-width: 1023px) {
+  .news-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+  .news-aside-box {
+    position: static;
+  }
+}
+@media (max-width: 640px) {
+  .news-title {
+    line-height: 1.45;
+  }
+  .news-dropcap {
+    font-size: 3.1em;
+  }
+}
