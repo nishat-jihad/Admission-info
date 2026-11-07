@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import BreakingNewsBar from "@/components/BreakingNewsBar";
 
 const CATEGORY_LINKS = [
   { category: "all", label: "হোম" },
@@ -14,9 +15,13 @@ const CATEGORY_LINKS = [
 
 export default function Navbar() {
   return (
-    <Suspense fallback={<NavbarShell />}>
-      <NavbarInner />
-    </Suspense>
+    <>
+      <Suspense fallback={<NavbarShell />}>
+        <NavbarInner />
+      </Suspense>
+      {/* সব পেজে navbar-এর ঠিক নিচে ব্রেকিং নিউজ বার */}
+      <BreakingNewsBar />
+    </>
   );
 }
 
