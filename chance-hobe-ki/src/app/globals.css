@@ -208,7 +208,7 @@ nav.nav-links button:not(.active):hover {
 .nav-social {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 .nav-social-inline {
   margin-left: 8px;
@@ -217,9 +217,9 @@ nav.nav-links button:not(.active):hover {
   display: none;
 }
 .nav-social a.nav-social-btn {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
   box-sizing: border-box;
   border-radius: 50%;
   display: flex;
@@ -242,8 +242,8 @@ nav.nav-links button:not(.active):hover {
   background: #1877f2;
 }
 .nav-social a.nav-social-facebook svg {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
   fill: #fff;
 }
 .nav-social a.nav-social-telegram {
