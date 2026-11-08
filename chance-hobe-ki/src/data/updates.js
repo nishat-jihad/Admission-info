@@ -47,10 +47,10 @@ export const updates = [
     universityId: "medical",
     universityName: "সরকারি মেডিকেল ও ডেন্টাল কলেজ ভর্তি পরীক্ষা",
     category: "medical",
-    applicationStart: "শীঘ্রই জানানো হবে",
+    applicationStart: "১৫–১৮ নভেম্বরের মধ্যে (সম্ভাব্য)",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
-      { unit: "ভর্তি পরীক্ষা", date: "৪ ডিসেম্বর" },
+      { unit: "ভর্তি পরীক্ষা", date: "১৮ ডিসেম্বর" },
     ],
   },
   {
