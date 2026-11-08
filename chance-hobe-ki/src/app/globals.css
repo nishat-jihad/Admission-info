@@ -1845,30 +1845,9 @@ main.about-page {
   flex-direction: column;
   gap: 14px;
 }
-.ab-back {
+main.about-page .general-back-btn {
   align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px 8px 10px;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.18);
-  border-radius: 999px;
-  font-family: var(--font-noto-bn), sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--black);
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.ab-back svg {
-  width: 18px;
-  height: 18px;
-}
-.ab-back:hover {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: #fff;
+  margin-bottom: 0;
 }
 .ab-segment {
   background: #fff;
