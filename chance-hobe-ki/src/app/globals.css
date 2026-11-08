@@ -2027,13 +2027,17 @@ main.about-page .general-back-btn {
   gap: 8px;
 }
 .ab-photo {
+  position: relative;
+  flex: 1;
+  min-height: 260px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.14);
-  aspect-ratio: 3 / 4;
   background: #e4e6e9;
 }
 .ab-photo img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -2054,13 +2058,13 @@ main.about-page .general-back-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  padding: 11px 12px;
+  gap: 6px;
+  padding: 10px 8px;
   border-radius: 10px;
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12.5px;
   min-width: 0;
   transition: filter 0.15s ease;
 }
@@ -2068,14 +2072,12 @@ main.about-page .general-back-btn {
   filter: brightness(0.92);
 }
 .ab-social svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   flex: none;
   fill: #fff;
 }
 .ab-social span {
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 .ab-social-facebook .ab-ico-fg {
@@ -2130,14 +2132,19 @@ main.about-page .general-back-btn {
     width: min(100%, 320px);
     margin: 0 auto;
   }
+  .ab-photo {
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 3 / 4;
+  }
   .ab-social {
-    padding: 9px 10px;
-    font-size: 13px;
-    gap: 6px;
+    padding: 9px 6px;
+    font-size: 12.5px;
+    gap: 5px;
   }
   .ab-social svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 }
 
