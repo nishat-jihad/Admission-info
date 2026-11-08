@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import BackButton from "@/components/BackButton";
 
 export const metadata = {
   title: "About",
@@ -208,7 +207,12 @@ export default function AboutPage() {
     <>
       <Navbar showBreaking={false} />
       <main className="page about-page">
-        <BackButton />
+        <Link className="general-back-btn" href="/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          হোমে ফিরে যাও
+        </Link>
         {/* 1. About this website */}
         <section className="ab-segment" aria-labelledby="ab-site-title">
           <h1 className="ab-title" id="ab-site-title">
