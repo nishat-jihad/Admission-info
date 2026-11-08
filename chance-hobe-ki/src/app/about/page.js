@@ -94,11 +94,6 @@ const DEV_BOXES = [
     title: "My dream for Bangladesh",
     text: "আমি বাংলাদেশেই থেকে কিছু গড়তে চাই। entrepreneur হয়ে এমন technology আর venture বানাতে চাই যা এ দেশের তরুণদের জন্য সুযোগ তৈরি করবে, আর কাজ খুঁজতে নয়, কাজ দিতে শেখাবে।",
   },
-  {
-    title: "Designed by me, built with vibe coding",
-    text: "এই website-এর প্রতিটা page-এর UI আমি নিজে design করেছি। আমি traditional coding জানি না, তাই vibe coding আর AI tools ব্যবহার করে সেই design-কে code-এ রূপ দিয়েছি। Idea, design আর প্রতিটা সিদ্ধান্ত আমার, শুধু code লেখায় AI আমাকে সাহায্য করেছে।",
-    wide: true,
-  },
 ];
 
 const MKT_BOXES = [
