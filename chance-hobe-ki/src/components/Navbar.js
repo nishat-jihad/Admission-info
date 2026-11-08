@@ -49,14 +49,14 @@ function SocialIcons({ className }) {
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ showBreaking = true }) {
   return (
     <>
       <Suspense fallback={<NavbarShell />}>
         <NavbarInner />
       </Suspense>
       {/* সব পেজে navbar-এর ঠিক নিচে ব্রেকিং নিউজ বার */}
-      <BreakingNewsBar />
+      {showBreaking && <BreakingNewsBar />}
     </>
   );
 }
