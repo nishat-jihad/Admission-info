@@ -80,7 +80,7 @@ const SITE_BOXES = [
 const DEV_BOXES = [
   {
     title: "About me",
-    text: "আমি নিশাত আলম, HSC 2026 ব্যাচের একজন admission candidate। এই পুরো platform, calculator থেকে শুরু করে university database পর্যন্ত, আমি নিজে design করেছি। EdTech, web development, business, startup আর engineering আমার আগ্রহের জায়গা।",
+    text: "আমি নিশাত আলম, HSC 2026 ব্যাচের একজন admission candidate। এই website-এর UI পুরোটাই আমি নিজে design করেছি, তবে আমি coding জানি না, তাই vibe coding আর AI tools দিয়ে code করিয়েছি। EdTech, UI design, business, startup আর engineering আমার আগ্রহের জায়গা।",
   },
   {
     title: "My vision",
@@ -95,8 +95,8 @@ const DEV_BOXES = [
     text: "আমি বাংলাদেশেই থেকে কিছু গড়তে চাই। entrepreneur হয়ে এমন technology আর venture বানাতে চাই যা এ দেশের তরুণদের জন্য সুযোগ তৈরি করবে, আর কাজ খুঁজতে নয়, কাজ দিতে শেখাবে।",
   },
   {
-    title: "How this website was coded",
-    text: "এই website-এর UI design পুরোটাই আমার করা। তবে আমি coding জানি না, তাই vibe coding আর AI tools ব্যবহার করে code করিয়েছি। Idea, design আর প্রতিটা সিদ্ধান্ত আমার, আর coding-এ AI আমাকে সাহায্য করেছে।",
+    title: "Designed by me, built with vibe coding",
+    text: "এই website-এর প্রতিটা page-এর UI আমি নিজে design করেছি। আমি traditional coding জানি না, তাই vibe coding আর AI tools ব্যবহার করে সেই design-কে code-এ রূপ দিয়েছি। Idea, design আর প্রতিটা সিদ্ধান্ত আমার, শুধু code লেখায় AI আমাকে সাহায্য করেছে।",
     wide: true,
   },
 ];
@@ -224,15 +224,13 @@ export default function AboutPage() {
             মেডিকেল কলেজে আবেদন করা যাবে।
           </p>
           <div className="ab-site">
-            <div className="ab-collage" aria-hidden="true">
+            <div className="ab-site-img">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="c1" src="/images/hero-1.jpg" alt="" loading="lazy" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="c2" src="/images/hero-2.jpg" alt="" loading="lazy" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="c3" src="/images/hero-3.jpg" alt="" loading="lazy" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="c4" src="/images/hero-4.jpg" alt="" loading="lazy" />
+              <img
+                src="/images/website-preview.png"
+                alt="Admission Info website preview"
+                loading="lazy"
+              />
             </div>
             <div className="ab-grid-2 ab-site-boxes">
               {SITE_BOXES.map((b) => (
