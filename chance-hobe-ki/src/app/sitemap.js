@@ -13,6 +13,7 @@ export default function sitemap() {
     "/news",
     "/about",
     "/contact",
+    "/privacy-policy",
   ].map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
