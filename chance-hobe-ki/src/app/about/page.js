@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 export const metadata = {
   title: "About",
   description: "Admission Info ওয়েবসাইট কী, কেন বানানো হয়েছে এবং কারা বানিয়েছে।",
+  alternates: { canonical: "/about" },
 };
 
 const ICONS = {
