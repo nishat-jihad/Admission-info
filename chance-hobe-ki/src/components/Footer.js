@@ -140,6 +140,7 @@ export default function Footer() {
           <Link href="/?category=versity#cards-wrap">সকল ভার্সিটি</Link>
           <Link href="/?category=engineering#cards-wrap">ইঞ্জিনিয়ারিং</Link>
           <Link href="/?category=medical#cards-wrap">মেডিক্যাল</Link>
+          <Link href="/privacy-policy">Privacy Policy</Link>
         </div>
 
         <div className="footer-col">
