@@ -137,15 +137,15 @@ export const updates = [
   },
   {
     id: "ku-2026-27-schedule",
-    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার সময়সূচি প্রকাশ",
+    title: "২০২৬-২৭ সেশনের ভর্তি পরীক্ষার পুনর্নির্ধারিত সময়সূচি",
     universityId: "ku_a",
     universityName: "খুলনা বিশ্ববিদ্যালয় (খুবি)",
     category: "versity",
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
-      { unit: "'সি' ও 'ডি' ইউনিট", date: "১৭ ডিসেম্বর" },
-      { unit: "'এ' ও 'বি' ইউনিট", date: "১৮ ডিসেম্বর" },
+      { unit: "'এ' ও 'বি' ইউনিট", date: "০৪ ফেব্রুয়ারি" },
+      { unit: "'সি' ও 'ডি' ইউনিট", date: "০৫ ফেব্রুয়ারি" },
     ],
   },
   {
@@ -183,9 +183,7 @@ export const updates = [
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [
-      { unit: "'সি' ইউনিট", date: "১৮ ডিসেম্বর" },
-      { unit: "'এ' ইউনিট", date: "১৯ ডিসেম্বর" },
-      { unit: "'বি' ইউনিট", date: "১৯ ডিসেম্বর" },
+      { unit: "ভর্তি পরীক্ষা", date: "৫ ও ৬ ফেব্রুয়ারি" },
     ],
   },
   {
@@ -194,8 +192,8 @@ export const updates = [
     universityId: "kuet",
     universityName: "খুলনা প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (KUET)",
     category: "engineering",
-    applicationStart: "শীঘ্রই জানানো হবে",
-    applicationEnd: "শীঘ্রই জানানো হবে",
+    applicationStart: "১০ নভেম্বর",
+    applicationEnd: "১০ ডিসেম্বর",
     schedule: [
       { unit: "ভর্তি পরীক্ষা", date: "০৮ জানুয়ারি" },
       { unit: "পরীক্ষার কেন্দ্র", date: "খুলনা, ঢাকা ও রাজশাহী" },
