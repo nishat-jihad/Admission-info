@@ -58,7 +58,7 @@ export const examDates = [
     category: "university",
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
-    schedule: [{ unit: "A", date: "18 ডিসেম্বর" }],
+    schedule: [{ unit: "A", date: "4 ফেব্রুয়ারি" }],
   },
   {
     id: "ku_b",
@@ -68,7 +68,7 @@ export const examDates = [
     category: "university",
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
-    schedule: [{ unit: "B", date: "18 ডিসেম্বর" }],
+    schedule: [{ unit: "B", date: "4 ফেব্রুয়ারি" }],
   },
   {
     id: "krishi",
@@ -142,11 +142,7 @@ export const examDates = [
     category: "engineering",
     applicationStart: "শীঘ্রই জানানো হবে",
     applicationEnd: "শীঘ্রই জানানো হবে",
-    schedule: [
-      { unit: "C", date: "18 ডিসেম্বর" },
-      { unit: "A", date: "19 ডিসেম্বর" },
-      { unit: "B", date: "19 ডিসেম্বর" },
-    ],
+    schedule: [{ unit: "ভর্তি পরীক্ষা", date: "5-6 ফেব্রুয়ারি" }],
   },
   {
     id: "kuet",
@@ -154,8 +150,8 @@ export const examDates = [
     universityName: "খুলনা প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (কুয়েট)",
     shortName: "KUET",
     category: "engineering",
-    applicationStart: "শীঘ্রই জানানো হবে",
-    applicationEnd: "শীঘ্রই জানানো হবে",
+    applicationStart: "10 নভেম্বর",
+    applicationEnd: "10 ডিসেম্বর",
     schedule: [{ unit: "A", date: "08 জানুয়ারি" }],
   },
   {
