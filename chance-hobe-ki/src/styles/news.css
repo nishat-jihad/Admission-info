@@ -968,15 +968,15 @@
   gap: 8px;
   margin: 0 0 18px;
   padding: 9px 18px 9px 14px;
-  border: 1.5px solid var(--black);
+  border: 0;
   border-radius: 999px;
-  background: #fff;
-  color: var(--black);
-  font-size: 14.5px;
+  background: var(--black);
+  color: #fff;
+  font-size: 13.5px;
   font-weight: 700;
   line-height: 1.2;
   text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 .back-btn svg {
   width: 18px;
@@ -984,18 +984,44 @@
   flex: 0 0 auto;
 }
 .back-btn:hover {
-  background: var(--black);
-  color: #fff;
-}
-.back-btn:active {
-  transform: translateY(1px);
+  background: var(--red);
 }
 
 /* ---------- হিরোর নিচের Latest News ---------- */
 .hero-latest {
-  margin-top: 30px;
-  max-width: 640px;
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: 6px;
   text-align: left;
+}
+.hero-latest-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hero-latest-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--black);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.hero-latest-all svg {
+  width: 15px;
+  height: 15px;
+}
+.hero-latest-all:hover {
+  background: var(--red);
 }
 .hero-latest-label {
   position: relative;
@@ -1064,8 +1090,7 @@
 }
 @media (max-width: 900px) {
   .hero-latest {
-    max-width: none;
-    margin-top: 24px;
+    margin-top: 0;
   }
   .hero-latest-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -1086,9 +1111,27 @@ main.page.page-with-news {
 .page-main {
   min-width: 0;
 }
-.page-news-aside .news-aside-box {
-  max-height: calc(100vh - 104px);
-  overflow-y: auto;
+/* Latest News তালিকার হেডার: বাঁয়ে শিরোনাম, ডানে "সকল নিউজ" বাটন */
+.latest-list-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1b2233;
+}
+.latest-list-head .news-aside-title {
+  margin: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.latest-list-head .news-aside-title::before {
+  bottom: 0.2em;
+}
+.latest-list-head .hero-latest-all {
+  padding: 7px 14px;
+  font-size: 13px;
 }
 .news-inline-box {
   display: none;
