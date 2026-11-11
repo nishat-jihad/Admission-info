@@ -9,6 +9,7 @@ import UniversityCard from "@/components/UniversityCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NewsCorner from "@/components/NewsCorner";
+import HeroLatestNews from "@/components/HeroLatestNews";
 
 const VISIBLE_COUNT = 6;
 
@@ -158,6 +159,8 @@ export default function HomePage() {
                 </span>
               </Link>
             </div>
+
+            <HeroLatestNews />
           </div>
 
           <div className="hero-visual">
