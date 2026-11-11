@@ -1062,6 +1062,13 @@
 .hero-latest-item:hover .hero-latest-title {
   color: var(--red);
 }
+/* PC: ছবি ছোট (প্রস্থের ১/৪ অংশ, চওড়া ratio) — তাই উচ্চতা কম */
+@media (min-width: 901px) {
+  .hero-latest-thumb {
+    flex: 0 0 24%;
+    aspect-ratio: 16 / 10;
+  }
+}
 @media (max-width: 900px) {
   .hero-latest {
     margin-top: 0;
