@@ -13,11 +13,8 @@ export default function LatestNewsList({ count = 5 }) {
     <div className="news-aside-box">
       <div className="latest-list-head">
         <h2 className="news-aside-title">Latest News</h2>
-        <Link href="/news" className="hero-latest-all">
+        <Link href="/news" className="latest-list-all">
           সকল নিউজ
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
         </Link>
       </div>
       <ol className="news-more-list">
