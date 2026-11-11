@@ -181,11 +181,11 @@ export default function NewsArticlePage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
 
-        <Link href="/news" className="back-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
-            <path d="M19 12H5M11 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+        <Link className="general-back-btn" href="/news">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span>সকল নিউজে ফিরে যাও</span>
+          সকল নিউজে ফিরে যাও
         </Link>
 
         <nav className="news-crumbs" aria-label="breadcrumb">
