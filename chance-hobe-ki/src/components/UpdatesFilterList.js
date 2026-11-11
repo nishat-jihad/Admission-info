@@ -72,7 +72,9 @@ function buildSearchWords(update) {
     update.title,
     update.applicationStart,
     update.applicationEnd,
-    ...(update.schedule || []).flatMap((row) => [row.unit, row.date]),
+    ...(update.schedule || []).flatMap((row) => [row.unit, row.date, row.time]),
+    ...(update.extraTables || []).flatMap((t) => [t.title, ...t.rows.flat()]),
+    ...(update.notes || []),
     GENERIC_KEYWORDS,
   ];
   return wordsOf(parts.filter(Boolean).join(" "));
@@ -223,6 +225,7 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                   <tr>
                     <th>ইউনিট</th>
                     <th>পরীক্ষার তারিখ</th>
+                    {u.schedule.some((r) => r.time) && <th>সময়</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -232,11 +235,92 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                       <td className={row.tentative ? "tentative-date" : undefined}>
                         {row.date}
                       </td>
+                      {u.schedule.some((r) => r.time) && <td>{row.time || "—"}</td>}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+            {(u.extraTables || []).map((t, ti) => (
+              <div key={ti}>
+                <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                  {t.title}
+                </h3>
+                <div className="update-table-wrap">
+                  <table className="update-table">
+                    <thead>
+                      <tr>
+                        {t.headers.map((h, hi) => (
+                          <th key={hi}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {t.rows.map((row, ri) => (
+                        <tr key={ri} className={ri % 2 === 0 ? "row-white" : "row-grey"}>
+                          {row.map((cell, ci) => (
+                            <td key={ci}>{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+            {(u.notes || []).length > 0 && (
+              <div>
+                <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                  গুরুত্বপূর্ণ তথ্য
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, color: "#333", lineHeight: 1.7 }}>
+                  {u.notes.map((n, i) => (
+                    <li key={i}>{n}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {u.sourcePdf && (
+              <div style={{ maxWidth: 380, margin: "16px auto 0" }}>
+                <a
+                  href={u.sourcePdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    width: "100%",
+                    textAlign: "center",
+                    padding: "10px 14px",
+                    border: "1px solid #e2e2e2",
+                    borderRadius: 8,
+                    background: "#f5f6f8",
+                    color: "inherit",
+                    textDecoration: "none",
+                    fontWeight: 700,
+                    fontSize: 14,
+                  }}
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+                    <path d="M14 3v5h5M9 13h6M9 17h6" />
+                  </svg>
+                  সার্কুলার (PDF) দেখো
+                </a>
+              </div>
+            )}
             {u.sourceImage && (
               <div style={{ maxWidth: 380, margin: "16px auto 0" }}>
                 <button
