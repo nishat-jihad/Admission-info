@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
 
 // পেজে তিনটা ট্যাব — ভার্সিটি, ইঞ্জিনিয়ারিং, মেডিকেল — Updates(admission)
@@ -78,7 +78,7 @@ function ExamUnitTable({ group }) {
   );
 }
 
-export default function ExamDatesFilterList({ examDates }) {
+export default function ExamDatesFilterList({ examDates, inlineNews = null }) {
   const [activeCategory, setActiveCategory] = useState("university");
 
   const catData = examDates.filter((u) => u.category === activeCategory);
@@ -109,8 +109,11 @@ export default function ExamDatesFilterList({ examDates }) {
           <p className="exam-category-empty">শীঘ্রই যোগ করা হবে</p>
         ) : (
           <div className="exam-unit-groups">
-            {unitGroups.map((group) => (
-              <ExamUnitTable key={group.unit} group={group} />
+            {unitGroups.map((group, i) => (
+              <Fragment key={group.unit}>
+                <ExamUnitTable group={group} />
+                {i === 0 && inlineNews}
+              </Fragment>
             ))}
           </div>
         )}
