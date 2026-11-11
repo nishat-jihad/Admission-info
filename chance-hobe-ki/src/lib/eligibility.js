@@ -58,16 +58,10 @@ export function checkEligibility(uniId, vals) {
   }
 
   if (uniId === "kuet") {
+    // ২০২৬ সার্কুলার: SSC-তে ন্যূনতম জিপিএ ৪.০০; HSC-তে গণিত + পদার্থ + রসায়ন + ইংরেজি,
+    // এই চার বিষয়ে মোট জিপিএ ন্যূনতম ১৬ (আলাদা করে প্রতি বিষয়ে ন্যূনতম শর্ত নেই)।
     const net = (vals.hm || 0) + (vals.phy || 0) + (vals.chem || 0) + (vals.eng || 0);
-    return (
-      (vals.ssc || 0) >= c.minSsc &&
-      (vals.hsc || 0) >= c.minHsc &&
-      (vals.hm || 0) >= c.minSubject &&
-      (vals.phy || 0) >= c.minSubject &&
-      (vals.chem || 0) >= c.minSubject &&
-      (vals.eng || 0) >= c.minSubject &&
-      net >= c.minNet
-    );
+    return (vals.ssc || 0) >= c.minSsc && net >= c.minNet;
   }
 
   if (uniId === "cuet") {
