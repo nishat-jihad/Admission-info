@@ -113,6 +113,10 @@ export default function EligibilityCalculator({ id, uni }) {
         <div className="circular-update-note" style={{ color: "var(--green-dark)" }}>
           এই তথ্য ২০২৬ সালের আপডেট অনুযায়ী দেওয়া হয়েছে।
         </div>
+      ) : id === "kuet" ? (
+        <div className="circular-update-note" style={{ color: "var(--green-dark)" }}>
+          এই তথ্য ২০২৬ সালের সার্কুলার অনুযায়ী দেওয়া হয়েছে।
+        </div>
       ) : (
         <div className="circular-update-note">
           ২০২৬ সালের আপডেটেড সার্কুলার প্রকাশ হলে এই তথ্য আপডেট করা হবে।
