@@ -1,6 +1,8 @@
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import UpdatesFilterList from "@/components/UpdatesFilterList";
+import LatestNewsList from "@/components/LatestNewsList";
 import { updates } from "@/data/updates";
 
 export const metadata = {
@@ -14,14 +16,36 @@ export default function UpdatesPage() {
   return (
     <>
       <Navbar />
-      <main className="page updates-page">
-        <h1 className="about-title">Update (Admission 26)</h1>
-        <p className="about-lead">
-          এখানে বিভিন্ন বিশ্ববিদ্যালয়ের ভর্তি পরীক্ষার সময়সূচি ও গুরুত্বপূর্ণ তথ্য
-          পাওয়ার সাথে সাথেই আপডেট করা হয়।
-        </p>
+      <main className="page updates-page page-with-news">
+        <div className="news-layout">
+          <div className="page-main">
+            <Link href="/" className="back-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>হোমে ফিরে যাও</span>
+            </Link>
 
-        <UpdatesFilterList updates={updates} />
+            <h1 className="about-title">Update (Admission 26)</h1>
+            <p className="about-lead">
+              এখানে বিভিন্ন বিশ্ববিদ্যালয়ের ভর্তি পরীক্ষার সময়সূচি ও গুরুত্বপূর্ণ তথ্য
+              পাওয়ার সাথে সাথেই আপডেট করা হয়।
+            </p>
+
+            <UpdatesFilterList
+              updates={updates}
+              inlineNews={
+                <section className="news-inline-box">
+                  <LatestNewsList count={2} />
+                </section>
+              }
+            />
+          </div>
+
+          <aside className="news-aside page-news-aside" aria-label="Latest News">
+            <LatestNewsList />
+          </aside>
+        </div>
       </main>
       <Footer />
     </>
