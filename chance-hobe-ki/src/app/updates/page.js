@@ -19,11 +19,11 @@ export default function UpdatesPage() {
       <main className="page updates-page page-with-news">
         <div className="news-layout">
           <div className="page-main">
-            <Link href="/" className="back-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
-                <path d="M19 12H5M11 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+            <Link className="general-back-btn" href="/">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span>হোমে ফিরে যাও</span>
+              হোমে ফিরে যাও
             </Link>
 
             <h1 className="about-title">Update (Admission 26)</h1>
