@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { universities } from "@/data/universities";
 
@@ -97,7 +97,7 @@ function matchesQuery(haystackWords, query) {
   });
 }
 
-export default function UpdatesFilterList({ updates }) {
+export default function UpdatesFilterList({ updates, inlineNews = null }) {
   const [activeCategory, setActiveCategory] = useState("versity");
   const [query, setQuery] = useState("");
   const [openSources, setOpenSources] = useState({});
@@ -203,8 +203,9 @@ export default function UpdatesFilterList({ updates }) {
               : "এই মুহূর্তে এই বিভাগে কোনো আপডেট নেই।"}
           </p>
         )}
-        {filtered.map((u) => (
-          <article key={u.id} className="update-card">
+        {filtered.map((u, idx) => (
+          <Fragment key={u.id}>
+          <article className="update-card">
             <h2 className="update-title">{u.title}</h2>
             <p className="update-uni">
               <Link href={`/university/${u.universityId}`} className="about-link">
@@ -305,6 +306,8 @@ export default function UpdatesFilterList({ updates }) {
               </div>
             )}
           </article>
+          {idx === 0 && inlineNews}
+          </Fragment>
         ))}
       </div>
 
