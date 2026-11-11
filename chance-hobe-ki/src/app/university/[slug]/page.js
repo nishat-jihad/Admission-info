@@ -237,6 +237,7 @@ export default function UniversityDetailPage({ params }) {
                   <tr>
                     <th>ইউনিট</th>
                     <th>পরীক্ষার তারিখ</th>
+                    {examDate.schedule.some((r) => r.time) && <th>সময়</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -247,11 +248,51 @@ export default function UniversityDetailPage({ params }) {
                         {row.date}
                         {row.tentative ? " (সম্ভাব্য)" : ""}
                       </td>
+                      {examDate.schedule.some((r) => r.time) && <td>{row.time || "—"}</td>}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+            {(examDate.extraTables || []).map((t, ti) => (
+              <div key={ti}>
+                <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                  {t.title}
+                </h3>
+                <div className="exam-date-table-wrap">
+                  <table className="exam-date-table">
+                    <thead>
+                      <tr>
+                        {t.headers.map((h, hi) => (
+                          <th key={hi}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {t.rows.map((row, ri) => (
+                        <tr key={ri} className={ri % 2 === 0 ? "row-white" : "row-grey"}>
+                          {row.map((cell, ci) => (
+                            <td key={ci}>{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+            {(examDate.notes || []).length > 0 && (
+              <div>
+                <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                  গুরুত্বপূর্ণ তথ্য
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, color: "#333", lineHeight: 1.7 }}>
+                  {examDate.notes.map((n, i) => (
+                    <li key={i}>{n}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <Link className="back-link back-link-pill" href="/updates">
               সব ভার্সিটির আপডেট দেখুন →
             </Link>
