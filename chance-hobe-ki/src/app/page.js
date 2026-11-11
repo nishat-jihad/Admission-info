@@ -159,8 +159,6 @@ export default function HomePage() {
                 </span>
               </Link>
             </div>
-
-            <HeroLatestNews />
           </div>
 
           <div className="hero-visual">
@@ -189,6 +187,8 @@ export default function HomePage() {
               loading="lazy"
             />
           </div>
+
+          <HeroLatestNews />
         </div>
       </section>
 
