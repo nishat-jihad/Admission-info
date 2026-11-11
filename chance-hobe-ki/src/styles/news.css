@@ -1103,9 +1103,18 @@ main.page.page-with-news {
 .latest-list-head .news-aside-title::before {
   bottom: 0.2em;
 }
-.latest-list-head .hero-latest-all {
-  padding: 7px 14px;
-  font-size: 13px;
+.latest-list-all {
+  flex: 0 0 auto;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+.latest-list-all:hover {
+  color: var(--blue-dark);
 }
 .news-inline-box {
   display: none;
