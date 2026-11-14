@@ -73,7 +73,7 @@ function buildSearchWords(update) {
     update.applicationStart,
     update.applicationEnd,
     ...(update.schedule || []).flatMap((row) => [row.unit, row.date, row.time]),
-    ...(update.extraTables || []).flatMap((t) => [t.title, ...t.rows.flat()]),
+    ...(update.extraTables || []).filter((t) => !t.detailOnly).flatMap((t) => [t.title, ...t.rows.flat()]),
     ...(update.notes || []),
     GENERIC_KEYWORDS,
   ];
@@ -249,7 +249,7 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                 </tbody>
               </table>
             </div>
-            {(u.extraTables || []).map((t, ti) => (
+            {(u.extraTables || []).filter((t) => !t.detailOnly).map((t, ti) => (
               <div key={ti}>
                 <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
                   {t.title}
