@@ -41,6 +41,24 @@ export function generateMetadata({ params }) {
   };
 }
 
+// universities.js-এর কোনো টেক্সটে একাধিক লাইন (\n দিয়ে আলাদা) থাকলে সেটা
+// ফাঁকা জায়গা রেখে পয়েন্ট আকারে দেখানো হয়; এক লাইন হলে আগের মতোই সাধারণ লেখা।
+function PointText({ text, as = "p" }) {
+  const lines = String(text).split("\n").map((l) => l.trim()).filter(Boolean);
+  if (lines.length <= 1) {
+    return as === "p" ? <p>{text}</p> : <>{text}</>;
+  }
+  return (
+    <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+      {lines.map((line, i) => (
+        <li key={i} style={{ lineHeight: 1.8 }}>
+          {line}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function Photo({ uni }) {
   if (!uni.photo) {
     return (
@@ -188,7 +206,11 @@ export default function UniversityDetailPage({ params }) {
                 ))}
               </div>
             </section>
-            {uni.subjectsNote && <div className="placeholder-note">{uni.subjectsNote}</div>}
+            {uni.subjectsNote && (
+              <div className="placeholder-note">
+                <PointText text={uni.subjectsNote} as="inline" />
+              </div>
+            )}
           </>
         )}
 
@@ -208,14 +230,14 @@ export default function UniversityDetailPage({ params }) {
         {uni.resultFormula && (
           <section className="block">
             <h2>ফলাফল নির্ণয় পদ্ধতি</h2>
-            <p>{uni.resultFormula}</p>
+            <PointText text={uni.resultFormula} />
           </section>
         )}
 
         <section className="block">
           <h2>আবেদনের যোগ্যতা</h2>
           {uni.eligibilityText ? (
-            <p>{uni.eligibilityText}</p>
+            <PointText text={uni.eligibilityText} />
           ) : (
             <div className="placeholder-note">
               এই ভার্সিটির বিস্তারিত যোগ্যতার তথ্য শীঘ্রই যুক্ত হবে। নিচের ক্যালকুলেটরে
