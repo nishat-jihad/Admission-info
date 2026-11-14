@@ -99,6 +99,14 @@ function matchesQuery(haystackWords, query) {
   });
 }
 
+// একটা আপডেটে একাধিক PDF বাটন দেখানোর জন্য — sourcePdfs ([{ label, href }])
+// থাকলে সেটা, না থাকলে আগের মতো একটা sourcePdf।
+function pdfLinks(u) {
+  if (u.sourcePdfs && u.sourcePdfs.length > 0) return u.sourcePdfs;
+  if (u.sourcePdf) return [{ label: "সার্কুলার (PDF) দেখো", href: u.sourcePdf }];
+  return [];
+}
+
 export default function UpdatesFilterList({ updates, inlineNews = null }) {
   const [activeCategory, setActiveCategory] = useState("versity");
   const [query, setQuery] = useState("");
@@ -280,45 +288,56 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                 </ul>
               </div>
             )}
-            {u.sourcePdf && (
-              <div style={{ maxWidth: 380, margin: "16px auto 0" }}>
-                <a
-                  href={u.sourcePdf}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 8,
-                    width: "100%",
-                    textAlign: "center",
-                    padding: "10px 14px",
-                    border: "1.5px solid var(--green-dark)",
-                    borderRadius: 8,
-                    background: "var(--green-dark)",
-                    color: "#fff",
-                    textDecoration: "none",
-                    fontWeight: 700,
-                    fontSize: 14,
-                  }}
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
+            {pdfLinks(u).length > 0 && (
+              <div
+                style={{
+                  maxWidth: 380,
+                  margin: "16px auto 0",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 10,
+                }}
+              >
+                {pdfLinks(u).map((pdf) => (
+                  <a
+                    key={pdf.href}
+                    href={pdf.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      width: "100%",
+                      textAlign: "center",
+                      padding: "10px 14px",
+                      border: "1.5px solid var(--green-dark)",
+                      borderRadius: 8,
+                      background: "var(--green-dark)",
+                      color: "#fff",
+                      textDecoration: "none",
+                      fontWeight: 700,
+                      fontSize: 14,
+                    }}
                   >
-                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
-                    <path d="M14 3v5h5M9 13h6M9 17h6" />
-                  </svg>
-                  সার্কুলার (PDF) দেখো
-                </a>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+                      <path d="M14 3v5h5M9 13h6M9 17h6" />
+                    </svg>
+                    {pdf.label}
+                  </a>
+                ))}
               </div>
             )}
             {u.sourceImage && (

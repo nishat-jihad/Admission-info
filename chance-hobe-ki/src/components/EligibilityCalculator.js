@@ -109,7 +109,11 @@ export default function EligibilityCalculator({ id, uni }) {
           নিশ্চিত হয়ে নিও।
         </div>
       </div>
-      {id === "ru" ? (
+      {id === "du" ? (
+        <div className="circular-update-note" style={{ color: "var(--green-dark)" }}>
+          এই তথ্য ২০২৬ সালের তথ্য অনুযায়ী আপডেট করা হয়েছে।
+        </div>
+      ) : id === "ru" ? (
         <div className="circular-update-note" style={{ color: "var(--green-dark)" }}>
           এই তথ্য ২০২৬ সালের আপডেট অনুযায়ী দেওয়া হয়েছে।
         </div>
