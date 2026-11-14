@@ -111,6 +111,10 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
   const [activeCategory, setActiveCategory] = useState("versity");
   const [query, setQuery] = useState("");
   const [openSources, setOpenSources] = useState({});
+  // প্রথম টেবিল (সময়সূচি) ও প্রথম extraTable ছাড়া বাকি টেবিল ফোল্ডেড থাকে;
+  // টাইটেলে ক্লিক করলে নিচে টেবিল খোলে/বন্ধ হয়।
+  const [openTables, setOpenTables] = useState({});
+  const [hoverTable, setHoverTable] = useState(null);
   const [fullImage, setFullImage] = useState(null);
 
   // Full-screen notice viewer: lock page scroll + Esc to close.
@@ -249,33 +253,92 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                 </tbody>
               </table>
             </div>
-            {(u.extraTables || []).filter((t) => !t.detailOnly).map((t, ti) => (
-              <div key={ti}>
-                <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
-                  {t.title}
-                </h3>
-                <div className="update-table-wrap">
-                  <table className="update-table">
-                    <thead>
-                      <tr>
-                        {t.headers.map((h, hi) => (
-                          <th key={hi}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {t.rows.map((row, ri) => (
-                        <tr key={ri} className={ri % 2 === 0 ? "row-white" : "row-grey"}>
-                          {row.map((cell, ci) => (
-                            <td key={ci}>{cell}</td>
+            {(u.extraTables || []).filter((t) => !t.detailOnly).map((t, ti) => {
+              const tableKey = `${u.id}-${ti}`;
+              const collapsible = ti >= 1;
+              const isOpen = !collapsible || !!openTables[tableKey];
+              return (
+                <div key={ti}>
+                  {collapsible ? (
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() =>
+                        setOpenTables((prev) => ({ ...prev, [tableKey]: !prev[tableKey] }))
+                      }
+                      onMouseEnter={() => setHoverTable(tableKey)}
+                      onMouseLeave={() => setHoverTable(null)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: 10,
+                        width: "100%",
+                        textAlign: "left",
+                        cursor: "pointer",
+                        margin: "14px 0 0",
+                        padding: "11px 14px",
+                        border: "1px solid " + (hoverTable === tableKey || isOpen ? "var(--blue)" : "#e2e2e2"),
+                        borderRadius: 8,
+                        background: hoverTable === tableKey || isOpen ? "#eaf2ff" : "#f5f6f8",
+                        color: "var(--black)",
+                        font: "inherit",
+                        fontFamily: "var(--font-noto-bn), sans-serif",
+                        fontWeight: 700,
+                        fontSize: 15,
+                        transition: "background 0.15s ease, border-color 0.15s ease",
+                      }}
+                    >
+                      <span>{t.title}</span>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                        style={{
+                          flexShrink: 0,
+                          transform: isOpen ? "rotate(180deg)" : "none",
+                          transition: "transform 0.2s ease",
+                        }}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                      {t.title}
+                    </h3>
+                  )}
+                  {isOpen && (
+                    <div className="update-table-wrap" style={collapsible ? { marginTop: 8 } : undefined}>
+                      <table className="update-table">
+                        <thead>
+                          <tr>
+                            {t.headers.map((h, hi) => (
+                              <th key={hi}>{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {t.rows.map((row, ri) => (
+                            <tr key={ri} className={ri % 2 === 0 ? "row-white" : "row-grey"}>
+                              {row.map((cell, ci) => (
+                                <td key={ci}>{cell}</td>
+                              ))}
+                            </tr>
                           ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
             {(u.notes || []).length > 0 && (
               <div>
                 <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
