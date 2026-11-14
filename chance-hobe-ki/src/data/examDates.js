@@ -7,6 +7,16 @@
 // সেকশনে ভাগ করে দেখানোর জন্য ব্যবহার হয়।
 export const examDates = [
   {
+    id: "du",
+    universityId: "du",
+    universityName: "ঢাকা বিশ্ববিদ্যালয় (ঢাবি)",
+    shortName: "DU",
+    category: "university",
+    applicationStart: "11 নভেম্বর",
+    applicationEnd: "25 নভেম্বর",
+    schedule: [{ unit: "A", date: "12 ডিসেম্বর" }],
+  },
+  {
     id: "gst",
     universityId: "gst",
     universityName: "GST গুচ্ছ",
@@ -29,16 +39,6 @@ export const examDates = [
     applicationStart: "15–18 নভেম্বরের মধ্যে (সম্ভাব্য)",
     applicationEnd: "শীঘ্রই জানানো হবে",
     schedule: [{ unit: "ভর্তি পরীক্ষা", date: "18 ডিসেম্বর" }],
-  },
-  {
-    id: "du",
-    universityId: "du",
-    universityName: "ঢাকা বিশ্ববিদ্যালয় (ঢাবি)",
-    shortName: "DU",
-    category: "university",
-    applicationStart: "11 নভেম্বর",
-    applicationEnd: "25 নভেম্বর",
-    schedule: [{ unit: "A", date: "12 ডিসেম্বর" }],
   },
   {
     id: "ru",
