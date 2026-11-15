@@ -157,7 +157,7 @@ export const examDates = [
   {
     id: "cuet",
     universityId: "cuet",
-    universityName: "চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (কুয়েট)",
+    universityName: "চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (চুয়েট)",
     shortName: "CUET",
     category: "engineering",
     applicationStart: "শীঘ্রই জানানো হবে",
