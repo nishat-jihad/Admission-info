@@ -340,6 +340,12 @@ nav.nav-links a.nav-icon-link.active .nav-label {
   .nav-label {
     font-size: 10.5px;
   }
+  /* খুব ছোট ফোন (≤340px): "Ad. Calendar" যেন পাশের বাটনে না লাগে */
+  @media (max-width: 340px) {
+    .nav-label {
+      font-size: 9px;
+    }
+  }
 
   /* নিচের bar-এর নিচে যেন content ঢাকা না পড়ে */
   body {
