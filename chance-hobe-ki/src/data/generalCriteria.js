@@ -24,7 +24,9 @@ export const generalCriteria = {
   cou: { name: "Comilla University", minSsc: 3.0, minHsc: 3.0, minCombined: 7.0 },
   ju_a: { name: "JU (A Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 8.5 },
   ju_d: { name: "JU (D Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 9.0 },
-  ru: { name: "RU (C Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 7.0 },
+  // RU ২০২৬-২৭ সার্কুলার: মানবিক/বাণিজ্য — প্রতিটিতে ৩.০০ সহ মোট ৬.৫০; বিজ্ঞান — প্রতিটিতে ৩.৫০ সহ মোট ৭.৫০।
+  // এখানে সর্বনিম্ন শর্ত (মানবিক/বাণিজ্য) ধরা হয়েছে; বিজ্ঞান শাখার জন্য ৩.৫০/৭.৫০ — বিস্তারিত RU পেজে।
+  ru: { name: "RU", minSsc: 3.0, minHsc: 3.0, minCombined: 6.5 },
   cu: { name: "CU (A Unit)", minSsc: 4.0, minHsc: 3.0, minCombined: 8.0 },
   ku_a: { name: "KU (A Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },
   ku_b: { name: "KU (B Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },

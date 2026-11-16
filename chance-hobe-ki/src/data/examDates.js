@@ -46,9 +46,13 @@ export const examDates = [
     universityName: "রাজশাহী বিশ্ববিদ্যালয় (রাবি)",
     shortName: "RU",
     category: "university",
-    applicationStart: "12 নভেম্বর",
-    applicationEnd: "27 নভেম্বর",
-    schedule: [{ unit: "C", date: "9 জানুয়ারি" }],
+    applicationStart: "15 নভেম্বর",
+    applicationEnd: "30 নভেম্বর",
+    schedule: [
+      { unit: "B", date: "12 ফেব্রুয়ারি" },
+      { unit: "C", date: "13 ফেব্রুয়ারি" },
+      { unit: "A", date: "20 ফেব্রুয়ারি" },
+    ],
   },
   {
     id: "ku_a",
