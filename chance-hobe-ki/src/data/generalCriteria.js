@@ -22,8 +22,10 @@ export const generalCriteria = {
   du: { name: "Dhaka University", minSsc: 3.5, minHsc: 3.5, minCombined: 8.0 },
   jnu: { name: "Jagannath University", minSsc: 3.25, minHsc: 3.25, minCombined: 7.5 },
   cou: { name: "Comilla University", minSsc: 3.0, minHsc: 3.0, minCombined: 7.0 },
-  ju_a: { name: "JU (A Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 8.5 },
-  ju_d: { name: "JU (D Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 9.0 },
+  // JU ২০২৬-২৭ সার্কুলার: A ইউনিট — প্রতিটিতে ৩.৫০ সহ মোট ৭.৫০।
+  ju_a: { name: "JU (A Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 7.5 },
+  // JU ২০২৬-২৭ সার্কুলার: D ইউনিট — প্রতিটিতে ৩.৫০ সহ মোট ৮.০০।
+  ju_d: { name: "JU (D Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 8.0 },
   // RU ২০২৬-২৭ সার্কুলার, বিজ্ঞান শাখা: SSC ও HSC প্রতিটিতে ন্যূনতম ৩.৫০ সহ মোট ৭.৫০।
   ru: { name: "RU (C Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 7.5 },
   cu: { name: "CU (A Unit)", minSsc: 4.0, minHsc: 3.0, minCombined: 8.0 },
