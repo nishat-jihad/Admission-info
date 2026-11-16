@@ -156,6 +156,17 @@ function parseMoment(text, sessionStartYear, endOfDay) {
 
 const isUnknownText = (s) => !s || /শীঘ্রই/.test(s) || !/[\d০-৯]/.test(s);
 
+// যে ভার্সিটির আবেদন সত্যিই চালু হয়েছে, শুধু তাদের লিংক এখানে থাকবে।
+// নতুন ভার্সিটির আবেদন শুরু হলে এখানে universityId (updates.js-এর universityId) আর লিংক
+// যোগ করলেই "আবেদন করুন" বাটন আর "আবেদন শুরু হয়েছে" অবস্থা চালু হয়ে যাবে।
+// এখানে যাদের নাম নেই, তাদের আবেদনের তারিখ ডেটায় থাকলেও অবস্থা "আবেদন শুরু হয়নি" দেখাবে
+// (কারণ তাদের আবেদন আসলে এখনো চালু হয়নি, তারিখগুলো সম্ভাব্য)।
+export const APPLY_LINKS = {
+  du: "https://admission.eis.du.ac.bd/",
+  ru: "https://admission.ru.ac.bd/",
+  kuet: "https://admission.kuet.ac.bd/",
+};
+
 const CATEGORY_MAP = { versity: "university", university: "university", engineering: "engineering", medical: "medical" };
 
 function shortNameOf(universityId, universityName, examDates) {
@@ -203,12 +214,14 @@ export function buildAdmissionCalendar({ updates = [], examDates = [] }) {
       universityId: u.universityId,
       shortName,
       category: (ex && ex.category) || CATEGORY_MAP[u.category] || "university",
+      applyUrl: APPLY_LINKS[u.universityId] || null,
       rows,
       application: {
         startText: u.applicationStart || "",
         endText: u.applicationEnd || "",
         startAt: parseMoment(u.applicationStart, sessionYear, false),
         endAt: parseMoment(u.applicationEnd, sessionYear, true),
+        confirmed: Boolean(APPLY_LINKS[u.universityId]),
       },
     });
   });
@@ -225,12 +238,14 @@ export function buildAdmissionCalendar({ updates = [], examDates = [] }) {
       universityId: e.universityId,
       shortName: e.shortName,
       category: e.category,
+      applyUrl: APPLY_LINKS[e.universityId] || null,
       rows,
       application: {
         startText: e.applicationStart || "",
         endText: e.applicationEnd || "",
         startAt: parseMoment(e.applicationStart, 2026, false),
         endAt: parseMoment(e.applicationEnd, 2026, true),
+        confirmed: Boolean(APPLY_LINKS[e.universityId]),
       },
     });
   });
@@ -273,7 +288,7 @@ export function getApplicationStatus(application, nowMs) {
   if (application.endAt != null && nowMs > application.endAt) {
     return { key: "closed", text: "আবেদন শেষ" };
   }
-  if (application.startAt != null && nowMs >= application.startAt) {
+  if (application.confirmed && application.startAt != null && nowMs >= application.startAt) {
     return { key: "started", text: "আবেদন শুরু হয়েছে" };
   }
   return { key: "notStarted", text: "আবেদন শুরু হয়নি" };
