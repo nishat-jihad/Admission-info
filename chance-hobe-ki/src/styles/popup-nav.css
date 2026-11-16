@@ -1,0 +1,150 @@
+/* ---------- NAVBAR: বাড়তি নীল border/outline বাদ ----------
+   PC-তে active বাটনে নীল ব্যাকগ্রাউন্ডের ওপর আলাদা নীল border (inset box-shadow) ছিল —
+   এখন শুধু হালকা নীল ব্যাকগ্রাউন্ড থাকবে। মোবাইলে ট্যাপ করলেও কোনো নীল দাগ/outline আসবে না। */
+nav.nav-links a.nav-icon-link,
+nav.nav-links a.nav-icon-link:focus,
+nav.nav-links a.nav-icon-link:focus-visible,
+nav.nav-links a.nav-icon-link:active {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+nav.nav-links a.nav-icon-link.active {
+  box-shadow: none;
+}
+
+/* ---------- আবেদন শুরু হয়েছে — pop-up (সব পেজে, Mobile + PC) ---------- */
+.apply-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(10, 14, 25, 0.62);
+}
+.apply-popup {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  padding: 26px 20px 20px;
+  background: #fff;
+  border: 1.5px solid var(--black);
+  border-radius: 16px;
+  box-shadow: var(--shadow-hard);
+}
+
+/* পরিষ্কার, ধারালো কালো ক্রস বাটন (গোল, সাদা ✕) */
+.apply-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--black);
+  color: #fff;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.apply-popup-close svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.apply-popup-close:hover {
+  background: #333;
+}
+.apply-popup-close:active {
+  transform: scale(0.94);
+}
+
+.apply-popup-title {
+  padding-right: 44px;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--black);
+}
+.apply-popup-sub {
+  margin-top: 4px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #4a5262;
+}
+
+.apply-popup-list {
+  list-style: none;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.apply-popup-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 10px 10px 14px;
+  background: #f5f8ff;
+  border: 1px solid #d5ddef;
+  border-radius: 12px;
+}
+.apply-popup-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--black);
+  overflow-wrap: anywhere;
+}
+.apply-popup-btn {
+  flex: 0 0 auto;
+  padding: 9px 16px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.apply-popup-btn:hover {
+  background: var(--blue-dark);
+}
+.apply-popup-btn:active {
+  transform: translateY(1px);
+}
+.apply-popup-btn:focus-visible,
+.apply-popup-close:focus-visible {
+  outline: 2.5px solid var(--blue);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .apply-popup {
+    padding: 24px 16px 16px;
+  }
+  .apply-popup-title {
+    font-size: 20px;
+  }
+  .apply-popup-name {
+    font-size: 14px;
+  }
+  .apply-popup-btn {
+    padding: 8px 13px;
+    font-size: 13px;
+  }
+}
