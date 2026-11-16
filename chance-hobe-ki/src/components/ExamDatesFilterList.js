@@ -1,88 +1,143 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
+import { getApplicationLines, getApplicationStatus, getRemaining } from "@/lib/examCalendar";
+import "../styles/admission-calendar.css";
 
-// পেজে তিনটা ট্যাব — ভার্সিটি, ইঞ্জিনিয়ারিং, মেডিকেল — Updates(admission)
-// পেজের মতোই, একসাথে একটা ক্যাটাগরি দেখানোর জন্য।
+// পেজে তিনটা ট্যাব — ভার্সিটি, ইঞ্জিনিয়ারিং, মেডিকেল — আগের মতোই।
 const CATEGORIES = [
   { key: "university", label: "ভার্সিটি" },
   { key: "engineering", label: "ইঞ্জিনিয়ারিং" },
   { key: "medical", label: "মেডিকেল" },
 ];
 
-// ইউনিট A মানে সায়েন্স, ইউনিট B মানে আর্টস ও কমার্স — হেডারে সেটা
-// বন্ধনীতে দেখানোর জন্য।
-const UNIT_LABEL_SUFFIX = {
-  A: " (Science)",
-  B: " (Arts and Commerce)",
-};
+// মোবাইলে inline news বক্স কতটা ভার্সিটির পরে বসবে (PC-তে ডানের sidebar-এ থাকে, তাই লুকানো)
+const NEWS_AFTER_BLOCK = 3;
 
-// examDates.js (per-university) থেকে ইউনিট অনুযায়ী গ্রুপ করা হচ্ছে, যাতে
-// একই ইউনিটের ভার্সিটিগুলো একটা টেবিলের নিচে একসাথে দেখানো যায় (যেমন
-// 'এ' ইউনিট-এ ঢাবি, জবি, চবি — সবাই একই টেবিলে)।
-function groupByUnit(data) {
-  const groups = [];
-  const indexByUnit = {};
-  data.forEach((u) => {
-    u.schedule.forEach((row) => {
-      if (!(row.unit in indexByUnit)) {
-        indexByUnit[row.unit] = groups.length;
-        groups.push({ unit: row.unit, rows: [] });
-      }
-      groups[indexByUnit[row.unit]].rows.push({
-        universityId: u.universityId,
-        universityName: u.universityName,
-        shortName: u.shortName,
-        examDate: row.date,
-        applicationRange: `${u.applicationStart} - ${u.applicationEnd}`,
-      });
-    });
-  });
-  return groups;
+// তিনটা কলামের প্রস্থ — মূল টেবিল, ভেতরের টেবিল আর আবেদনের টেবিল সবখানে একই,
+// তাই সব কলাম সোজা একই লাইনে থাকে।
+function ColGroup() {
+  return (
+    <colgroup>
+      <col className="cal-col-uni" />
+      <col className="cal-col-date" />
+      <col className="cal-col-left" />
+    </colgroup>
+  );
 }
 
-function ExamUnitTable({ group }) {
+function CalendarBlock({ block, nowMs }) {
+  const [open, setOpen] = useState(false);
+  const panelId = `cal-apply-${block.id}`;
+
+  const status = nowMs == null ? null : getApplicationStatus(block.application, nowMs);
+  const lines = getApplicationLines(block.application);
+
   return (
-    <div className="exam-unit-table-wrap">
-      <table className="exam-unit-table">
-        <thead>
-          <tr>
-            <th colSpan={3} className="exam-unit-header">
-              Unit {group.unit}
-              {UNIT_LABEL_SUFFIX[group.unit] || ""}
-            </th>
-          </tr>
-          <tr>
-            <th>বিশ্ববিদ্যালয়</th>
-            <th>পরীক্ষার তারিখ</th>
-            <th>আবেদন (শুরু-শেষ)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {group.rows.map((row) => (
-            <tr key={row.universityId}>
-              <td className="exam-uni-cell">
-                <Link href={`/university/${row.universityId}`} className="exam-uni-link">
-                  <span className="exam-uni-full">{row.universityName}</span>
-                  <span className="exam-uni-short">{row.shortName}</span>
-                </Link>
-              </td>
-              <td>{row.examDate}</td>
-              <td>{row.applicationRange}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="cal-block">
+      {/* ভার্সিটির নিজের টেবিল — তার সব ইউনিট নিচে নিচে */}
+      <div className="cal-inner-wrap">
+        <table className="cal-inner">
+          <ColGroup />
+          <tbody>
+            {block.rows.map((row) => {
+              const remaining = nowMs == null ? null : getRemaining(row, nowMs);
+              return (
+                <tr key={row.key}>
+                  <td className="cal-cell-uni">
+                    <Link href={`/university/${block.universityId}`} className="cal-uni-link">
+                      {block.shortName}
+                      {row.label ? ` (${row.label})` : ""}
+                    </Link>
+                    {row.note && <span className="cal-note">{row.note}</span>}
+                  </td>
+                  <td className={"cal-cell-date" + (row.tentative ? " cal-tentative" : "")}>
+                    {row.dateText}
+                  </td>
+                  <td
+                    className={
+                      "cal-cell-left" + (remaining ? ` cal-left-${remaining.tone}` : "")
+                    }
+                  >
+                    {remaining ? remaining.text : "—"}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* ঠিক নিচে (একই gap-এ) আবেদনের সময় দেখার বাটন */}
+      <button
+        type="button"
+        className="cal-apply-btn"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((o) => !o)}
+      >
+        আবেদনের সময় দেখুন
+        <svg className="cal-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="cal-apply-wrap" id={panelId}>
+          <table className="cal-apply">
+            <ColGroup />
+            <thead>
+              <tr>
+                <th>বিশ্ববিদ্যালয়</th>
+                <th>আবেদনের সময়সীমা</th>
+                <th>আবেদনের অবস্থা</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="cal-cell-uni">
+                  <Link href={`/university/${block.universityId}`} className="cal-uni-link">
+                    {block.shortName}
+                  </Link>
+                </td>
+                <td className="cal-cell-date">
+                  {lines.map((l, i) => (
+                    <span className="cal-apply-line" key={i}>
+                      {l.label && <b>{l.label}: </b>}
+                      {l.value}
+                    </span>
+                  ))}
+                </td>
+                <td className="cal-cell-left">
+                  {status ? (
+                    <span className={`cal-status cal-status-${status.key}`}>{status.text}</span>
+                  ) : (
+                    "—"
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
 
-export default function ExamDatesFilterList({ examDates, inlineNews = null }) {
+export default function ExamDatesFilterList({ calendar, inlineNews = null }) {
   const [activeCategory, setActiveCategory] = useState("university");
+  // বর্তমান সময় শুধু ব্রাউজারে বসে (সার্ভারের সাথে hydration mismatch এড়াতে), প্রতি ৩০ সেকেন্ডে আপডেট হয়।
+  const [nowMs, setNowMs] = useState(null);
 
-  const catData = examDates.filter((u) => u.category === activeCategory);
-  const unitGroups = groupByUnit(catData);
+  useEffect(() => {
+    setNowMs(Date.now());
+    const id = setInterval(() => setNowMs(Date.now()), 30000);
+    return () => clearInterval(id);
+  }, []);
+
+  const blocks = calendar.filter((b) => b.category === activeCategory);
+  const newsIndex = Math.min(NEWS_AFTER_BLOCK, blocks.length) - 1;
 
   return (
     <>
@@ -105,16 +160,36 @@ export default function ExamDatesFilterList({ examDates, inlineNews = null }) {
       </div>
 
       <section className="exam-category-section">
-        {unitGroups.length === 0 ? (
+        {blocks.length === 0 ? (
           <p className="exam-category-empty">শীঘ্রই যোগ করা হবে</p>
         ) : (
-          <div className="exam-unit-groups">
-            {unitGroups.map((group, i) => (
-              <Fragment key={group.unit}>
-                <ExamUnitTable group={group} />
-                {i === 0 && inlineNews}
-              </Fragment>
-            ))}
+          <div className="cal-wrap">
+            <table className="cal-main">
+              <ColGroup />
+              <thead>
+                <tr>
+                  <th>বিশ্ববিদ্যালয়</th>
+                  <th>পরীক্ষার তারিখ</th>
+                  <th>সময় বাকি</th>
+                </tr>
+              </thead>
+              <tbody>
+                {blocks.map((block, i) => (
+                  <Fragment key={block.id}>
+                    <tr>
+                      <td colSpan={3} className="cal-uni-block-cell">
+                        <CalendarBlock block={block} nowMs={nowMs} />
+                      </td>
+                    </tr>
+                    {i === newsIndex && inlineNews && (
+                      <tr className="cal-news-row">
+                        <td colSpan={3}>{inlineNews}</td>
+                      </tr>
+                    )}
+                  </Fragment>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </section>
