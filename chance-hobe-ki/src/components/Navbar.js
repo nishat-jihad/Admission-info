@@ -6,29 +6,34 @@ import { usePathname } from "next/navigation";
 import BreakingNewsBar from "@/components/BreakingNewsBar";
 
 // Mobile ও PC — দুই জায়গাতেই একই আইকন, একই ক্রম।
+// PC: উপরের navbar-এ আইকন | Mobile: নিচের app-style bottom bar (আইকন + ছোট নাম)
 // (Home-এ যেতে logo-তে ক্লিক করলেই হবে)
 const NAV_ITEMS = [
   {
     href: "/exam-dates",
     label: "Exam Dates",
+    shortLabel: "Exam Dates",
     iconClass: "nav-icon-exam",
     isActive: (pathname) => pathname === "/exam-dates",
   },
   {
     href: "/news",
     label: "News",
+    shortLabel: "News",
     iconClass: "nav-icon-news",
     isActive: (pathname) => pathname.startsWith("/news"),
   },
   {
     href: "/hsc-gpa-calculator",
     label: "HSC GPA Calculator",
+    shortLabel: "HSC GPA",
     iconClass: "nav-icon-gpa",
     isActive: (pathname) => pathname === "/hsc-gpa-calculator",
   },
   {
     href: "/updates",
     label: "Updates (Admission)",
+    shortLabel: "Updates",
     iconClass: "nav-icon-updates",
     isActive: (pathname) => pathname === "/updates",
   },
@@ -112,6 +117,8 @@ function NavbarInner() {
               title={item.label}
             >
               <span className={`nav-icon ${item.iconClass}`} aria-hidden="true" />
+              {/* label শুধু mobile-এর নিচের বারে দেখায় (PC-তে hidden) */}
+              <span className="nav-label">{item.shortLabel}</span>
             </Link>
           );
         })}
