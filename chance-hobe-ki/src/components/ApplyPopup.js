@@ -1,0 +1,89 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { getApplicationStatus } from "@/lib/examCalendar";
+
+// সাইটে ঢুকলেই (Mobile + PC দুই জায়গাতেই) একটা pop-up আসবে — যেসব ভার্সিটিতে এখন আবেদন চলছে
+// শুধু সেগুলো আর প্রত্যেকটার পাশে "Apply Now" বাটন। "Apply Now"-এর লিংক আসে
+// src/lib/examCalendar.js-এর APPLY_LINKS থেকে (অর্থাৎ Admission Calendar-এর লিংকই)।
+// এখানে বিস্তারিত পেজের কোনো লিংক নেই।
+export default function ApplyPopup({ items = [] }) {
+  const [list, setList] = useState([]);
+  const closeRef = useRef(null);
+  const open = list.length > 0;
+
+  // বর্তমান সময় শুধু ব্রাউজারে দেখা হয় (hydration mismatch এড়াতে)
+  useEffect(() => {
+    const now = Date.now();
+    setList(items.filter((it) => getApplicationStatus(it.application, now).key === "started"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => {
+      if (e.key === "Escape") setList([]);
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    if (closeRef.current) closeRef.current.focus();
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  if (!open) return null;
+
+  const close = () => setList([]);
+
+  return (
+    <div
+      className="apply-popup-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) close();
+      }}
+    >
+      <div
+        className="apply-popup"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="apply-popup-title"
+      >
+        <button
+          type="button"
+          ref={closeRef}
+          className="apply-popup-close"
+          aria-label="বন্ধ করো"
+          onClick={close}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.2" aria-hidden="true">
+            <path d="M5 5l14 14M19 5L5 19" strokeLinecap="round" />
+          </svg>
+        </button>
+
+        <h2 id="apply-popup-title" className="apply-popup-title">
+          আবেদন শুরু হয়েছে!
+        </h2>
+        <p className="apply-popup-sub">এই ভার্সিটিগুলোতে এখন আবেদন চলছে।</p>
+
+        <ul className="apply-popup-list">
+          {list.map((it) => (
+            <li className="apply-popup-item" key={it.id}>
+              <span className="apply-popup-name">{it.name}</span>
+              <a
+                className="apply-popup-btn"
+                href={it.applyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Apply Now
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
