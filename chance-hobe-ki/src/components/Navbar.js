@@ -2,12 +2,36 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { usePathname } from "next/navigation";
 import BreakingNewsBar from "@/components/BreakingNewsBar";
 
-const CATEGORY_LINKS = [
-  { category: "all", label: "হোম" },
+// Mobile ও PC — দুই জায়গাতেই একই আইকন, একই ক্রম।
+// (Home-এ যেতে logo-তে ক্লিক করলেই হবে)
+const NAV_ITEMS = [
+  {
+    href: "/exam-dates",
+    label: "Exam Dates",
+    iconClass: "nav-icon-exam",
+    isActive: (pathname) => pathname === "/exam-dates",
+  },
+  {
+    href: "/news",
+    label: "News",
+    iconClass: "nav-icon-news",
+    isActive: (pathname) => pathname.startsWith("/news"),
+  },
+  {
+    href: "/hsc-gpa-calculator",
+    label: "HSC GPA Calculator",
+    iconClass: "nav-icon-gpa",
+    isActive: (pathname) => pathname === "/hsc-gpa-calculator",
+  },
+  {
+    href: "/updates",
+    label: "Updates (Admission)",
+    iconClass: "nav-icon-updates",
+    isActive: (pathname) => pathname === "/updates",
+  },
 ];
 
 const FACEBOOK_URL = "https://www.facebook.com/admissioninfo26";
@@ -52,43 +76,18 @@ function SocialIcons({ className }) {
 export default function Navbar({ showBreaking = true }) {
   return (
     <>
-      <Suspense fallback={<NavbarShell />}>
-        <NavbarInner />
-      </Suspense>
+      <NavbarInner />
       {/* সব পেজে navbar-এর ঠিক নিচে ব্রেকিং নিউজ বার */}
       {showBreaking && <BreakingNewsBar />}
     </>
   );
 }
 
-// Rendered for the instant before the real navbar hydrates, so there's
-// no layout jump.
-function NavbarShell() {
-  return <header className="navbar" />;
-}
-
 function NavbarInner() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  // useSearchParams is reactive, so this updates immediately on every
-  // client-side Link navigation — including "/" -> "/?category=..." ones
-  // that don't remount the page.
-  const activeCategory = pathname === "/" ? searchParams.get("category") || "all" : "all";
 
   return (
     <header className="navbar">
-      <button
-        className="hamburger-btn"
-        aria-label="মেনু"
-        aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M3 6h18M3 12h18M3 18h18" strokeLinecap="round" />
-        </svg>
-      </button>
-
       <Link href="/" className="logo-block">
         <Image
           src="/images/admission-info-logo.png"
@@ -100,45 +99,22 @@ function NavbarInner() {
         />
       </Link>
 
-      <nav className={`nav-links${open ? " open" : ""}`}>
-        {CATEGORY_LINKS.map((link) => (
-          <Link
-            key={link.category}
-            href={link.category === "all" ? "/" : `/?category=${link.category}#cards-wrap`}
-            className={pathname === "/" && activeCategory === link.category ? "active" : ""}
-            onClick={() => setOpen(false)}
-          >
-            {link.label}
-          </Link>
-        ))}
-        <Link
-          href="/exam-dates"
-          className={pathname === "/exam-dates" ? "active" : ""}
-          onClick={() => setOpen(false)}
-        >
-          Exam Dates
-        </Link>
-        <Link
-          href="/news"
-          className={pathname.startsWith("/news") ? "active" : ""}
-          onClick={() => setOpen(false)}
-        >
-          News
-        </Link>
-        <Link
-          href="/hsc-gpa-calculator"
-          className={pathname === "/hsc-gpa-calculator" ? "active" : ""}
-          onClick={() => setOpen(false)}
-        >
-          HSC GPA Calculator
-        </Link>
-        <Link
-          href="/updates"
-          className={pathname === "/updates" ? "active" : ""}
-          onClick={() => setOpen(false)}
-        >
-          Updates(admission)
-        </Link>
+      <nav className="nav-links" aria-label="Main navigation">
+        {NAV_ITEMS.map((item) => {
+          const active = item.isActive(pathname);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`nav-icon-link${active ? " active" : ""}`}
+              aria-label={item.label}
+              aria-current={active ? "page" : undefined}
+              title={item.label}
+            >
+              <span className={`nav-icon ${item.iconClass}`} aria-hidden="true" />
+            </Link>
+          );
+        })}
         <SocialIcons className="nav-social nav-social-inline" />
       </nav>
 
