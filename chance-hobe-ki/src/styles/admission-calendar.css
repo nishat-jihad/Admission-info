@@ -7,11 +7,18 @@
   --cal-gap: 4px;
   --cal-line: #c3cde0;
   --cal-block-bg: #eef1f7;
+  --cal-head: #e8590c; /* হেডারের কমলা */
   margin-top: 28px;
   border: 1.5px solid var(--black);
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
+}
+
+/* বাটন/লিংকে padding থাকলেও যেন ঘরের বাইরে না বেরোয় */
+.cal-wrap button,
+.cal-wrap a {
+  box-sizing: border-box;
 }
 
 /* কলামের প্রস্থ — তিনটা টেবিলেই এক */
@@ -33,12 +40,12 @@
   table-layout: fixed;
 }
 
-/* ---- মূল টেবিলের হেডার (কালো, স্ক্রিনশটের মতো) ---- */
+/* ---- মূল টেবিলের হেডার (কমলা + সাদা লেখা) ---- */
 .cal-main > thead th {
-  background: #121212;
+  background: var(--cal-head);
   color: #fff;
-  font-size: 14.5px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   padding: 13px 10px;
   text-align: center;
 }
@@ -54,8 +61,7 @@
 }
 
 /* ভার্সিটির নিজের টেবিল */
-.cal-inner-wrap,
-.cal-apply-wrap {
+.cal-inner-wrap {
   background: #fff;
   border: 1px solid var(--cal-line);
   border-radius: 8px;
@@ -113,19 +119,24 @@
   color: #8a8f99;
 }
 
-/* ---- আবেদনের সময় দেখুন (বাটন) — ভার্সিটির টেবিলের ঠিক নিচে, একই ফাঁকে ---- */
+/* ---- আবেদনের সময় দেখুন (বাটন) — ভার্সিটির টেবিলের ভেতরেই, সবার শেষ সারিতে ---- */
+.cal-inner .cal-apply-row > td {
+  padding: 0;
+  background: #f7f9fe;
+}
+.cal-inner .cal-apply-row:hover td {
+  background: #f7f9fe;
+}
 .cal-apply-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  margin-top: var(--cal-gap);
-  padding: 10px 12px;
-  background: #fff;
+  padding: 12px 12px;
+  background: transparent;
   color: var(--black);
-  border: 1px solid var(--cal-line);
-  border-radius: 8px;
+  border: 0;
   font-family: var(--font-noto-bn), sans-serif;
   font-size: 13.5px;
   font-weight: 700;
@@ -133,7 +144,7 @@
   transition: background 0.15s ease;
 }
 .cal-apply-btn:hover {
-  background: #f3f6fd;
+  background: #eaf0ff;
 }
 .cal-chev {
   width: 16px;
@@ -146,7 +157,8 @@
 
 /* ---- খুললে: বিশ্ববিদ্যালয় | আবেদনের সময়সীমা | আবেদনের অবস্থা ---- */
 .cal-apply-wrap {
-  margin-top: var(--cal-gap);
+  background: #fff;
+  border-top: 1px solid var(--cal-line);
 }
 .cal-apply th {
   background: #eef1f6;
@@ -191,6 +203,30 @@
   color: #b3261e;
 }
 
+/* "আবেদন করুন" — গোল নীল বাটন, সাদা লেখা (শুধু যাদের আবেদন চালু আর লিংক আছে) */
+.cal-apply-now {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.cal-apply-now:hover {
+  background: var(--blue-dark);
+}
+.cal-apply-now:active {
+  transform: translateY(1px);
+}
+
 /* ---- মোবাইলে মাঝের Latest News (PC-তে ডানের sidebar-এ আছে, তাই এখানে লুকানো) ---- */
 .cal-news-row > td {
   padding: 10px var(--cal-gap);
@@ -217,7 +253,7 @@
     width: 33%;
   }
   .cal-main > thead th {
-    font-size: 12.5px;
+    font-size: 13px;
     padding: 11px 4px;
   }
   .cal-inner td,
@@ -238,6 +274,10 @@
   }
   .cal-apply-btn {
     font-size: 12.5px;
-    padding: 9px 10px;
+    padding: 11px 10px;
+  }
+  .cal-apply-now {
+    padding: 8px 6px;
+    font-size: 12px;
   }
 }
