@@ -93,7 +93,7 @@ header.navbar {
 /* ---------- NAVBAR: আইকন নেভিগেশন (PC + Mobile একই আইকন) ---------- */
 nav.nav-links {
   display: flex;
-  gap: 22px;
+  gap: 40px;
   align-items: center;
 }
 @media (min-width: 901px) {
@@ -107,11 +107,11 @@ nav.nav-links {
   }
 }
 nav.nav-links a.nav-icon-link {
-  width: 46px;
-  height: 46px;
+  width: 60px;
+  height: 60px;
   padding: 0;
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   background: transparent;
   box-shadow: none;
   color: #222;
@@ -133,12 +133,15 @@ nav.nav-links a.nav-icon-link.active {
   box-shadow: inset 0 0 0 1.5px var(--blue);
 }
 .nav-icon {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   display: block;
   background-color: currentColor;
   -webkit-mask: var(--icon) center / contain no-repeat;
   mask: var(--icon) center / contain no-repeat;
+}
+.nav-label {
+  display: none; /* PC-তে শুধু আইকন; নাম দেখা যায় hover করলে (title) */
 }
 .nav-icon-exam {
   --icon: url("/icons/nav-exam-dates.png");
@@ -185,18 +188,18 @@ nav.nav-links a.nav-icon-link.active {
   gap: 14px;
 }
 .nav-social-inline {
-  margin-left: 4px;
-  padding-left: 22px;
+  margin-left: 0;
+  padding-left: 32px;
   border-left: 1px solid #e3e6ea;
-  gap: 22px;
+  gap: 24px;
 }
 .nav-social-mobile {
   display: none;
 }
 .nav-social a.nav-social-btn {
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
   box-sizing: border-box;
   border-radius: 50%;
   display: flex;
@@ -219,8 +222,8 @@ nav.nav-links a.nav-icon-link.active {
   background: #1877f2;
 }
 .nav-social a.nav-social-facebook svg {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   fill: #fff;
 }
 .nav-social a.nav-social-telegram {
@@ -230,42 +233,84 @@ nav.nav-links a.nav-icon-link.active {
   fill: #229ed9;
 }
 
-/* ---------- NAVBAR: Mobile — উপরে logo + social, নিচে আইকন বার ---------- */
+/* ---------- NAVBAR: Mobile — উপরে logo + social, নিচে app-style bottom bar ---------- */
 @media (max-width: 640px) {
   header.navbar {
     position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "logo social"
-      "nav nav";
-    align-items: center;
-    row-gap: 10px;
-    column-gap: 8px;
-    padding: 10px 16px 12px;
-  }
-  header.navbar .logo-block {
-    grid-area: logo;
-    justify-self: start;
+    flex-wrap: nowrap;
+    padding: 10px 16px;
   }
   .nav-social-inline {
     display: none;
   }
   .nav-social-mobile {
     display: flex;
-    grid-area: social;
-    justify-self: end;
     gap: 20px;
   }
+
+  /* নিচে আটকে থাকা bar */
   header.navbar nav.nav-links {
-    grid-area: nav;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    transform: none;
     width: 100%;
+    z-index: 60;
+    display: flex;
     justify-content: space-around;
+    align-items: stretch;
     gap: 0;
-    padding: 6px 8px;
-    background: #f3f6fd;
-    border: 1px solid #e6eaf2;
-    border-radius: 16px;
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+    background: #fff;
+    border-top: 1px solid #dfe5f1;
+    border-radius: 0;
+    box-shadow: 0 -4px 18px rgba(15, 23, 42, 0.12);
+  }
+  header.navbar nav.nav-links a.nav-icon-link {
+    flex: 1 1 0;
+    width: auto;
+    height: 58px;
+    flex-direction: column;
+    gap: 4px;
+    border-radius: 12px;
+    box-shadow: none;
+    transform: none;
+    color: #222;
+  }
+  header.navbar nav.nav-links a.nav-icon-link:hover {
+    background: transparent;
+    transform: none;
+    color: #222;
+  }
+  header.navbar nav.nav-links a.nav-icon-link.active {
+    background: rgba(46, 92, 230, 0.12);
+    box-shadow: none;
+    color: var(--blue-dark);
+  }
+  .nav-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .nav-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  header.navbar nav.nav-links a.nav-icon-link.active .nav-label {
+    font-weight: 800;
+  }
+
+  /* নিচের bar-এর নিচে যেন content ঢাকা না পড়ে */
+  body {
+    padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  }
+  /* University page-এ এই navbar নেই, তাই বাড়তি ফাঁকা দরকার নেই */
+  body:has(.layout.uni-detail) {
+    padding-bottom: 0;
   }
 }
 
