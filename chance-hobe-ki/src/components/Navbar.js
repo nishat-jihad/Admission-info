@@ -6,9 +6,16 @@ import { usePathname } from "next/navigation";
 import BreakingNewsBar from "@/components/BreakingNewsBar";
 
 // Mobile ও PC — দুই জায়গাতেই একই আইকন, একই ক্রম।
-// PC: উপরের navbar-এ আইকন | Mobile: নিচের app-style bottom bar (আইকন + ছোট নাম)
-// (Home-এ যেতে logo-তে ক্লিক করলেই হবে)
+// PC: উপরের navbar-এ আইকন + নিচে পেজের নাম | Mobile: নিচের app-style bottom bar (আইকন + নাম)
+// Home বাটনও দুই জায়গাতেই আছে (logo-তে ক্লিক করলেও Home-এ যাওয়া যায়)
 const NAV_ITEMS = [
+  {
+    href: "/",
+    label: "Home",
+    shortLabel: "Home",
+    iconClass: "nav-icon-home",
+    isActive: (pathname) => pathname === "/",
+  },
   {
     href: "/exam-dates",
     label: "Exam Dates",
@@ -117,7 +124,7 @@ function NavbarInner() {
               title={item.label}
             >
               <span className={`nav-icon ${item.iconClass}`} aria-hidden="true" />
-              {/* label শুধু mobile-এর নিচের বারে দেখায় (PC-তে hidden) */}
+              {/* আইকনের নিচে পেজের নাম (PC + Mobile দুই জায়গাতেই) */}
               <span className="nav-label">{item.shortLabel}</span>
             </Link>
           );
