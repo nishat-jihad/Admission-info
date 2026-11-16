@@ -55,7 +55,7 @@ export const universities = {
     }
   },
   "du": {
-    "name": "DU",
+    "name": "DU ('A' Unit)",
     "fullName": "ঢাকা বিশ্ববিদ্যালয় — 'ক' ইউনিট",
     "photo": "/images/du.jpg",
     "color": "#152B6B",
