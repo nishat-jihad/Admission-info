@@ -7,7 +7,7 @@
   --cal-gap: 4px;
   --cal-line: #c3cde0;
   --cal-block-bg: #eef1f7;
-  --cal-head: #e8590c; /* হেডারের কমলা */
+  --cal-head: #000; /* হেডারের কালো */
   margin-top: 28px;
   border: 1.5px solid var(--black);
   border-radius: 12px;
@@ -40,7 +40,7 @@
   table-layout: fixed;
 }
 
-/* ---- মূল টেবিলের হেডার (কমলা + সাদা লেখা) ---- */
+/* ---- মূল টেবিলের হেডার (কালো + সাদা লেখা) ---- */
 .cal-main > thead th {
   background: var(--cal-head);
   color: #fff;
