@@ -1,0 +1,243 @@
+/* ---------- ADMISSION CALENDAR (/exam-dates) ----------
+   একটা বড় (মূল) টেবিল — তার ভেতরে প্রতিটা ভার্সিটির নিজের ছোট টেবিল।
+   ভেতরের টেবিল, বাটন আর আবেদনের টেবিল — সবকিছু মূল টেবিলের কিনারা থেকে ঠিক
+   একই (--cal-gap) ফাঁকে বসে, তাই কোন সারিগুলো কোন ভার্সিটির তা এক নজরেই বোঝা যায়। */
+
+.cal-wrap {
+  --cal-gap: 4px;
+  --cal-line: #c3cde0;
+  --cal-block-bg: #eef1f7;
+  margin-top: 28px;
+  border: 1.5px solid var(--black);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* কলামের প্রস্থ — তিনটা টেবিলেই এক */
+.cal-wrap col.cal-col-uni {
+  width: 29%;
+}
+.cal-wrap col.cal-col-date {
+  width: 38%;
+}
+.cal-wrap col.cal-col-left {
+  width: 33%;
+}
+
+.cal-main,
+.cal-inner,
+.cal-apply {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* ---- মূল টেবিলের হেডার (কালো, স্ক্রিনশটের মতো) ---- */
+.cal-main > thead th {
+  background: #121212;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 700;
+  padding: 13px 10px;
+  text-align: center;
+}
+
+/* ---- প্রতিটা ভার্সিটির ঘর ---- */
+.cal-uni-block-cell {
+  padding: var(--cal-gap);
+  background: var(--cal-block-bg);
+  border-top: 1px solid #cfd7e6;
+}
+.cal-main > tbody > tr:first-child > .cal-uni-block-cell {
+  border-top: 0;
+}
+
+/* ভার্সিটির নিজের টেবিল */
+.cal-inner-wrap,
+.cal-apply-wrap {
+  background: #fff;
+  border: 1px solid var(--cal-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.cal-inner td {
+  padding: 12px 12px;
+  border-top: 1px solid #e6eaf3;
+  font-size: 14.5px;
+  line-height: 1.45;
+  text-align: left;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+.cal-inner tr:first-child td {
+  border-top: 0;
+}
+.cal-inner tr:hover td {
+  background: #f7f9fe;
+}
+
+.cal-cell-uni {
+  font-weight: 700;
+}
+.cal-uni-link {
+  color: var(--blue-dark);
+  text-decoration: none;
+}
+.cal-uni-link:hover {
+  text-decoration: underline;
+}
+.cal-note {
+  display: block;
+  margin-top: 1px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #5a6478;
+}
+.cal-tentative {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* সময় বাকি */
+.cal-cell-left {
+  font-weight: 700;
+}
+.cal-left-upcoming {
+  color: var(--green-dark);
+}
+.cal-left-today {
+  color: #d4380d;
+}
+.cal-left-past {
+  color: #8a8f99;
+}
+
+/* ---- আবেদনের সময় দেখুন (বাটন) — ভার্সিটির টেবিলের ঠিক নিচে, একই ফাঁকে ---- */
+.cal-apply-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: var(--cal-gap);
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--black);
+  border: 1px solid var(--cal-line);
+  border-radius: 8px;
+  font-family: var(--font-noto-bn), sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.cal-apply-btn:hover {
+  background: #f3f6fd;
+}
+.cal-chev {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+.cal-apply-btn[aria-expanded="true"] .cal-chev {
+  transform: rotate(180deg);
+}
+
+/* ---- খুললে: বিশ্ববিদ্যালয় | আবেদনের সময়সীমা | আবেদনের অবস্থা ---- */
+.cal-apply-wrap {
+  margin-top: var(--cal-gap);
+}
+.cal-apply th {
+  background: #eef1f6;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 8px;
+  text-align: center;
+}
+.cal-apply td {
+  padding: 12px 12px;
+  border-top: 1px solid #e6eaf3;
+  font-size: 13.5px;
+  line-height: 1.55;
+  text-align: left;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+.cal-apply-line {
+  display: block;
+}
+.cal-apply-line b {
+  font-weight: 700;
+}
+.cal-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.cal-status-started {
+  background: #e3f6ea;
+  color: #0f6b2a;
+}
+.cal-status-notStarted {
+  background: #fff1db;
+  color: #9a5200;
+}
+.cal-status-closed {
+  background: #fdeaea;
+  color: #b3261e;
+}
+
+/* ---- মোবাইলে মাঝের Latest News (PC-তে ডানের sidebar-এ আছে, তাই এখানে লুকানো) ---- */
+.cal-news-row > td {
+  padding: 10px var(--cal-gap);
+  background: #fff;
+  border-top: 1px solid #cfd7e6;
+}
+@media (min-width: 1024px) {
+  .cal-news-row {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cal-wrap {
+    border-radius: 10px;
+  }
+  .cal-wrap col.cal-col-uni {
+    width: 31%;
+  }
+  .cal-wrap col.cal-col-date {
+    width: 36%;
+  }
+  .cal-wrap col.cal-col-left {
+    width: 33%;
+  }
+  .cal-main > thead th {
+    font-size: 12.5px;
+    padding: 11px 4px;
+  }
+  .cal-inner td,
+  .cal-apply td {
+    padding: 10px 6px;
+    font-size: 12.5px;
+  }
+  .cal-apply th {
+    font-size: 11.5px;
+    padding: 9px 4px;
+  }
+  .cal-note {
+    font-size: 10.5px;
+  }
+  .cal-status {
+    padding: 3px 8px;
+    font-size: 11.5px;
+  }
+  .cal-apply-btn {
+    font-size: 12.5px;
+    padding: 9px 10px;
+  }
+}
