@@ -2,6 +2,11 @@ import { Analytics } from '@vercel/analytics/react';
 import Script from "next/script";
 import { Bangers, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
+import "../styles/popup-nav.css";
+import ApplyPopup from "@/components/ApplyPopup";
+import { updates } from "@/data/updates";
+import { examDates } from "@/data/examDates";
+import { buildAdmissionCalendar } from "@/lib/examCalendar";
 
 const bangers = Bangers({
   subsets: ["latin"],
@@ -76,10 +81,25 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // যেসব ভার্সিটির "Apply Now" লিংক আছে (APPLY_LINKS, Admission Calendar-এর সাথে একই) — pop-up-এর ডেটা।
+  // কোনটার আবেদন এখন চলছে সেটা ব্রাউজারে বর্তমান সময় দেখে ঠিক হয়।
+  const seen = new Set();
+  const applyItems = buildAdmissionCalendar({ updates, examDates })
+    .filter((b) => b.applyUrl && !seen.has(b.universityId) && seen.add(b.universityId))
+    .map((b) => ({
+      id: b.universityId,
+      name:
+        (updates.find((u) => u.universityId === b.universityId) || {}).universityName ||
+        b.shortName,
+      applyUrl: b.applyUrl,
+      application: b.application,
+    }));
+
   return (
     <html lang="bn">
       <body className={`${bangers.variable} ${notoBengali.variable}`}>
         {children}
+        <ApplyPopup items={applyItems} />
         <Analytics />
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
