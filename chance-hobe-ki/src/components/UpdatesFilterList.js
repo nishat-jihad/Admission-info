@@ -255,7 +255,8 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
             </div>
             {(u.extraTables || []).filter((t) => !t.detailOnly).map((t, ti) => {
               const tableKey = `${u.id}-${ti}`;
-              const collapsible = ti >= 1;
+              // u.foldExtraTables: true হলে প্রথম extraTable-ও ফোল্ডেড থাকে (শুধু সময়সূচির টেবিল খোলা)।
+              const collapsible = u.foldExtraTables ? true : ti >= 1;
               const isOpen = !collapsible || !!openTables[tableKey];
               return (
                 <div key={ti}>
@@ -339,18 +340,77 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                 </div>
               );
             })}
-            {(u.notes || []).length > 0 && (
-              <div>
-                <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
-                  গুরুত্বপূর্ণ তথ্য
-                </h3>
-                <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, color: "#333", lineHeight: 1.7 }}>
-                  {u.notes.map((n, i) => (
-                    <li key={i}>{n}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {(u.notes || []).length > 0 && (() => {
+              // u.foldNotes: true হলে "গুরুত্বপূর্ণ তথ্য" ফোল্ডেড থাকে; টাইটেলে ক্লিক করলে খোলে/বন্ধ হয়।
+              const notesKey = `${u.id}-notes`;
+              const isOpen = !u.foldNotes || !!openTables[notesKey];
+              return (
+                <div>
+                  {u.foldNotes ? (
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() =>
+                        setOpenTables((prev) => ({ ...prev, [notesKey]: !prev[notesKey] }))
+                      }
+                      onMouseEnter={() => setHoverTable(notesKey)}
+                      onMouseLeave={() => setHoverTable(null)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: 10,
+                        width: "100%",
+                        textAlign: "left",
+                        cursor: "pointer",
+                        margin: "14px 0 0",
+                        padding: "11px 14px",
+                        border: "1px solid " + (hoverTable === notesKey || isOpen ? "var(--blue)" : "#e2e2e2"),
+                        borderRadius: 8,
+                        background: hoverTable === notesKey || isOpen ? "#eaf2ff" : "#f5f6f8",
+                        color: "var(--black)",
+                        font: "inherit",
+                        fontFamily: "var(--font-noto-bn), sans-serif",
+                        fontWeight: 700,
+                        fontSize: 15,
+                        transition: "background 0.15s ease, border-color 0.15s ease",
+                      }}
+                    >
+                      <span>গুরুত্বপূর্ণ তথ্য</span>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                        style={{
+                          flexShrink: 0,
+                          transform: isOpen ? "rotate(180deg)" : "none",
+                          transition: "transform 0.2s ease",
+                        }}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                      গুরুত্বপূর্ণ তথ্য
+                    </h3>
+                  )}
+                  {isOpen && (
+                    <ul style={{ margin: u.foldNotes ? "10px 0 0" : 0, paddingLeft: 20, fontSize: 14, color: "#333", lineHeight: 1.7 }}>
+                      {u.notes.map((n, i) => (
+                        <li key={i}>{n}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            })()}
             {pdfLinks(u).length > 0 && (
               <div
                 style={{
