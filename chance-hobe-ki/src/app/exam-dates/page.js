@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import ExamDatesFilterList from "@/components/ExamDatesFilterList";
 import LatestNewsList from "@/components/LatestNewsList";
 import { examDates } from "@/data/examDates";
+import { updates } from "@/data/updates";
+import { buildAdmissionCalendar } from "@/lib/examCalendar";
 
 export const metadata = {
   title: "ভর্তি পরীক্ষার তারিখ ২০২৬-২৭ — সব ভার্সিটি একসাথে",
@@ -13,6 +15,10 @@ export const metadata = {
 };
 
 export default function ExamDatesPage() {
+  // তারিখ/সময়/আবেদনের তথ্য updates.js + examDates.js থেকে সার্ভারে একবার বানানো হয়;
+  // ক্লায়েন্টে শুধু এই ছোট ডেটাটুকু যায়।
+  const calendar = buildAdmissionCalendar({ updates, examDates });
+
   return (
     <>
       <Navbar />
@@ -26,7 +32,7 @@ export default function ExamDatesPage() {
               হোমে ফিরে যাও
             </Link>
 
-            <h1 className="about-title">একত্রে ভর্তি পরীক্ষার তারিখসমূহ</h1>
+            <h1 className="about-title">Admission Calendar</h1>
             <p className="about-lead">
               সব বিশ্ববিদ্যালয়ের আবেদন শুরু-শেষের তারিখ আর ইউনিট অনুযায়ী পরীক্ষার তারিখ
               এক জায়গায় গুছিয়ে দেওয়া হলো। বিশ্ববিদ্যালয়ের নামে ক্লিক করলে সেই
@@ -42,7 +48,7 @@ export default function ExamDatesPage() {
             </p>
 
             <ExamDatesFilterList
-              examDates={examDates}
+              calendar={calendar}
               inlineNews={
                 <section className="news-inline-box">
                   <LatestNewsList count={2} />
