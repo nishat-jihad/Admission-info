@@ -25,7 +25,7 @@ export const generalCriteria = {
   ju_a: { name: "JU (A Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 8.5 },
   ju_d: { name: "JU (D Unit)", minSsc: 4.0, minHsc: 4.0, minCombined: 9.0 },
   // RU ২০২৬-২৭ সার্কুলার, বিজ্ঞান শাখা: SSC ও HSC প্রতিটিতে ন্যূনতম ৩.৫০ সহ মোট ৭.৫০।
-  ru: { name: "RU", minSsc: 3.5, minHsc: 3.5, minCombined: 7.5 },
+  ru: { name: "RU (C Unit)", minSsc: 3.5, minHsc: 3.5, minCombined: 7.5 },
   cu: { name: "CU (A Unit)", minSsc: 4.0, minHsc: 3.0, minCombined: 8.0 },
   ku_a: { name: "KU (A Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },
   ku_b: { name: "KU (B Unit)", minSsc: 3.0, minHsc: 3.0, minCombined: 8.0 },
