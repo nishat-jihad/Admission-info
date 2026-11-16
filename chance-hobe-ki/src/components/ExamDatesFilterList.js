@@ -36,7 +36,7 @@ function CalendarBlock({ block, nowMs }) {
 
   return (
     <div className="cal-block">
-      {/* ভার্সিটির নিজের টেবিল — তার সব ইউনিট নিচে নিচে */}
+      {/* ভার্সিটির নিজের টেবিল — তার সব ইউনিট নিচে নিচে, আর সবার শেষে আবেদনের সময় দেখার বাটন */}
       <div className="cal-inner-wrap">
         <table className="cal-inner">
           <ColGroup />
@@ -65,62 +65,76 @@ function CalendarBlock({ block, nowMs }) {
                 </tr>
               );
             })}
+
+            <tr className="cal-apply-row">
+              <td colSpan={3}>
+                <button
+                  type="button"
+                  className="cal-apply-btn"
+                  aria-expanded={open}
+                  aria-controls={panelId}
+                  onClick={() => setOpen((o) => !o)}
+                >
+                  আবেদনের সময় দেখুন
+                  <svg className="cal-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+
+                {open && (
+                  <div className="cal-apply-wrap" id={panelId}>
+                    <table className="cal-apply">
+                      <ColGroup />
+                      <thead>
+                        <tr>
+                          <th>বিশ্ববিদ্যালয়</th>
+                          <th>আবেদনের সময়সীমা</th>
+                          <th>আবেদনের অবস্থা</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="cal-cell-uni">
+                            <Link href={`/university/${block.universityId}`} className="cal-uni-link">
+                              {block.shortName}
+                            </Link>
+                          </td>
+                          <td className="cal-cell-date">
+                            {lines.map((l, i) => (
+                              <span className="cal-apply-line" key={i}>
+                                {l.label && <b>{l.label}: </b>}
+                                {l.value}
+                              </span>
+                            ))}
+                          </td>
+                          <td className="cal-cell-left">
+                            {!status ? (
+                              "—"
+                            ) : status.key === "started" && block.applyUrl ? (
+                              <a
+                                className="cal-apply-now"
+                                href={block.applyUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                আবেদন করুন
+                              </a>
+                            ) : (
+                              <span className={`cal-status cal-status-${status.key}`}>
+                                {status.text}
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
-
-      {/* ঠিক নিচে (একই gap-এ) আবেদনের সময় দেখার বাটন */}
-      <button
-        type="button"
-        className="cal-apply-btn"
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => setOpen((o) => !o)}
-      >
-        আবেদনের সময় দেখুন
-        <svg className="cal-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
-          <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-
-      {open && (
-        <div className="cal-apply-wrap" id={panelId}>
-          <table className="cal-apply">
-            <ColGroup />
-            <thead>
-              <tr>
-                <th>বিশ্ববিদ্যালয়</th>
-                <th>আবেদনের সময়সীমা</th>
-                <th>আবেদনের অবস্থা</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="cal-cell-uni">
-                  <Link href={`/university/${block.universityId}`} className="cal-uni-link">
-                    {block.shortName}
-                  </Link>
-                </td>
-                <td className="cal-cell-date">
-                  {lines.map((l, i) => (
-                    <span className="cal-apply-line" key={i}>
-                      {l.label && <b>{l.label}: </b>}
-                      {l.value}
-                    </span>
-                  ))}
-                </td>
-                <td className="cal-cell-left">
-                  {status ? (
-                    <span className={`cal-status cal-status-${status.key}`}>{status.text}</span>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
     </div>
   );
 }
