@@ -18,8 +18,8 @@ const NAV_ITEMS = [
   },
   {
     href: "/exam-dates",
-    label: "Exam Dates",
-    shortLabel: "Exam Dates",
+    label: "Ad. Calendar",
+    shortLabel: "Ad. Calendar",
     iconClass: "nav-icon-exam",
     isActive: (pathname) => pathname === "/exam-dates",
   },
