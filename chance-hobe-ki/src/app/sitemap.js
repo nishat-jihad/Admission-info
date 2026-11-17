@@ -7,6 +7,7 @@ export default function sitemap() {
   const staticRoutes = [
     "",
     "/hsc-gpa-calculator",
+    "/agri-cluster-calculator",
     "/general-check",
     "/exam-dates",
     "/updates",
