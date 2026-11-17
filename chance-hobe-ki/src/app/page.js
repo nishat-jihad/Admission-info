@@ -10,6 +10,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NewsCorner from "@/components/NewsCorner";
 import HeroLatestNews from "@/components/HeroLatestNews";
+import AgriCalcCard from "@/components/AgriCalcCard";
 
 const VISIBLE_COUNT = 6;
 
@@ -187,6 +188,8 @@ export default function HomePage() {
               loading="lazy"
             />
           </div>
+
+          <AgriCalcCard />
 
           <HeroLatestNews />
         </div>
