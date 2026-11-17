@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 // রাইট-ক্লিক মেনুতে যা যা থাকবে
@@ -13,7 +14,7 @@ const MENU_ITEMS = [
 ];
 
 const MENU_WIDTH = 220;
-const MENU_HEIGHT = MENU_ITEMS.length * 40 + 16;
+const MENU_HEIGHT = MENU_ITEMS.length * 40 + 16 + 64; // 64 = লোগোর জায়গা
 
 export default function CustomContextMenu() {
   const router = useRouter();
@@ -71,6 +72,15 @@ export default function CustomContextMenu() {
       style={{ left: pos.x, top: pos.y }}
       onContextMenu={(e) => e.preventDefault()}
     >
+      <div className="ctx-menu-logo">
+        <Image
+          src="/images/admission-info-logo.png"
+          alt="Admission Info"
+          width={346}
+          height={145}
+          className="ctx-menu-logo-img"
+        />
+      </div>
       {MENU_ITEMS.map((item) => (
         <button
           key={item.href}
