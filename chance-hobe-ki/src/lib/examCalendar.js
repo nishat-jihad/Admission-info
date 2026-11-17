@@ -165,6 +165,9 @@ export const APPLY_LINKS = {
   du: "https://admission.eis.du.ac.bd/",
   ru: "https://admission.ru.ac.bd/",
   kuet: "https://admission.kuet.ac.bd/",
+  // JU: আবেদন শুরু ২২ নভেম্বর ২০২৬ সকাল ১০টা — তার আগে "আবেদন শুরু হয়নি", সময় হলে নিজে থেকে বাটন আসবে
+  ju_a: "https://admission.juniv.edu/",
+  ju_d: "https://admission.juniv.edu/",
 };
 
 const CATEGORY_MAP = { versity: "university", university: "university", engineering: "engineering", medical: "medical" };
@@ -208,6 +211,13 @@ export function buildAdmissionCalendar({ updates = [], examDates = [] }) {
     if (rows.length === 0) return;
     const shortName = shortNameOf(u.universityId, u.universityName, examDates);
     const ex = examDates.find((e) => e.universityId === u.universityId);
+    // একই ভার্সিটির একাধিক ইউনিটের আলাদা আপডেট (যেমন JU-এর A ও D) একই কার্ডে মিলে যাবে
+    const same = blocks.find((blk) => blk.shortName === shortName);
+    if (same) {
+      same.rows.push(...rows);
+      same.rows.sort((x, y) => x.instants[0] - y.instants[0]);
+      return;
+    }
     usedShortNames.add(shortName);
     blocks.push({
       id: u.id,
