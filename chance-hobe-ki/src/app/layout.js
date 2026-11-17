@@ -3,7 +3,9 @@ import Script from "next/script";
 import { Bangers, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import "../styles/popup-nav.css";
+import "../styles/context-menu.css";
 import ApplyPopup from "@/components/ApplyPopup";
+import CustomContextMenu from "@/components/CustomContextMenu";
 import { updates } from "@/data/updates";
 import { examDates } from "@/data/examDates";
 import { buildAdmissionCalendar } from "@/lib/examCalendar";
@@ -100,6 +102,7 @@ export default function RootLayout({ children }) {
       <body className={`${bangers.variable} ${notoBengali.variable}`}>
         {children}
         <ApplyPopup items={applyItems} />
+        <CustomContextMenu />
         <Analytics />
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
