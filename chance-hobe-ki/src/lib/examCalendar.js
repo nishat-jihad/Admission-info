@@ -170,6 +170,26 @@ export const APPLY_LINKS = {
   ju_d: "https://admission.juniv.edu/",
 };
 
+// কোন সারির ইউনিটের জন্য বিস্তারিত পেজ (/university/[slug]) আছে, সেটা ঠিক করার নিয়ম।
+// - এখানে যে ভার্সিটির নাম নেই: তার সব সারি নিজের পেজে যাবে (যদি পেজ থাকে)।
+// - এখানে যাদের নাম আছে: শুধু লেখা ইউনিটগুলোর পেজ আছে — বাকি সারিতে কোনো লিংক থাকবে না।
+//   (ডানে পেজের slug, যেটা src/data/universities.js-এর key)
+const UNIT_PAGES = {
+  du: { A: "du" },
+  ru: { C: "ru" },
+  cu: { A: "cu" },
+  jnu: { A: "jnu" },
+  cou: { A: "cou" },
+  bup: { D: "bup" }, // শুধু FST ('ডি' ইউনিট)-এর পেজ আছে
+  ku_a: { A: "ku_a", B: "ku_b", "A, B": "ku_a" },
+};
+
+function pageIdFor(universityId, label, pageIds) {
+  const map = UNIT_PAGES[universityId];
+  const id = map ? map[label] : universityId;
+  return id && pageIds.includes(id) ? id : null;
+}
+
 const CATEGORY_MAP = { versity: "university", university: "university", engineering: "engineering", medical: "medical" };
 
 function shortNameOf(universityId, universityName, examDates) {
@@ -201,7 +221,8 @@ function buildRows(schedule, sessionYear) {
 }
 
 // ---------- মূল ফাংশন: সার্ভারে একবার চালানো হয়, ক্লায়েন্টে শুধু ছোট ডেটা যায় ----------
-export function buildAdmissionCalendar({ updates = [], examDates = [] }) {
+// pageIds = যেসব ভার্সিটির বিস্তারিত পেজ আছে তাদের slug-এর তালিকা (universities.js-এর key)।
+export function buildAdmissionCalendar({ updates = [], examDates = [], pageIds = [] }) {
   const blocks = [];
   const usedShortNames = new Set();
 
@@ -209,6 +230,9 @@ export function buildAdmissionCalendar({ updates = [], examDates = [] }) {
     const sessionYear = sessionYearFrom(u.title);
     const rows = buildRows(u.schedule, sessionYear);
     if (rows.length === 0) return;
+    rows.forEach((r) => {
+      r.pageId = pageIdFor(u.universityId, r.label, pageIds);
+    });
     const shortName = shortNameOf(u.universityId, u.universityName, examDates);
     const ex = examDates.find((e) => e.universityId === u.universityId);
     // একই ভার্সিটির একাধিক ইউনিটের আলাদা আপডেট (যেমন JU-এর A ও D) একই কার্ডে মিলে যাবে
@@ -242,6 +266,9 @@ export function buildAdmissionCalendar({ updates = [], examDates = [] }) {
     if (usedShortNames.has(e.shortName)) return;
     const rows = buildRows(e.schedule, 2026);
     if (rows.length === 0) return;
+    rows.forEach((r) => {
+      r.pageId = pageIdFor(e.universityId, r.label, pageIds);
+    });
     usedShortNames.add(e.shortName);
     blocks.push({
       id: e.id,
@@ -258,6 +285,11 @@ export function buildAdmissionCalendar({ updates = [], examDates = [] }) {
         confirmed: Boolean(APPLY_LINKS[e.universityId]),
       },
     });
+  });
+
+  // ভার্সিটির নামে (আবেদনের টেবিলে) লিংক দেওয়ার জন্য: কোনো একটা সারির পেজ থাকলে সেটাই, না থাকলে null
+  blocks.forEach((b) => {
+    b.pageId = (b.rows.find((r) => r.pageId) || {}).pageId || null;
   });
 
   // যার পরীক্ষা আগে, সে উপরে (স্ক্রিনশটের অ্যাপের মতো)
