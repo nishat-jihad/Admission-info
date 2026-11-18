@@ -78,20 +78,20 @@
   }
 }
 
-/* ---------- ক্যালকুলেটর পেজ: বাঁয়ে Latest News, ডানে ক্যালকুলেটর ---------- */
+/* ---------- ক্যালকুলেটর পেজ: বাঁয়ে ক্যালকুলেটর, ডানে Latest News ---------- */
 .agri-layout {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 340px;
   gap: 40px;
 }
 .agri-layout > .general-page-inner {
   width: 100%;
 }
 .agri-news-aside {
-  padding-right: 28px;
-  border-right: 1px solid #d9dce1;
+  padding-left: 28px;
+  border-left: 1px solid #d9dce1;
 }
 @media (max-width: 1023px) {
   .agri-layout {
@@ -100,9 +100,8 @@
   }
   /* মোবাইলে ক্যালকুলেটর আগে, নিউজ তার নিচে */
   .agri-news-aside {
-    order: 2;
-    padding-right: 0;
-    border-right: 0;
+    padding-left: 0;
+    border-left: 0;
     padding-top: 24px;
     border-top: 1px solid #d9dce1;
   }
