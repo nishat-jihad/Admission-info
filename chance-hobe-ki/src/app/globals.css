@@ -2852,14 +2852,6 @@ section.block h2 .circular-tag {
 .exam-date-table tr.row-grey {
   background: #f5f6f8;
 }
-.exam-date-table th,
-.exam-date-table td {
-  border-right: 1px solid #e2e2e2;
-}
-.exam-date-table th:last-child,
-.exam-date-table td:last-child {
-  border-right: none;
-}
 @media (max-width: 640px) {
   .exam-date-table th,
   .exam-date-table td {
