@@ -5,6 +5,7 @@ import ExamDatesFilterList from "@/components/ExamDatesFilterList";
 import LatestNewsList from "@/components/LatestNewsList";
 import { examDates } from "@/data/examDates";
 import { updates } from "@/data/updates";
+import { universities } from "@/data/universities";
 import { buildAdmissionCalendar } from "@/lib/examCalendar";
 
 export const metadata = {
@@ -17,7 +18,12 @@ export const metadata = {
 export default function ExamDatesPage() {
   // তারিখ/সময়/আবেদনের তথ্য updates.js + examDates.js থেকে সার্ভারে একবার বানানো হয়;
   // ক্লায়েন্টে শুধু এই ছোট ডেটাটুকু যায়।
-  const calendar = buildAdmissionCalendar({ updates, examDates });
+  // pageIds: যেসব ভার্সিটির বিস্তারিত পেজ আছে — শুধু তাদের নামেই লিংক বসবে।
+  const calendar = buildAdmissionCalendar({
+    updates,
+    examDates,
+    pageIds: Object.keys(universities),
+  });
 
   return (
     <>
