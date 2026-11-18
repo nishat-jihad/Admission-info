@@ -15,6 +15,21 @@
   background: #fff;
 }
 
+/* ---- ভার্সিটি / ইঞ্জিনিয়ারিং / মেডিকেল বাটন — এই পেজে নীল (Updates পেজে আগের মতোই) ---- */
+.exam-dates-page .updates-filter-btn {
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.exam-dates-page .updates-filter-btn:hover {
+  background: #eaf0ff;
+}
+.exam-dates-page .updates-filter-btn-active,
+.exam-dates-page .updates-filter-btn-active:hover {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
 /* বাটন/লিংকে padding থাকলেও যেন ঘরের বাইরে না বেরোয় */
 .cal-wrap button,
 .cal-wrap a {
@@ -83,6 +98,13 @@
   background: #f7f9fe;
 }
 
+/* ---- কলামের লাইন: বিশ্ববিদ্যালয় | তারিখ | সময় বাকি (মাঝে ২টা লাইন) ---- */
+.cal-inner > tbody > tr > td + td,
+.cal-apply > thead > tr > th + th,
+.cal-apply > tbody > tr > td + td {
+  border-left: 1px solid var(--cal-line);
+}
+
 .cal-cell-uni {
   font-weight: 700;
 }
@@ -92,6 +114,10 @@
 }
 .cal-uni-link:hover {
   text-decoration: underline;
+}
+/* বিস্তারিত পেজ নেই — কালো লেখা, কোনো লিংক নেই */
+.cal-uni-name {
+  color: var(--black);
 }
 .cal-note {
   display: block;
@@ -243,14 +269,16 @@
   .cal-wrap {
     border-radius: 10px;
   }
+  /* ভার্সিটির নাম একটু বাঁয়ে (সরু), তারিখের কলাম চওড়া — যাতে "am" একই লাইনে থাকে;
+     আর "সময় বাকি" একটু ডানে */
   .cal-wrap col.cal-col-uni {
-    width: 31%;
+    width: 25%;
   }
   .cal-wrap col.cal-col-date {
-    width: 36%;
+    width: 44%;
   }
   .cal-wrap col.cal-col-left {
-    width: 33%;
+    width: 31%;
   }
   .cal-main > thead th {
     font-size: 13px;
@@ -258,8 +286,11 @@
   }
   .cal-inner td,
   .cal-apply td {
-    padding: 10px 6px;
+    padding: 10px 5px;
     font-size: 12.5px;
+  }
+  .cal-inner > tbody > tr > td.cal-cell-date {
+    font-size: 12px;
   }
   .cal-apply th {
     font-size: 11.5px;
@@ -279,5 +310,16 @@
   .cal-apply-now {
     padding: 8px 6px;
     font-size: 12px;
+  }
+}
+
+/* খুব ছোট ফোনে (৩৮০px বা কম) তারিখ-সময় যেন এক লাইনে ধরে */
+@media (max-width: 380px) {
+  .cal-inner > tbody > tr > td.cal-cell-date {
+    font-size: 11.5px;
+  }
+  .cal-inner td,
+  .cal-apply td {
+    padding: 10px 4px;
   }
 }
