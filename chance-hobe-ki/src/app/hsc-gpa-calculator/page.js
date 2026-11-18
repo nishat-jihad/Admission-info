@@ -131,6 +131,7 @@ export default function HscGpaCalculatorPage() {
           </div>
 
           <div className="hsc-layout">
+            <div className="hsc-left-col">
             <div className="general-card hsc-main-card">
               <div className="general-intro">
                 সবগুলো বিষয়ের GPA দাও — <b>Higher Math</b> আর <b>Biology</b> দুটোই HSC-তে
@@ -222,6 +223,12 @@ export default function HscGpaCalculatorPage() {
               )}
             </div>
 
+            <div className="hsc-grading-block">
+              <div className="grading-panel-title">গ্রেডিং স্কেল</div>
+              <GradingScaleTable />
+            </div>
+            </div>
+
             <aside className="hsc-grading-panel hsc-about-panel">
               <div className="grading-panel-title">About HSC GPA Calculation</div>
               <p>
@@ -242,10 +249,6 @@ export default function HscGpaCalculatorPage() {
             </aside>
           </div>
 
-          <div className="general-card hsc-grading-mobile">
-            <div className="grading-panel-title">গ্রেডিং স্কেল</div>
-            <GradingScaleTable />
-          </div>
         </div>
       </section>
       <Footer />
