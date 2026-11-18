@@ -6,6 +6,7 @@ import "../styles/agri-calc.css";
 export default function AgriCalcCard() {
   return (
     <section className="agri-card" aria-label="কৃষি গুচ্ছ GPA Calculator">
+      <span className="agri-card-badge">🔥 কৃষি গুচ্ছ ক্যান্ডিডেটদের জন্য</span>
       <div className="agri-card-left">
         <span className="agri-card-icon" aria-hidden="true">
           🌾
