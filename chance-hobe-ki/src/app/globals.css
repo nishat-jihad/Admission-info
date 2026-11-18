@@ -2776,13 +2776,12 @@ section.block h2 .circular-tag {
 .update-table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border: 1px solid #c5ccd6;
+  border-radius: 8px;
 }
 .update-table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #e2e2e2;
-  border-radius: 8px;
-  overflow: hidden;
 }
 .update-table th {
   text-align: left;
@@ -2792,16 +2791,21 @@ section.block h2 .circular-tag {
   background: #eef1f6;
   color: var(--black);
   padding: 10px 14px;
-  border-bottom: 1.5px solid #e2e2e2;
+  border-bottom: 1px solid #c5ccd6;
+  border-right: 1px solid #c5ccd6;
 }
 .update-table td {
   padding: 9px 14px;
   font-size: 14px;
   color: #333;
-  border-bottom: 1px solid #ececec;
+  border-right: 1px solid #c5ccd6;
 }
-.update-table tr:last-child td {
-  border-bottom: none;
+.update-table tbody tr + tr td {
+  border-top: 1px solid #c5ccd6;
+}
+.update-table th:last-child,
+.update-table td:last-child {
+  border-right: none;
 }
 .update-table tr.row-white {
   background: #ffffff;
