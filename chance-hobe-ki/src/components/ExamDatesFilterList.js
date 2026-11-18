@@ -43,17 +43,23 @@ function CalendarBlock({ block, nowMs }) {
           <tbody>
             {block.rows.map((row) => {
               const remaining = nowMs == null ? null : getRemaining(row, nowMs);
+              const rowName = `${block.shortName}${row.label ? ` (${row.label})` : ""}`;
+              // "10:00 am"-এর am যেন আলাদা লাইনে একা না পড়ে — তাই সময় আর am-এর মাঝে non-breaking space
+              const dateText = row.dateText.replace(/\s(am|pm)$/i, "\u00A0$1");
               return (
                 <tr key={row.key}>
                   <td className="cal-cell-uni">
-                    <Link href={`/university/${block.universityId}`} className="cal-uni-link">
-                      {block.shortName}
-                      {row.label ? ` (${row.label})` : ""}
-                    </Link>
+                    {row.pageId ? (
+                      <Link href={`/university/${row.pageId}`} className="cal-uni-link">
+                        {rowName}
+                      </Link>
+                    ) : (
+                      <span className="cal-uni-name">{rowName}</span>
+                    )}
                     {row.note && <span className="cal-note">{row.note}</span>}
                   </td>
                   <td className={"cal-cell-date" + (row.tentative ? " cal-tentative" : "")}>
-                    {row.dateText}
+                    {dateText}
                   </td>
                   <td
                     className={
@@ -95,9 +101,13 @@ function CalendarBlock({ block, nowMs }) {
                       <tbody>
                         <tr>
                           <td className="cal-cell-uni">
-                            <Link href={`/university/${block.universityId}`} className="cal-uni-link">
-                              {block.shortName}
-                            </Link>
+                            {block.pageId ? (
+                              <Link href={`/university/${block.pageId}`} className="cal-uni-link">
+                                {block.shortName}
+                              </Link>
+                            ) : (
+                              <span className="cal-uni-name">{block.shortName}</span>
+                            )}
                           </td>
                           <td className="cal-cell-date">
                             {lines.map((l, i) => (
