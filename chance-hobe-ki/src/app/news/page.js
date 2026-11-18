@@ -29,13 +29,6 @@ export const metadata = {
   },
 };
 
-const QUICK_LINKS = [
-  { href: "/exam-dates", label: "ভর্তি পরীক্ষার তারিখ" },
-  { href: "/updates", label: "Updates(admission)" },
-  { href: "/general-check", label: "SSC+HSC যোগ্যতা যাচাই" },
-  { href: "/hsc-gpa-calculator", label: "HSC GPA ক্যালকুলেটর" },
-];
-
 export default function NewsPortalPage() {
   const items = getAllNews();
 
@@ -62,13 +55,6 @@ export default function NewsPortalPage() {
             ভর্তি পরীক্ষার সর্বশেষ খবর, আবেদনের যোগ্যতায় বদল আর সময়সূচির নতুন সিদ্ধান্ত—
             সব এক জায়গায়, সহজ ভাষায়।
           </p>
-          <div className="news-portal-chips">
-            {QUICK_LINKS.map((l) => (
-              <Link key={l.href} href={l.href} className="news-chip">
-                {l.label}
-              </Link>
-            ))}
-          </div>
         </header>
 
         <div className="news-grid">
