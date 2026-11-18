@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { universities } from "@/data/universities";
-import { updates } from "@/data/updates";
+import { updates, mergeTableRows } from "@/data/updates";
 import UniversitySidebar from "@/components/UniversitySidebar";
 import EligibilityCalculator from "@/components/EligibilityCalculator";
 
@@ -253,8 +253,8 @@ export default function UniversityDetailPage({ params }) {
               আবেদন শুরু: <strong>{examDate.applicationStart}</strong> — আবেদন শেষ:{" "}
               <strong>{examDate.applicationEnd}</strong>
             </p>
-            <div className="exam-date-table-wrap">
-              <table className="exam-date-table">
+            <div className="update-table-wrap" style={{ marginTop: 12 }}>
+              <table className="update-table">
                 <thead>
                   <tr>
                     <th>ইউনিট</th>
@@ -281,8 +281,8 @@ export default function UniversityDetailPage({ params }) {
                 <h3 style={{ fontFamily: "var(--font-noto-bn), sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
                   {t.title}
                 </h3>
-                <div className="exam-date-table-wrap">
-                  <table className="exam-date-table">
+                <div className="update-table-wrap" style={{ marginTop: 12 }}>
+                  <table className="update-table">
                     <thead>
                       <tr>
                         {t.headers.map((h, hi) => (
@@ -291,11 +291,19 @@ export default function UniversityDetailPage({ params }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {t.rows.map((row, ri) => (
-                        <tr key={ri} className={ri % 2 === 0 ? "row-white" : "row-grey"}>
-                          {row.map((cell, ci) => (
-                            <td key={ci}>{cell}</td>
-                          ))}
+                      {mergeTableRows(t.rows).map((row, ri) => (
+                        <tr key={ri} className={row.stripe}>
+                          {row.cells.map((c, ci) =>
+                            c.span === 0 ? null : (
+                              <td
+                                key={ci}
+                                rowSpan={c.span > 1 ? c.span : undefined}
+                                style={c.span > 1 ? { verticalAlign: "middle" } : undefined}
+                              >
+                                {c.cell}
+                              </td>
+                            )
+                          )}
                         </tr>
                       ))}
                     </tbody>
