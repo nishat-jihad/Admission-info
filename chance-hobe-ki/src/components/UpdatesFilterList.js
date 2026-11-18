@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { universities } from "@/data/universities";
+import { mergeTableRows } from "@/data/updates";
 
 const CATEGORIES = [
   { key: "versity", label: "ভার্সিটি" },
@@ -326,11 +327,19 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                           </tr>
                         </thead>
                         <tbody>
-                          {t.rows.map((row, ri) => (
-                            <tr key={ri} className={ri % 2 === 0 ? "row-white" : "row-grey"}>
-                              {row.map((cell, ci) => (
-                                <td key={ci}>{cell}</td>
-                              ))}
+                          {mergeTableRows(t.rows).map((row, ri) => (
+                            <tr key={ri} className={row.stripe}>
+                              {row.cells.map((c, ci) =>
+                                c.span === 0 ? null : (
+                                  <td
+                                    key={ci}
+                                    rowSpan={c.span > 1 ? c.span : undefined}
+                                    style={c.span > 1 ? { verticalAlign: "middle" } : undefined}
+                                  >
+                                    {c.cell}
+                                  </td>
+                                )
+                              )}
                             </tr>
                           ))}
                         </tbody>
