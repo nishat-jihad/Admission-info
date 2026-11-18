@@ -7,9 +7,6 @@ export default function AgriCalcCard() {
   return (
     <section className="agri-card" aria-label="কৃষি গুচ্ছ GPA Calculator">
       <div className="agri-card-left">
-        <span className="agri-card-icon" aria-hidden="true">
-          🌾
-        </span>
         <div className="agri-card-text">
           <h2 className="agri-card-title">কৃষি গুচ্ছ GPA Calculator</h2>
           <p className="agri-card-sub">
