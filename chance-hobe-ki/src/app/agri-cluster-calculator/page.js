@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LatestNewsList from "@/components/LatestNewsList";
 import "../../styles/agri-calc.css";
 
 const MAX_MARK = 25; // SSC থেকে ২৫, HSC থেকে ২৫
@@ -110,6 +111,10 @@ export default function AgriClusterCalculatorPage() {
     <>
       <Navbar />
       <section className="general-page hsc-calc-page open">
+        <div className="agri-layout">
+        <aside className="agri-news-aside" aria-label="Latest News">
+          <LatestNewsList />
+        </aside>
         <div className="general-page-inner">
           <Link className="general-back-btn" href="/">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -276,6 +281,7 @@ export default function AgriClusterCalculatorPage() {
               </div>
             )}
           </div>
+        </div>
         </div>
       </section>
       <Footer />
