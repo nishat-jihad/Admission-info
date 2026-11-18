@@ -65,23 +65,23 @@ export default function AgriClusterCalculatorPage() {
     setResult(null);
 
     if ([sscGot, sscFull, hscGot, hscFull].some((n) => Number.isNaN(n))) {
-      setError("⚠️ চারটা ঘরেই নম্বর লিখো (শুধু সংখ্যা)।");
+      setError("চারটা ঘরেই নম্বর লিখো (শুধু সংখ্যা)।");
       return;
     }
     if (sscFull <= 0 || hscFull <= 0) {
-      setError("⚠️ পূর্ণমান ০-এর বেশি হতে হবে।");
+      setError("পূর্ণমান ০-এর বেশি হতে হবে।");
       return;
     }
     if (sscGot < 0 || hscGot < 0) {
-      setError("⚠️ প্রাপ্ত নম্বর ঋণাত্মক হতে পারে না।");
+      setError("প্রাপ্ত নম্বর ঋণাত্মক হতে পারে না।");
       return;
     }
     if (sscGot > sscFull) {
-      setError("⚠️ SSC-র প্রাপ্ত নম্বর পূর্ণমানের চেয়ে বেশি হতে পারে না।");
+      setError("SSC-র প্রাপ্ত নম্বর পূর্ণমানের চেয়ে বেশি হতে পারে না।");
       return;
     }
     if (hscGot > hscFull) {
-      setError("⚠️ HSC-র প্রাপ্ত নম্বর পূর্ণমানের চেয়ে বেশি হতে পারে না।");
+      setError("HSC-র প্রাপ্ত নম্বর পূর্ণমানের চেয়ে বেশি হতে পারে না।");
       return;
     }
 
@@ -128,9 +128,9 @@ export default function AgriClusterCalculatorPage() {
 
           <div className="general-card">
             <div className="agri-note">
-              ⚠️ দ্রষ্টব্য: <b>শারীরিক শিক্ষা</b> ও <b>কর্মমুখী শিক্ষার</b> নম্বর কাটা যাবে — অর্থাৎ
-              প্রাপ্ত নম্বর আর পূর্ণমান, দুটো থেকেই ওই বিষয়ের নম্বর বাদ দিয়ে লিখবে। ২০২৬ সালে{" "}
-              <b>চতুর্থ বিষয়ের নম্বর সহ</b> গণনা হবে।
+              দ্রষ্টব্য: <b>SSC-র</b> ক্ষেত্রে <b>শারীরিক শিক্ষা</b> ও <b>কর্মমুখী শিক্ষার</b> নম্বর
+              কাটা যাবে — অর্থাৎ SSC-র প্রাপ্ত নম্বর আর পূর্ণমান, দুটো থেকেই ওই বিষয়ের নম্বর বাদ
+              দিয়ে লিখবে। ২০২৬ সালে <b>চতুর্থ বিষয়ের নম্বর সহ</b> গণনা হবে।
             </div>
 
             <div className="agri-group-title">SSC</div>
@@ -265,7 +265,7 @@ export default function AgriClusterCalculatorPage() {
 
                   <ul>
                     <li>২০২৬ সালে চতুর্থ বিষয়ের নম্বর সহ ধরা হয়েছে।</li>
-                    <li>শারীরিক শিক্ষা ও কর্মমুখী শিক্ষার নম্বর বাদ দিয়ে হিসাব করা হয়েছে।</li>
+                    <li>SSC-র শারীরিক শিক্ষা ও কর্মমুখী শিক্ষার নম্বর বাদ দিয়ে হিসাব করা হয়েছে।</li>
                     <li>এই ২৫ + ২৫ নম্বর ১০০ নম্বরের ভর্তি পরীক্ষার সাথে যোগ হয়ে মোট ১৫০-এর মেধা স্কোর হয়।</li>
                   </ul>
                 </div>
