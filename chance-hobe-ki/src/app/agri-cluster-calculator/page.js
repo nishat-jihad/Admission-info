@@ -178,6 +178,23 @@ export default function AgriClusterCalculatorPage() {
             {result && (
               <div className="agri-result">
                 <div className="agri-result-title">তোমার হিসাব</div>
+
+                <div className="agri-summary">
+                  <div className="agri-summary-label">তোমার মোট স্কোর</div>
+                  <div className="agri-summary-score">
+                    <span>{bn2(result.total)}</span> / {bn(MAX_MARK * 2)}
+                  </div>
+                  <div className="agri-meter" aria-hidden="true">
+                    <div
+                      className="agri-meter-fill"
+                      style={{ width: `${(result.total / (MAX_MARK * 2)) * 100}%` }}
+                    />
+                  </div>
+                  <div className="agri-summary-cut">
+                    কাটা গেছে: <b>{bn2(result.totalCut)}</b>
+                  </div>
+                </div>
+
                 <div className="agri-table-wrap">
                   <table className="agri-table">
                     <thead>
@@ -185,27 +202,34 @@ export default function AgriClusterCalculatorPage() {
                         <th>পরীক্ষা</th>
                         <th>প্রাপ্ত নম্বর</th>
                         <th>পূর্ণমান</th>
+                        <th>হিসাব</th>
                         <th>পাবে (২৫-এর মধ্যে)</th>
                         <th>কাটা যাবে</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>SSC</td>
+                        <td className="agri-exam">SSC</td>
                         <td>{bn(result.sscGot)}</td>
                         <td>{bn(result.sscFull)}</td>
+                        <td className="agri-calc">
+                          ({bn(result.sscGot)} × ২৫) ÷ {bn(result.sscFull)}
+                        </td>
                         <td className="agri-got">{bn2(result.sscScore)}</td>
                         <td className="agri-cut">{bn2(result.sscCut)}</td>
                       </tr>
                       <tr>
-                        <td>HSC</td>
+                        <td className="agri-exam">HSC</td>
                         <td>{bn(result.hscGot)}</td>
                         <td>{bn(result.hscFull)}</td>
+                        <td className="agri-calc">
+                          ({bn(result.hscGot)} × ২৫) ÷ {bn(result.hscFull)}
+                        </td>
                         <td className="agri-got">{bn2(result.hscScore)}</td>
                         <td className="agri-cut">{bn2(result.hscCut)}</td>
                       </tr>
                       <tr className="agri-total">
-                        <td colSpan={3}>মোট (৫০-এর মধ্যে)</td>
+                        <td colSpan={4}>মোট (৫০-এর মধ্যে)</td>
                         <td className="agri-got">{bn2(result.total)}</td>
                         <td className="agri-cut">{bn2(result.totalCut)}</td>
                       </tr>
@@ -214,19 +238,31 @@ export default function AgriClusterCalculatorPage() {
                 </div>
 
                 <div className="agri-formula">
-                  <div className="agri-formula-title">যে ফর্মুলায় হিসাব করা হয়েছে</div>
+                  <div className="agri-formula-title">কোন ফর্মুলায় হিসাব করা হয়েছে</div>
+
+                  <div className="agri-formula-step">ধাপ ১ — মূল ফর্মুলা (SSC ও HSC দুটোর জন্যই একই)</div>
+                  <code>পাবে = (প্রাপ্ত নম্বর × ২৫) ÷ মোট পূর্ণমান</code>
+
+                  <div className="agri-formula-step">ধাপ ২ — SSC</div>
                   <code>
-                    প্রাপ্ত নম্বর × ২৫ ÷ পূর্ণমান
+                    ({bn(result.sscGot)} × ২৫) ÷ {bn(result.sscFull)} = {bn2(result.sscScore)}
                   </code>
+
+                  <div className="agri-formula-step">ধাপ ৩ — HSC</div>
                   <code>
-                    SSC = ({bn(result.sscGot)} × ২৫) ÷ {bn(result.sscFull)} = {bn2(result.sscScore)}
+                    ({bn(result.hscGot)} × ২৫) ÷ {bn(result.hscFull)} = {bn2(result.hscScore)}
                   </code>
+
+                  <div className="agri-formula-step">ধাপ ৪ — মোট স্কোর (৫০-এর মধ্যে)</div>
                   <code>
-                    HSC = ({bn(result.hscGot)} × ২৫) ÷ {bn(result.hscFull)} = {bn2(result.hscScore)}
+                    {bn2(result.sscScore)} + {bn2(result.hscScore)} = {bn2(result.total)}
                   </code>
+
+                  <div className="agri-formula-step">ধাপ ৫ — কাটা যাবে</div>
                   <code>
                     কাটা যাবে = ২৫ − পাওয়া নম্বর (SSC: {bn2(result.sscCut)}, HSC: {bn2(result.hscCut)})
                   </code>
+
                   <ul>
                     <li>২০২৬ সালে চতুর্থ বিষয়ের নম্বর সহ ধরা হয়েছে।</li>
                     <li>শারীরিক শিক্ষা ও কর্মমুখী শিক্ষার নম্বর বাদ দিয়ে হিসাব করা হয়েছে।</li>
