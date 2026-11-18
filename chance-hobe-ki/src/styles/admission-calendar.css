@@ -17,17 +17,17 @@
 
 /* ---- ভার্সিটি / ইঞ্জিনিয়ারিং / মেডিকেল বাটন — এই পেজে নীল (Updates পেজে আগের মতোই) ---- */
 .exam-dates-page .updates-filter-btn {
-  color: var(--blue);
-  border-color: var(--blue);
+  color: var(--blue-dark);
+  border-color: var(--blue-dark);
 }
 .exam-dates-page .updates-filter-btn:hover {
   background: #eaf0ff;
 }
 .exam-dates-page .updates-filter-btn-active,
 .exam-dates-page .updates-filter-btn-active:hover {
-  background: var(--blue);
+  background: var(--blue-dark);
   color: #fff;
-  border-color: var(--blue);
+  border-color: var(--blue-dark);
 }
 
 /* বাটন/লিংকে padding থাকলেও যেন ঘরের বাইরে না বেরোয় */
