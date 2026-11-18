@@ -2,34 +2,19 @@
    কৃষি গুচ্ছ GPA Calculator — হোমের কার্ড + ক্যালকুলেটর পেজ
    ========================================================================== */
 
-/* ---------- হোমের হাইলাইট কার্ড (Latest News-এর ওপরে) ---------- */
+/* ---------- হোমের হালকা নীল কার্ড (Latest News-এর ওপরে) ---------- */
 .agri-card {
-  position: relative;
   grid-column: 1 / -1;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 18px 20px;
-  background: linear-gradient(135deg, #0f6b2a 0%, #22a348 100%);
-  border: 2px solid var(--black);
+  padding: 16px 20px;
+  background: #e8f1ff;
+  border: 1.5px solid #bcd6ff;
   border-radius: 18px;
-  box-shadow: var(--shadow-hard);
   text-align: left;
-}
-.agri-card-badge {
-  position: absolute;
-  top: -11px;
-  left: 18px;
-  padding: 3px 12px;
-  border-radius: 999px;
-  background: #ffd23f;
-  border: 1.5px solid var(--black);
-  color: var(--black);
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1.4;
 }
 .agri-card-left {
   display: flex;
@@ -37,50 +22,36 @@
   gap: 14px;
   min-width: 0;
 }
-.agri-card-icon {
-  flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: #fff;
-  border: 2px solid var(--black);
-  font-size: 28px;
-  line-height: 1;
-}
 .agri-card-text {
   min-width: 0;
 }
 .agri-card-title {
   margin: 0;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
   line-height: 1.35;
-  color: #fff;
+  color: var(--black);
 }
 .agri-card-sub {
   margin: 3px 0 0;
   font-size: 13.5px;
   line-height: 1.5;
-  color: #e6f7ec;
+  color: #44566e;
 }
 .agri-card-btn {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 11px 22px;
+  padding: 10px 22px;
   border-radius: 999px;
-  background: #ffd23f;
-  border: 2px solid var(--black);
+  background: #fff;
+  border: 1.5px solid var(--black);
   color: var(--black);
   font-size: 15px;
   font-weight: 800;
   line-height: 1.2;
   text-decoration: none;
-  box-shadow: var(--shadow-thin);
-  animation: agri-pulse 2s ease-in-out infinite;
   transition: background-color 0.2s ease;
 }
 .agri-card-btn svg {
@@ -88,31 +59,12 @@
   height: 16px;
 }
 .agri-card-btn:hover {
-  background: #ffe17a;
-}
-@keyframes agri-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.06);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .agri-card-btn {
-    animation: none;
-  }
+  background: #f2f2f2;
 }
 @media (max-width: 600px) {
   .agri-card {
-    padding: 16px 12px 14px;
+    padding: 12px 12px;
     gap: 10px;
-  }
-  .agri-card-icon {
-    width: 42px;
-    height: 42px;
-    font-size: 22px;
   }
   .agri-card-title {
     font-size: 15.5px;
