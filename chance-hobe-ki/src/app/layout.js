@@ -1,6 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
 import Script from "next/script";
-import { Bangers, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import "../styles/popup-nav.css";
 import "../styles/context-menu.css";
@@ -9,18 +8,6 @@ import CustomContextMenu from "@/components/CustomContextMenu";
 import { updates } from "@/data/updates";
 import { examDates } from "@/data/examDates";
 import { buildAdmissionCalendar } from "@/lib/examCalendar";
-
-const bangers = Bangers({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-bangers",
-});
-
-const notoBengali = Noto_Sans_Bengali({
-  subsets: ["bengali", "latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-noto-bn",
-});
 
 const SITE_URL = "https://admissioninfo.vercel.app";
 
@@ -99,7 +86,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="bn">
-      <body className={`${bangers.variable} ${notoBengali.variable}`}>
+      <body>
         {children}
         <ApplyPopup items={applyItems} />
         <CustomContextMenu />
