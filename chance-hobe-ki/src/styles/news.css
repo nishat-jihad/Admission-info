@@ -398,8 +398,28 @@
   line-height: 1.8;
   color: #444;
 }
+/* সকল নিউজ পেজ: সবকিছু একটু ওপরে — ছোট ব্যাক বাটন, কম ফাঁক */
+.news-page.news-portal {
+  padding-top: 10px;
+}
+.news-portal .general-back-btn {
+  font-size: 12.5px;
+  padding: 6px 14px 6px 10px;
+  margin-bottom: 10px;
+  gap: 4px;
+}
+.news-portal .general-back-btn svg {
+  width: 14px;
+  height: 14px;
+}
+.news-portal .news-crumbs {
+  margin-bottom: 10px;
+}
 .news-portal .news-portal-head {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
+}
+.news-portal .news-portal-lead {
+  margin-top: 8px;
 }
 
 /* ---------- সকল নিউজ পেজ: ক্যাটাগরি বার (সব এক লাইনে, ছোট স্ক্রিনে পাশে স্ক্রল) ---------- */
@@ -409,7 +429,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px;
-  margin-bottom: 28px;
+  margin-bottom: 22px;
   border: 1px solid #d9dce1;
   border-radius: 999px;
   background: #fff;
@@ -470,8 +490,47 @@
   margin-bottom: 28px;
   border-bottom: 1px solid #d9dce1;
 }
-.np-top-single {
-  grid-template-columns: minmax(0, 1fr);
+/* ক্যাটাগরিতে ১টা নিউজ: বাঁয়ে ছবি, ডানে শিরোনাম */
+.np-single {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #d9dce1;
+}
+.np-single-media {
+  position: relative;
+  display: block;
+  flex: 0 0 380px;
+  max-width: 40%;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #dfe7f5;
+}
+.np-single-media .news-img {
+  object-fit: cover;
+  object-position: center;
+}
+.np-single-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+.np-single-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.np-single-title a {
+  color: var(--black);
+  text-decoration: none;
+}
+.np-single-title a:hover {
+  color: var(--red);
 }
 .np-feature-media {
   position: relative;
@@ -521,22 +580,25 @@
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   gap: 36px;
-  align-items: start;
+  align-items: stretch;
 }
 .np-bottom-solo {
   grid-template-columns: minmax(0, 1fr);
 }
+.np-list {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
 .np-list-item {
   display: flex;
-  align-items: flex-start;
+  flex: 1 1 auto;
+  align-items: center;
   gap: 12px;
   padding: 13px 0;
   border-bottom: 1px solid #d9dce1;
   text-decoration: none;
   color: inherit;
-}
-.np-list-item:first-child {
-  padding-top: 0;
 }
 .np-list-thumb {
   position: relative;
@@ -571,6 +633,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 26px 22px;
+  align-content: start;
 }
 .np-grid-wide {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -586,7 +649,7 @@
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   background: #dfe7f5;
@@ -695,15 +758,16 @@
   }
 }
 
-/* ---------- নিউজের লেখার মাঝে Telegram + Facebook প্রমো ছবি ---------- */
+/* ---------- নিউজের লেখার মাঝে প্রমো ব্যানার (একটা করে, মাঝখানে, ছোট) ---------- */
 .news-promo {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  margin: 26px 0;
 }
 .news-promo-item {
   display: block;
+  width: 100%;
+  max-width: 300px;
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid #e3e7ef;
@@ -718,12 +782,6 @@
   display: block;
   width: 100%;
   height: auto;
-}
-@media (max-width: 560px) {
-  .news-promo {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
-  }
 }
 
 /* ---------- নিউজের পেজ ---------- */
