@@ -18,9 +18,6 @@ export default function HeroLatestNews() {
         </h2>
         <Link href="/news" className="hero-latest-all">
           সকল নিউজ
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
         </Link>
       </div>
       <hr className="hero-latest-rule" />
