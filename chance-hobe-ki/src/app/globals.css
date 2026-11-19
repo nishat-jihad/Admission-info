@@ -2,7 +2,7 @@
   font-family: "SolaimanLipi";
   src: local("SolaimanLipi"),
     url("/fonts/SolaimanLipi.ttf") format("truetype");
-  font-weight: 100 900;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
