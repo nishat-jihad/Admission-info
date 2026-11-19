@@ -278,7 +278,7 @@ export default function UniversityDetailPage({ params }) {
             </div>
             {(examDate.extraTables || []).map((t, ti) => (
               <div key={ti}>
-                <h3 style={{ fontFamily: "'Nirmala UI', 'Noto Sans Bengali', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
                   {t.title}
                 </h3>
                 <div className="update-table-wrap" style={{ marginTop: 12 }}>
@@ -313,7 +313,7 @@ export default function UniversityDetailPage({ params }) {
             ))}
             {(examDate.notes || []).length > 0 && (
               <div>
-                <h3 style={{ fontFamily: "'Nirmala UI', 'Noto Sans Bengali', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
                   গুরুত্বপূর্ণ তথ্য
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, color: "#333", lineHeight: 1.7 }}>
