@@ -82,6 +82,48 @@ function ListItem({ item }) {
   );
 }
 
+// PC: ক্যাটাগরিতে মাত্র ১টা নিউজ থাকলে — বাঁয়ে স্ট্যান্ডার্ড সাইজের ছবি, ডানে শিরোনাম
+function Single({ item }) {
+  const href = `/news/${item.slug}`;
+  return (
+    <article className="np-single">
+      <Link href={href} className="np-single-media" aria-label={item.title} tabIndex={-1}>
+        <NewsImage
+          src={item.image}
+          alt={item.imageAlt || item.title}
+          sizes="380px"
+          priority
+        />
+      </Link>
+      <div className="np-single-text">
+        <h2 className="np-single-title">
+          <Link href={href}>{item.title}</Link>
+        </h2>
+        <DateLine item={item} />
+      </div>
+    </article>
+  );
+}
+
+// PC-র নিচের অংশে বাঁ (তালিকা) ও ডান (২ কলামের গ্রিড) দুই দিকের উচ্চতা সমান রাখতে
+// কয়টা নিউজ কোন দিকে যাবে তা হিসাব করা। বাঁ দিক স্বাভাবিকভাবে ডানের চেয়ে ছোট হয়,
+// CSS তাকে টেনে ডানের সমান করে দেয়।
+const TILE_ROW_H = 301; // গ্রিডের এক সারি (ছবি + শিরোনাম + তারিখ + ফাঁক)
+const GRID_GAP = 26;
+const LIST_ITEM_H = 129; // তালিকার একটা আইটেম
+function splitBottom(rest) {
+  const R = rest.length;
+  for (let k = 1; k * 2 <= R; k++) {
+    const n = R - 2 * k;
+    if (n < 3) break;
+    if (n * LIST_ITEM_H <= k * TILE_ROW_H - GRID_GAP) {
+      return { grid: rest.slice(0, 2 * k), older: rest.slice(2 * k) };
+    }
+  }
+  // নিউজ কম হলে সব গ্রিডে (৩ কলামে), বাঁয়ে তালিকা থাকবে না
+  return { grid: rest, older: [] };
+}
+
 // মোবাইলের বড় (প্রথম) নিউজ
 function Lead({ item }) {
   const href = `/news/${item.slug}`;
@@ -128,11 +170,10 @@ export default function NewsPortal({ items }) {
 
   const list = cat === ALL_CATEGORY ? items : items.filter((i) => i.cats.includes(cat));
 
-  // PC: ওপরে ২টা বড় · নিচে বামে পুরোনো তালিকা, ডানে ২ কলামের গ্রিড
+  // PC: ওপরে ২টা বড় (১টা হলে ছবি বামে-শিরোনাম ডানে) · নিচে বামে পুরোনো তালিকা, ডানে ২ কলামের গ্রিড
   const top = list.slice(0, 2);
   const rest = list.slice(2);
-  const grid = rest.slice(0, 6);
-  const older = rest.slice(6);
+  const { grid, older } = splitBottom(rest);
 
   // Mobile: ১টা বড় · ৩টা সারি (ডানে ছবি) · বাকিগুলো ২ কলামে
   const lead = list[0];
@@ -161,11 +202,15 @@ export default function NewsPortal({ items }) {
         <>
           {/* ---------- PC / বড় স্ক্রিন ---------- */}
           <div className="np-desktop">
-            <div className={`np-top${top.length === 1 ? " np-top-single" : ""}`}>
-              {top.map((item, i) => (
-                <Feature key={item.slug} item={item} priority={i < 2} />
-              ))}
-            </div>
+            {top.length === 1 ? (
+              <Single item={top[0]} />
+            ) : (
+              <div className="np-top">
+                {top.map((item, i) => (
+                  <Feature key={item.slug} item={item} priority={i < 2} />
+                ))}
+              </div>
+            )}
 
             {rest.length > 0 && (
               <div className={`np-bottom${older.length === 0 ? " np-bottom-solo" : ""}`}>
