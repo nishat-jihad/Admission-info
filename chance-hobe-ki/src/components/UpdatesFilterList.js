@@ -285,7 +285,7 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                         background: hoverTable === tableKey || isOpen ? "#eaf2ff" : "#f5f6f8",
                         color: "var(--black)",
                         font: "inherit",
-                        fontFamily: "'Nirmala UI', 'Noto Sans Bengali', sans-serif",
+                        fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif",
                         fontWeight: 700,
                         fontSize: 15,
                         transition: "background 0.15s ease, border-color 0.15s ease",
@@ -312,7 +312,7 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                       </svg>
                     </button>
                   ) : (
-                    <h3 style={{ fontFamily: "'Nirmala UI', 'Noto Sans Bengali', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                    <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
                       {t.title}
                     </h3>
                   )}
@@ -379,7 +379,7 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                         background: hoverTable === notesKey || isOpen ? "#eaf2ff" : "#f5f6f8",
                         color: "var(--black)",
                         font: "inherit",
-                        fontFamily: "'Nirmala UI', 'Noto Sans Bengali', sans-serif",
+                        fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif",
                         fontWeight: 700,
                         fontSize: 15,
                         transition: "background 0.15s ease, border-color 0.15s ease",
@@ -406,7 +406,7 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                       </svg>
                     </button>
                   ) : (
-                    <h3 style={{ fontFamily: "'Nirmala UI', 'Noto Sans Bengali', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                    <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
                       গুরুত্বপূর্ণ তথ্য
                     </h3>
                   )}
