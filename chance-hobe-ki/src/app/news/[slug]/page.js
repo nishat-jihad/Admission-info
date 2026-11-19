@@ -119,6 +119,23 @@ function Block({ block }) {
   }
 }
 
+// প্রমো ব্যানার দুটো লেখার আলাদা দুই জায়গায় বসে — সবসময় কোনো অংশ (h2 থেকে h2 পর্যন্ত)
+// শেষ হওয়ার পরে, কখনো উপশিরোনামের ঠিক নিচে নয়। প্রথমটা ~১/৩ অংশে, দ্বিতীয়টা ~২/৩ অংশে।
+function pickPromoSpots(body, avoid) {
+  const n = body.length;
+  const all = body.map((_, i) => i);
+  const isSectionEnd = (i) => body[i].type !== "h2" && i < n - 1 && body[i + 1].type === "h2";
+  let pool = all.filter((i) => isSectionEnd(i) && i !== avoid);
+  if (pool.length < 2) {
+    pool = all.filter((i) => body[i].type !== "h2" && i < n - 1 && i !== avoid);
+  }
+  const nearest = (target, list) =>
+    list.reduce((best, i) => (best === null || Math.abs(i - target) < Math.abs(best - target) ? i : best), null);
+  const first = nearest(n / 3, pool);
+  const second = nearest((2 * n) / 3, pool.filter((i) => i !== first));
+  return [first, second];
+}
+
 // মোবাইলে লেখার মাঝে "আরও পড়ুন" (PC-তে ডানের সাইডবার থাকায় CSS দিয়ে লুকানো)।
 function InlineRelated({ items }) {
   if (!items.length) return null;
@@ -151,8 +168,8 @@ export default function NewsArticlePage({ params }) {
     .slice(0, 2);
   const inlineRelated = related.length ? related : more.slice(0, 2);
   const insertAfter = content.body.length > 3 ? 1 : 0;
-  // Telegram/Facebook প্রমো ছবি: লেখার ঠিক মাঝামাঝি
-  const promoAfter = Math.max(Math.floor(content.body.length / 2) - 1, 0);
+  // Telegram ও Facebook ব্যানার: আলাদা দুই জায়গায়
+  const [telegramAfter, facebookAfter] = pickPromoSpots(content.body, insertAfter);
 
   const [cap, rest] = splitFirstGrapheme(content.lead);
   const references = content.references || [];
@@ -240,7 +257,8 @@ export default function NewsArticlePage({ params }) {
                 <div key={i} className="news-block">
                   <Block block={block} />
                   {i === insertAfter && <InlineRelated items={inlineRelated} />}
-                  {i === promoAfter && <NewsSocialPromo />}
+                  {i === telegramAfter && <NewsSocialPromo type="telegram" />}
+                  {i === facebookAfter && <NewsSocialPromo type="facebook" />}
                 </div>
               ))}
             </div>
