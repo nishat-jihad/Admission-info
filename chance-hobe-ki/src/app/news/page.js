@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import NewsCard from "@/components/NewsCard";
-import { getAllNews, isNewNews } from "@/data/news";
+import NewsPortal from "@/components/NewsPortal";
+import { getAllNews, formatBnDate } from "@/data/news";
+import { getNewsCategories } from "@/data/newsCategories";
 import "../../styles/news.css";
 
 export const metadata = {
@@ -30,7 +31,16 @@ export const metadata = {
 };
 
 export default function NewsPortalPage() {
-  const items = getAllNews();
+  const items = getAllNews().map((n) => ({
+    slug: n.slug,
+    title: n.title,
+    excerpt: n.excerpt,
+    date: n.date,
+    dateText: formatBnDate(n.date),
+    image: n.image,
+    imageAlt: n.imageAlt,
+    cats: getNewsCategories(n),
+  }));
 
   return (
     <>
@@ -57,17 +67,7 @@ export default function NewsPortalPage() {
           </p>
         </header>
 
-        <div className="news-grid">
-          {items.map((item, i) => (
-            <NewsCard
-              key={item.slug}
-              item={item}
-              isNew={isNewNews(item.slug)}
-              variant="large"
-              priority={i < 3}
-            />
-          ))}
-        </div>
+        <NewsPortal items={items} />
       </main>
       <Footer />
     </>
