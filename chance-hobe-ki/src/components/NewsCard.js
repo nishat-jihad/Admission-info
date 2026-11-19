@@ -9,13 +9,7 @@ const CLOCK_ICON = (
   </svg>
 );
 
-const ARROW_ICON = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-    <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-// variant: "home" (হোমের News Corner) | "large" (সকল নিউজ পেজ — একটু বড়)
+// হোমের News Corner-এর সিম্পল নিউজ: ওপরে ছবি, নিচে শিরোনাম (ক্লিক করলে বিস্তারিত নিউজে যায়) ও তারিখ।
 export default function NewsCard({ item, variant = "home", priority = false }) {
   const href = `/news/${item.slug}`;
 
@@ -31,23 +25,13 @@ export default function NewsCard({ item, variant = "home", priority = false }) {
       </Link>
 
       <div className="news-card-body">
-        <div className="news-card-meta">
-          <span className="news-date">
-            {CLOCK_ICON}
-            <time dateTime={item.date}>{formatBnDate(item.date)}</time>
-          </span>
-        </div>
-
         <h3 className="news-card-title">
           <Link href={href}>{item.title}</Link>
         </h3>
-
-        <p className="news-card-excerpt">{item.excerpt}</p>
-
-        <Link href={href} className="news-card-btn">
-          <span>সম্পূর্ণ</span>
-          {ARROW_ICON}
-        </Link>
+        <span className="news-date">
+          {CLOCK_ICON}
+          <time dateTime={item.date}>{formatBnDate(item.date)}</time>
+        </span>
       </div>
     </article>
   );
