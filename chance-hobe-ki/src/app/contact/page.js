@@ -67,7 +67,7 @@ export default function ContactPage() {
         <h2
           style={{
             marginTop: 40,
-            fontFamily: "var(--font-noto-bn), sans-serif",
+            fontFamily: "'Nirmala UI', 'Noto Sans Bengali', sans-serif",
             fontWeight: 700,
             fontSize: 20,
           }}
