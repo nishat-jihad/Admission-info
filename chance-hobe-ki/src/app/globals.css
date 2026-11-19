@@ -3029,3 +3029,40 @@ section.block h2 .circular-tag {
     padding: 10px 8px;
   }
 }
+
+/* ===== Extra bold look for SolaimanLipi (single-weight font) ===== */
+/* Home hero title */
+.hero h1,
+.hero h1 .accent {
+  -webkit-text-stroke: 1.1px currentColor;
+}
+.hero .sub {
+  -webkit-text-stroke: 0.8px currentColor;
+}
+
+/* Navbar options */
+.nav-label {
+  -webkit-text-stroke: 0.45px currentColor;
+}
+
+/* News titles */
+.news-card-title,
+.news-card-title a,
+.np-single-title,
+.np-single-title a,
+.np-feature-title,
+.np-feature-title a,
+.np-lead-title,
+.np-lead-title a,
+.np-list-title,
+.np-tile-title,
+.np-tile-title a,
+.np-m-title,
+.news-title,
+.news-more-title,
+.hero-latest-title,
+.news-section-title,
+.news-portal-title,
+.news-aside-title {
+  -webkit-text-stroke: 0.55px currentColor;
+}
