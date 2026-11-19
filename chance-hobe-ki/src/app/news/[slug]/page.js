@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import NewsImage from "@/components/NewsImage";
 import NewsRichText from "@/components/NewsRichText";
 import ShareButtons from "@/components/ShareButtons";
+import NewsSocialPromo from "@/components/NewsSocialPromo";
 import { news, getNewsMeta, getMoreNews, formatBnDate, toBn } from "@/data/news";
 import { newsContent } from "@/data/newsContent";
 import "../../../styles/news.css";
@@ -150,6 +151,8 @@ export default function NewsArticlePage({ params }) {
     .slice(0, 2);
   const inlineRelated = related.length ? related : more.slice(0, 2);
   const insertAfter = content.body.length > 3 ? 1 : 0;
+  // Telegram/Facebook প্রমো ছবি: লেখার ঠিক মাঝামাঝি
+  const promoAfter = Math.max(Math.floor(content.body.length / 2) - 1, 0);
 
   const [cap, rest] = splitFirstGrapheme(content.lead);
   const references = content.references || [];
@@ -237,6 +240,7 @@ export default function NewsArticlePage({ params }) {
                 <div key={i} className="news-block">
                   <Block block={block} />
                   {i === insertAfter && <InlineRelated items={inlineRelated} />}
+                  {i === promoAfter && <NewsSocialPromo />}
                 </div>
               ))}
             </div>
