@@ -57,6 +57,7 @@ export function generateMetadata({ params }) {
       title: item.title,
       description: item.summary,
       publishedTime: `${item.date}T00:00:00+06:00`,
+      modifiedTime: `${item.updated || item.date}T00:00:00+06:00`,
       images: [{ url: img.url, alt: item.imageAlt || item.title }],
     },
     twitter: {
@@ -181,7 +182,7 @@ export default function NewsArticlePage({ params }) {
     description: item.summary,
     inLanguage: "bn",
     datePublished: `${item.date}T00:00:00+06:00`,
-    dateModified: `${item.date}T00:00:00+06:00`,
+    dateModified: `${item.updated || item.date}T00:00:00+06:00`,
     image: [img.url],
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     author: { "@type": "Person", name: "Nishat Alam" },
@@ -192,6 +193,16 @@ export default function NewsArticlePage({ params }) {
     },
   };
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "হোম", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "সকল নিউজ", item: `${SITE_URL}/news` },
+      { "@type": "ListItem", position: 3, name: item.title, item: url },
+    ],
+  };
+
   return (
     <>
       <Navbar />
@@ -199,6 +210,10 @@ export default function NewsArticlePage({ params }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd).replace(/</g, "\\u003c") }}
         />
 
         <Link className="general-back-btn" href="/news">
