@@ -1,0 +1,424 @@
+/* ============================================================================
+   Android অ্যাপের স্টাইল (ক্লাসগুলো app- দিয়ে শুরু; ওয়েবসাইটে এগুলো কোথাও ব্যবহার হয় না)
+   থিম: সাদা। ☰ মেনু, অ্যাপ-হোম, ছোট ভার্সিটি কার্ড।
+   ============================================================================ */
+
+/* ---------- হেডার: FB + Telegram + ☰ ---------- */
+.app-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.app-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #111827;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.app-menu-btn:active {
+  background: #eef1f6;
+}
+.app-menu-btn svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* ---------- ☰ ড্রয়ার (বাঁ দিক থেকে, সাদা) ---------- */
+.app-drawer-root {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  visibility: hidden;
+  transition: visibility 0s linear 0.25s;
+}
+.app-drawer-root.is-open {
+  visibility: visible;
+  transition-delay: 0s;
+}
+.app-drawer-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.app-drawer-root.is-open .app-drawer-overlay {
+  opacity: 1;
+}
+.app-drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: min(82vw, 320px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.18);
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.app-drawer-root.is-open .app-drawer {
+  transform: none;
+}
+.app-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 8px 10px 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.app-drawer-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+.app-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #4b5563;
+  cursor: pointer;
+}
+.app-drawer-close svg {
+  width: 22px;
+  height: 22px;
+}
+.app-drawer-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+.app-drawer-sec {
+  padding: 6px 0 8px;
+  border-bottom: 1px solid #f0f1f4;
+}
+.app-drawer-sec:last-child {
+  border-bottom: 0;
+}
+.app-drawer-sec-title {
+  padding: 10px 18px 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+}
+.app-drawer-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 11px 18px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  color: #111827;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.app-drawer-item:active {
+  background: #f3f5f9;
+}
+.app-drawer-item svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: #4b5563;
+}
+.app-drawer-static {
+  cursor: default;
+  color: #4b5563;
+  font-size: 14px;
+}
+.app-drawer-static:active {
+  background: transparent;
+}
+.app-drawer-note {
+  margin: 0 18px 6px 52px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #374151;
+}
+.app-drawer-note a {
+  color: var(--blue);
+  font-weight: 700;
+  text-decoration: underline;
+}
+.app-drawer-foot {
+  padding: 10px 18px calc(12px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid #e5e7eb;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ---------- অ্যাপ-হোম ---------- */
+.app-home {
+  background: #fff;
+  padding-bottom: 8px;
+}
+.app-sec-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 8px;
+}
+.app-sec-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: #111827;
+}
+.app-sec-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Latest News: আড়াআড়ি সোয়াইপ, একসাথে ২টা */
+.app-news-track {
+  display: flex;
+  gap: 10px;
+  padding: 0 16px 4px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 16px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.app-news-track::-webkit-scrollbar {
+  display: none;
+}
+.app-news-card {
+  flex: 0 0 calc(50% - 5px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+.app-news-card:nth-child(odd) {
+  scroll-snap-align: start;
+}
+.app-news-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #dfe7f5;
+}
+.app-news-media .news-img {
+  object-fit: cover;
+  object-position: center;
+}
+.app-news-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #111827;
+}
+.app-dots {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 0 2px;
+}
+.app-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d1d5db;
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+.app-dots i.on {
+  width: 16px;
+  border-radius: 3px;
+  background: var(--blue);
+}
+
+/* ভার্সিটি অংশ */
+.app-unis {
+  padding: 8px 16px 20px;
+}
+.app-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 0 12px;
+  border: 1px solid #d9dce1;
+  border-radius: 12px;
+  background: #fff;
+}
+.app-search svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+.app-search input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 42px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  color: #111827;
+}
+.app-cats {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  padding: 4px;
+  border: 1px solid #d9dce1;
+  border-radius: 999px;
+  background: #fff;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.app-cats::-webkit-scrollbar {
+  display: none;
+}
+.app-cat {
+  flex: 1 0 auto;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  color: #374151;
+  cursor: pointer;
+}
+.app-cat.is-active {
+  background: var(--blue);
+  color: #fff;
+}
+
+/* ছোট ভার্সিটি কার্ড (২ কলাম) */
+.app-uni-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.app-uni {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 4px 14px rgba(15, 23, 42, 0.09);
+}
+.app-uni-photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 86px;
+  overflow: hidden;
+}
+.app-uni-photo img {
+  object-fit: cover;
+  object-position: center;
+}
+.app-uni-photo svg {
+  width: 34px;
+  height: 34px;
+}
+.app-uni-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 7px;
+  padding: 9px 10px 10px;
+}
+.app-uni-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.app-uni-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: auto;
+}
+.app-uni-info {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #374151;
+}
+.app-uni-btn {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--black);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-decoration: none;
+}
+.app-all-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 16px;
+  padding: 11px;
+  border: 1.5px solid var(--blue);
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  cursor: pointer;
+}
+.app-all-btn:active {
+  background: #eef2fd;
+}
+.app-empty {
+  margin: 24px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+}

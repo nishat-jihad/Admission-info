@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BreakingNewsBar from "@/components/BreakingNewsBar";
+import { AppMenuButton } from "@/components/AppMenu";
+import { IS_APP } from "@/lib/appConfig";
 
 // Mobile ও PC — দুই জায়গাতেই একই আইকন, একই ক্রম।
 // PC: উপরের navbar-এ আইকন + নিচে পেজের নাম | Mobile: নিচের app-style bottom bar (আইকন + নাম)
@@ -132,7 +134,15 @@ function NavbarInner() {
         <SocialIcons className="nav-social nav-social-inline" />
       </nav>
 
-      <SocialIcons className="nav-social nav-social-mobile" />
+      {IS_APP ? (
+        // অ্যাপে: FB + Telegram-এর পাশে ☰ মেনু বাটন
+        <div className="app-header-right">
+          <SocialIcons className="nav-social nav-social-mobile" />
+          <AppMenuButton />
+        </div>
+      ) : (
+        <SocialIcons className="nav-social nav-social-mobile" />
+      )}
     </header>
   );
 }

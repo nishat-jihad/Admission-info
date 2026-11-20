@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { IS_APP } from "@/lib/appConfig";
 
 // Single source for the icon set so the same markup can be rendered twice
 // (once for desktop placement under the logo, once for mobile placement at
@@ -109,6 +110,9 @@ const FOOTER_EXTRA_CSS = `
 `;
 
 export default function Footer() {
+  // অ্যাপে footer নেই — এর সব লিংক ☰ মেনুতে (AppMenu.js)
+  if (IS_APP) return null;
+
   return (
     <footer className="site-footer">
       <style dangerouslySetInnerHTML={{ __html: FOOTER_EXTRA_CSS }} />
