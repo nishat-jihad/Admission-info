@@ -3,7 +3,17 @@ import { news } from "@/data/news";
 
 const SITE_URL = "https://admissioninfo.vercel.app";
 
+// প্রতিবার build-এ new Date() দিলে Google বুঝে যায় তারিখটা আসল না, তাই lastmod-কে গুরুত্ব দেয় না।
+// এখানে সবচেয়ে নতুন নিউজের তারিখ ব্যবহার হচ্ছে — নতুন নিউজ যোগ করলেই নিজে থেকে বদলাবে।
+const latestNewsDate = news
+  .map((n) => n.updated || n.date)
+  .sort()
+  .pop();
+const LATEST = new Date(latestNewsDate || "2026-11-01");
+const STATIC_DATE = new Date("2026-11-01");
+
 export default function sitemap() {
+  const dynamicRoutes = ["", "/updates", "/news", "/exam-dates"];
   const staticRoutes = [
     "",
     "/hsc-gpa-calculator",
@@ -17,23 +27,17 @@ export default function sitemap() {
     "/privacy-policy",
   ].map((route) => ({
     url: `${SITE_URL}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === "" || route === "/updates" || route === "/news" ? "daily" : "weekly",
-    priority: route === "" ? 1 : 0.8,
+    lastModified: dynamicRoutes.includes(route) ? LATEST : STATIC_DATE,
   }));
 
   const universityRoutes = Object.keys(universities).map((slug) => ({
     url: `${SITE_URL}/university/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.7,
+    lastModified: LATEST,
   }));
 
   const newsRoutes = news.map((item) => ({
     url: `${SITE_URL}/news/${item.slug}`,
-    lastModified: new Date(item.date),
-    changeFrequency: "weekly",
-    priority: 0.8,
+    lastModified: new Date(item.updated || item.date),
   }));
 
   return [...staticRoutes, ...universityRoutes, ...newsRoutes];

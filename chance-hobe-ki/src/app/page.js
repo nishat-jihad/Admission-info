@@ -167,13 +167,14 @@ export default function HomePage() {
               className="vc-1"
               src="/images/hero-1.jpg"
               alt="BUET ক্যাম্পাস"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
             />
             <img
               className="vc-2"
               src="/images/hero-2.jpg"
               alt="ঢাকা বিশ্ববিদ্যালয় ক্যাম্পাস"
-              loading="lazy"
+              loading="eager"
             />
             <img
               className="vc-3"
