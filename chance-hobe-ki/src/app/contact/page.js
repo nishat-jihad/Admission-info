@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "যোগাযোগ করুন",
+  description:
+    "Admission Info-র সাথে যোগাযোগ করো — ভর্তি তথ্যে ভুল, পরামর্শ বা কোনো প্রশ্ন থাকলে সরাসরি জানাও।",
   alternates: { canonical: "/contact" },
 };
 
