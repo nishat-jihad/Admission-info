@@ -33,6 +33,9 @@ export function generateMetadata({ params }) {
     ],
     alternates: { canonical: url },
     openGraph: {
+      type: "website",
+      locale: "bn_BD",
+      siteName: "Admission Info",
       title,
       description,
       url,
@@ -126,8 +129,22 @@ export default function UniversityDetailPage({ params }) {
   const maxCount = uni.subjects ? Math.max(...uni.subjects.map((s) => s.count)) : 0;
   const examDate = updates.find((u) => u.universityId === params.slug);
 
+  const SITE = "https://admissioninfo.vercel.app";
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "হোম", item: SITE },
+      { "@type": "ListItem", position: 2, name: uni.name, item: `${SITE}/university/${params.slug}` },
+    ],
+  };
+
   return (
     <div className="layout uni-detail">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd).replace(/</g, "\\u003c") }}
+      />
       <UniversitySidebar activeId={params.slug} />
 
       <main className="content">
