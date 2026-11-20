@@ -184,7 +184,7 @@ export default function NewsArticlePage({ params }) {
     dateModified: `${item.date}T00:00:00+06:00`,
     image: [img.url],
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
-    author: { "@type": "Organization", name: "Admission Info", url: SITE_URL },
+    author: { "@type": "Person", name: "Nishat Alam" },
     publisher: {
       "@type": "Organization",
       name: "Admission Info",
@@ -220,7 +220,13 @@ export default function NewsArticlePage({ params }) {
             <p className="news-standfirst">{item.summary}</p>
 
             <div className="news-byline">
-              <span className="news-byline-by">Admission Info ডেস্ক</span>
+              <span className="news-byline-by">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M12 20h9" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Nishat Alam
+              </span>
               <span className="news-date">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <circle cx="12" cy="12" r="9" />
