@@ -13,6 +13,7 @@ export default function ApplyPopup({ items = [] }) {
   const open = list.length > 0;
   // ডাউনলোড/স্কিপ বাটন শুধু ওয়েবসাইটে (PC + মোবাইল ব্রাউজার); অ্যাপের ভেতরে নয়
   const [showDl, setShowDl] = useState(false);
+  const [started, setStarted] = useState(false);
 
   // বর্তমান সময় শুধু ব্রাউজারে দেখা হয় (hydration mismatch এড়াতে)
   useEffect(() => {
@@ -87,13 +88,17 @@ export default function ApplyPopup({ items = [] }) {
 
         {showDl && (
           <div className="apply-popup-dl">
-            <p className="apply-popup-dl-title">সর্বশেষ আপডেট ও ভালো অভিজ্ঞতার জন্য আমাদের অফিসিয়াল অ্যাপ ইনস্টল করুন</p>
+            <p className="apply-popup-dl-title">
+              {started
+                ? "ডাউনলোড শুরু হয়েছে। শেষ হলে নোটিফিকেশন বার বা Downloads ফোল্ডার থেকে admission-info.apk চেপে ইনস্টল করুন।"
+                : "সর্বশেষ আপডেট ও ভালো অভিজ্ঞতার জন্য আমাদের অফিসিয়াল অ্যাপ ইনস্টল করুন"}
+            </p>
             <div className="apply-popup-dl-actions">
-              <a className="app-dl-btn app-dl-btn-dark" href={WEB_APK_URL} download>
+              <a className="app-dl-btn app-dl-btn-dark" href={WEB_APK_URL} download onClick={() => setStarted(true)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
                   <path d="M12 4v11M7 11l5 5 5-5M5 20h14" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Download
+                {started ? "শুরু হয়েছে" : "Download"}
               </a>
               <button type="button" className="app-dl-btn app-dl-btn-light" onClick={close}>
                 Skip
