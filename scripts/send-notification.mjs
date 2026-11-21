@@ -3,7 +3,8 @@
 //
 // কখন পাঠায়:
 //   • main-এ commit করলে — শুধু যদি commit message-এর শুরুতে [notify] লেখা থাকে।
-//     নোটিফিকেশনের লেখা = [notify] বাদে বাকি commit message।
+//     [notify] বাদে commit message-এর প্রথম লাইন = টাইটেল, "Extended description" = নিচের লেখা।
+//     Extended description না দিলে টাইটেল "Admission Info", নিচের লেখা = প্রথম লাইন।
 //   • হাতে Run workflow চালালে — শুধু যদি "notify" টিক দেওয়া থাকে। লেখা = notes ঘর।
 // Secret FIREBASE_SERVICE_ACCOUNT_JSON না থাকলে কিছু না করেই বেরিয়ে যায়।
 // ============================================================================
@@ -66,7 +67,13 @@ async function getAccessToken() {
   return data.access_token;
 }
 
-const body = text.replace(/\s+/g, " ").slice(0, 200);
+// লেখার প্রথম লাইন = টাইটেল, বাকিটা = নিচের লেখা (body)।
+// শুধু এক লাইন থাকলে টাইটেল হবে "Admission Info" আর সেই লাইনটাই body।
+const lines = text.split(/\r?\n/);
+const first = lines[0].trim();
+const rest = lines.slice(1).join(" ").replace(/\s+/g, " ").trim();
+const title = (rest ? first : "Admission Info").slice(0, 100);
+const body = (rest || first).replace(/\s+/g, " ").slice(0, 200);
 const token = await getAccessToken();
 const res = await fetch(`https://fcm.googleapis.com/v1/projects/${sa.project_id}/messages:send`, {
   method: "POST",
@@ -74,7 +81,7 @@ const res = await fetch(`https://fcm.googleapis.com/v1/projects/${sa.project_id}
   body: JSON.stringify({
     message: {
       topic: "all",
-      notification: { title: "Admission Info", body },
+      notification: { title, body },
       android: { priority: "HIGH" },
     },
   }),
@@ -84,4 +91,4 @@ if (!res.ok) {
   console.error("নোটিফিকেশন পাঠানো ব্যর্থ:", res.status, out);
   process.exit(1);
 }
-console.log("নোটিফিকেশন পাঠানো হয়েছে:", body);
+console.log("নোটিফিকেশন পাঠানো হয়েছে:", title, "|", body);
