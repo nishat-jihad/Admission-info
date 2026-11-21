@@ -51,6 +51,21 @@ export async function installBundleUpdate(info) {
   await CapacitorUpdater.set({ id: bundle.id });
 }
 
+// নোটিফিকেশনে চাপ দিয়ে অ্যাপ খুললে: নতুন ভার্সন থাকলে সাথে সাথে নামিয়ে চালু করে (অ্যাপ নিজে একবার রিলোড হয়)।
+// ফেরত দেয় true — রিলোড শুরু হয়েছে; false — নতুন কিছু নেই বা ব্যর্থ (তখন যেমন ছিল তেমনই চলবে)।
+export async function applyLatestNow() {
+  try {
+    const r = await fetchLatestRelease();
+    if (r.status !== "new" || !r.info.bundleUrl) return false;
+    const { CapacitorUpdater } = await import("@capgo/capacitor-updater");
+    const bundle = await CapacitorUpdater.download({ url: r.info.bundleUrl, version: r.info.version });
+    await CapacitorUpdater.set({ id: bundle.id });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 // অটো-আপডেট: নতুন ভার্সন চুপচাপ নামিয়ে রাখে; ইউজার পরেরবার অ্যাপ খুললে (পুরোপুরি বন্ধ করে আবার খুললে) চালু হয়।
 // কিছু দেখানো লাগে না। একই ভার্সন দ্বিতীয়বার নামে না। ব্যর্থ হলে error ছোঁড়ে।
 const PENDING_KEY = "admissionInfoPendingVersion";
