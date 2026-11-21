@@ -119,6 +119,8 @@ jobs:
           sed -i 's#<uses-permission android:name="android.permission.INTERNET" />#&\n    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />#' android/app/src/main/AndroidManifest.xml
           # নতুন প্লাগইনের লাইব্রেরি Android SDK 35 চায় — তাই compileSdk 35 করা (targetSdk/minSdk বদলায় না)
           sed -i 's/compileSdkVersion = 34/compileSdkVersion = 35/' android/variables.gradle
+          # নতুন লাইব্রেরি Android 6 (API 23) বা তার ওপরের ফোন চায়
+          sed -i 's/minSdkVersion = 22/minSdkVersion = 23/' android/variables.gradle
           echo "android.suppressUnsupportedCompileSdk=35" >> android/gradle.properties
           grep -n "compileSdkVersion\|targetSdkVersion\|minSdkVersion" android/variables.gradle
           if [ "$PUSH_ENABLED" = "1" ]; then
