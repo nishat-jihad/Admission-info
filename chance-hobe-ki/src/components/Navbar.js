@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BreakingNewsBar from "@/components/BreakingNewsBar";
+import { AppMenuButton } from "@/components/AppMenu";
+import { IS_APP } from "@/lib/appConfig";
 
 // Mobile ও PC — দুই জায়গাতেই একই আইকন, একই ক্রম।
 // PC: উপরের navbar-এ আইকন + নিচে পেজের নাম | Mobile: নিচের app-style bottom bar (আইকন + নাম)
@@ -96,7 +98,10 @@ export default function Navbar({ showBreaking = true }) {
 }
 
 function NavbarInner() {
-  const pathname = usePathname();
+  // অ্যাপে (static export) পাথ শেষে "/" থাকে (যেমন "/exam-dates/") — সেটা বাদ দিয়ে মেলানো হয়,
+  // নইলে Home আর News ছাড়া বাকি আইকন নীল হতো না।
+  const rawPath = usePathname() || "/";
+  const pathname = rawPath.length > 1 ? rawPath.replace(/\/+$/, "") : rawPath;
 
   return (
     <header className="navbar">
@@ -132,7 +137,15 @@ function NavbarInner() {
         <SocialIcons className="nav-social nav-social-inline" />
       </nav>
 
-      <SocialIcons className="nav-social nav-social-mobile" />
+      {IS_APP ? (
+        // অ্যাপে: FB + Telegram-এর পাশে ☰ মেনু বাটন
+        <div className="app-header-right">
+          <SocialIcons className="nav-social nav-social-mobile" />
+          <AppMenuButton />
+        </div>
+      ) : (
+        <SocialIcons className="nav-social nav-social-mobile" />
+      )}
     </header>
   );
 }

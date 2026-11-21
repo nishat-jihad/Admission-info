@@ -1,6 +1,12 @@
+// Android অ্যাপের বিল্ডে (NEXT_PUBLIC_APP=1) সাইটটা static ফাইল (out/ ফোল্ডার) হিসেবে বের হয়,
+// যেটা Capacitor অ্যাপের ভেতরে ঢোকে। ওয়েবসাইটের (Vercel) বিল্ডে এই বদলগুলো কাজ করে না।
+const isApp = process.env.NEXT_PUBLIC_APP === "1";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  ...(isApp ? { output: "export", trailingSlash: true } : {}),
   images: {
+    ...(isApp ? { unoptimized: true } : {}),
     remotePatterns: [
       { protocol: "https", hostname: "commons.wikimedia.org" },
       { protocol: "https", hostname: "thumb.wikimedia.org" },

@@ -1,13 +1,29 @@
 import { Analytics } from '@vercel/analytics/react';
 import Script from "next/script";
+import { Bangers, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import "../styles/popup-nav.css";
 import "../styles/context-menu.css";
+import "../styles/app.css";
+import AppBootstrap from "@/components/AppBootstrap";
+import { IS_APP } from "@/lib/appConfig";
 import ApplyPopup from "@/components/ApplyPopup";
 import CustomContextMenu from "@/components/CustomContextMenu";
 import { updates } from "@/data/updates";
 import { examDates } from "@/data/examDates";
 import { buildAdmissionCalendar } from "@/lib/examCalendar";
+
+const bangers = Bangers({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-bangers",
+});
+
+const notoBengali = Noto_Sans_Bengali({
+  subsets: ["bengali", "latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-noto-bn",
+});
 
 const SITE_URL = "https://admissioninfo.vercel.app";
 
@@ -31,14 +47,6 @@ export const metadata = {
   ],
   alternates: {
     canonical: SITE_URL,
-  },
-  // Google Discover ও সার্চে বড় ছবির প্রিভিউ দেখানোর অনুমতি (ছবি ১২০০px+ হলে)
-  robots: {
-    index: true,
-    follow: true,
-    "max-image-preview": "large",
-    "max-snippet": -1,
-    "max-video-preview": -1,
   },
   icons: {
     icon: [
@@ -77,28 +85,6 @@ export const metadata = {
   },
 };
 
-const SITE_JSON_LD = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: "Admission Info",
-      inLanguage: "bn",
-      publisher: { "@id": `${SITE_URL}/#org` },
-    },
-    {
-      "@type": "Organization",
-      "@id": `${SITE_URL}/#org`,
-      name: "Admission Info",
-      url: SITE_URL,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/images/admission-info-logo.png` },
-      sameAs: ["https://www.facebook.com/admissioninfo26", "https://t.me/admissioninfo26"],
-    },
-  ],
-};
-
 export default function RootLayout({ children }) {
   // যেসব ভার্সিটির "Apply Now" লিংক আছে (APPLY_LINKS, Admission Calendar-এর সাথে একই) — pop-up-এর ডেটা।
   // কোনটার আবেদন এখন চলছে সেটা ব্রাউজারে বর্তমান সময় দেখে ঠিক হয়।
@@ -115,25 +101,28 @@ export default function RootLayout({ children }) {
     }));
 
   return (
-    <html lang="bn">
-      <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_JSON_LD).replace(/</g, "\\u003c") }}
-        />
+    <html lang="bn" className={IS_APP ? "is-app" : undefined}>
+      <body className={`${bangers.variable} ${notoBengali.variable}`}>
         {children}
         <ApplyPopup items={applyItems} />
-        <CustomContextMenu />
-        <Analytics />
-        <Script id="microsoft-clarity" strategy="afterInteractive">
-          {`
+        {IS_APP ? (
+          // অ্যাপে: ☰ মেনু/back বাটন/স্ট্যাটাস বার (AppBootstrap)। Analytics, Clarity, ডান-ক্লিক মেনু নেই।
+          <AppBootstrap />
+        ) : (
+          <>
+            <CustomContextMenu />
+            <Analytics />
+            <Script id="microsoft-clarity" strategy="afterInteractive">
+              {`
             (function(c,l,a,r,i,t,y){
               c[a] = c[a] || function(){(c[a].q=c[a].q||[]).push(arguments)};
               t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
             })(window, document, "clarity", "script", "ygp6jepq9e");
           `}
-        </Script>
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );

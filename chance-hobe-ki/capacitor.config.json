@@ -1,0 +1,16 @@
+{
+  "appId": "bd.admissioninfo.app",
+  "appName": "Admission Info",
+  "webDir": "out",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#ffffff"
+  },
+  "plugins": {
+    "CapacitorUpdater": {
+      "autoUpdate": false
+    }
+  }
+}

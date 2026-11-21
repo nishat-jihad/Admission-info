@@ -1,25 +1,50 @@
 # ============================================================================
-# Admission Info — Android APK বানানো (GitHub নিজেই ক্লাউডে বানায়)
+# Admission Info — Android APK + অ্যাপ-আপডেট ফাইল বানানো (GitHub নিজেই ক্লাউডে বানায়)
 #
-# কীভাবে চালাবে: GitHub-এ রিপোর "Actions" ট্যাব → "Build Android APK" → "Run workflow" বাটন।
-# ১০–১৫ মিনিট পর "Releases" অংশে admission-info.apk তৈরি থাকবে।
-# সরাসরি ডাউনলোড লিংক:
-#   https://github.com/<মালিক>/<রিপো>/releases/latest/download/admission-info.apk
+# কখন চলে:
+#   ১) main branch-এ chance-hobe-ki/ ফোল্ডারে কিছু বদলে commit করলেই নিজে থেকে চলে
+#      (ওয়েবসাইটের কোনো লেখা/UI/নিউজ বদলালে অ্যাপের জন্য নতুন ভার্সন তৈরি হয়)
+#   ২) হাতে: Actions ট্যাব → Build Android APK → Run workflow
 #
-# সাইনিং (আসল কী): রিপোর Settings → Secrets and variables → Actions-এ ৪টা secret দিলে
-# প্রতিবার একই কী দিয়ে সাইন হবে (তখন পুরোনো অ্যাপের ওপর আপডেট ইন্সটল হয়):
-#   ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD
-# secret না দিলে debug কী দিয়ে বানায় — ইন্সটল হয়, কিন্তু পরের ভার্সন ইন্সটলের আগে পুরোনোটা মুছতে হয়।
+# কী তৈরি হয় (Releases-এ):
+#   admission-info.apk — নতুন ইন্সটলের জন্য
+#   bundle.zip         — অ্যাপের ভেতরে "আপডেট করো" চাপলে এটাই নামে (APK ইন্সটল লাগে না)
+#
+# ভার্সন: package.json-এর প্রথম দুই অংশ + run নম্বর (যেমন 1.0.7)। নিজে দিতে চাইলে Run workflow-এ লিখো।
+# পপ-আপে "কী বদলেছে" হিসেবে commit message (বা হাতে চালালে notes ঘর) দেখায়।
+#
+# সাইনিং secret (APK-র জন্য, ঐচ্ছিক): ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD,
+#   ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD
+# পুশ নোটিফিকেশন secret (ঐচ্ছিক): GOOGLE_SERVICES_JSON (Firebase-এর google-services.json ফাইলের পুরো লেখা)
+#   + FIREBASE_SERVICE_ACCOUNT_JSON (Firebase-এর service account key ফাইলের পুরো লেখা — নোটিফিকেশন নিজে পাঠানোর জন্য)
+# নোটিফিকেশন যায় শুধু commit message "[notify]" দিয়ে শুরু হলে (বা হাতে চালালে notify টিক দিলে)।
 # ============================================================================
 name: Build Android APK
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "chance-hobe-ki/**"
   workflow_dispatch:
     inputs:
       version:
-        description: "অ্যাপের ভার্সন (যেমন 1.0.1)। ফাঁকা রাখলে package.json-এর ভার্সন।"
+        description: "অ্যাপের ভার্সন (যেমন 1.0.1)। ফাঁকা রাখলে নিজে বানাবে।"
         required: false
         default: ""
+      notes:
+        description: "নতুন কী কী বদলেছে (ইউজার আপডেট পপ-আপে দেখবে)। ফাঁকা রাখলেও চলে।"
+        required: false
+        default: ""
+      notify:
+        description: "ইউজারদের নোটিফিকেশন পাঠাবে? (টিক দিলে উপরের notes-ই নোটিফিকেশনের লেখা)"
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: build-apk
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -49,11 +74,22 @@ jobs:
         id: ver
         env:
           INPUT_VERSION: ${{ github.event.inputs.version }}
+          RUN_NUMBER: ${{ github.run_number }}
         run: |
           V="$INPUT_VERSION"
-          if [ -z "$V" ]; then V=$(node -p "require('./package.json').version"); fi
+          if [ -z "$V" ]; then
+            BASE=$(node -p "require('./package.json').version.split('.').slice(0,2).join('.')")
+            V="$BASE.$RUN_NUMBER"
+          fi
           echo "version=$V" >> "$GITHUB_OUTPUT"
           echo "ভার্সন: $V"
+
+      - name: পুশ নোটিফিকেশন (Firebase) আছে কি না
+        id: push
+        env:
+          GSJ: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          if [ -n "$GSJ" ]; then echo "enabled=1" >> "$GITHUB_OUTPUT"; else echo "enabled=0" >> "$GITHUB_OUTPUT"; fi
 
       - name: প্যাকেজ ইন্সটল
         run: npm install --no-audit --no-fund
@@ -63,16 +99,33 @@ jobs:
           NEXT_PUBLIC_APP: "1"
           NEXT_PUBLIC_APP_VERSION: ${{ steps.ver.outputs.version }}
           NEXT_PUBLIC_GITHUB_REPO: ${{ github.repository }}
+          NEXT_PUBLIC_PUSH: ${{ steps.push.outputs.enabled }}
         run: |
           npx next build
           # PDF গুলো অ্যাপে বান্ডেল হয় না (ব্রাউজারে ওয়েবসাইট থেকে খোলে) — APK ছোট থাকে
           rm -rf out/docs
+          # অ্যাপের ভেতরে "আপডেট করো" চাপলে এই zip নামে (index.html জিপের একদম উপরে)
+          (cd out && zip -qr ../bundle.zip .)
 
       - name: Android প্রজেক্ট তৈরি
+        env:
+          GSJ: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          PUSH_ENABLED: ${{ steps.push.outputs.enabled }}
         run: |
           npx cap add android
           npx --yes @capacitor/assets generate --android
           npx cap sync android
+          # Android 13+ নোটিফিকেশন পারমিশন
+          sed -i 's#<uses-permission android:name="android.permission.INTERNET" />#&\n    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />#' android/app/src/main/AndroidManifest.xml
+          # নতুন প্লাগইনের লাইব্রেরি Android SDK 35 চায় — তাই compileSdk 35 করা (targetSdk/minSdk বদলায় না)
+          sed -i 's/compileSdkVersion = 34/compileSdkVersion = 35/' android/variables.gradle
+          # নতুন লাইব্রেরি Android 6 (API 23) বা তার ওপরের ফোন চায়
+          sed -i 's/minSdkVersion = 22/minSdkVersion = 23/' android/variables.gradle
+          echo "android.suppressUnsupportedCompileSdk=35" >> android/gradle.properties
+          grep -n "compileSdkVersion\|targetSdkVersion\|minSdkVersion" android/variables.gradle
+          if [ "$PUSH_ENABLED" = "1" ]; then
+            printf '%s' "$GSJ" > android/app/google-services.json
+          fi
 
       - name: ভার্সন নম্বর বসানো
         env:
@@ -106,17 +159,33 @@ jobs:
             cp app/build/outputs/apk/debug/app-debug.apk ../admission-info.apk
           fi
 
-      - name: APK সংরক্ষণ (Artifacts)
+      - name: ফাইল সংরক্ষণ (Artifacts)
         uses: actions/upload-artifact@v4
         with:
           name: admission-info-apk
-          path: chance-hobe-ki/admission-info.apk
+          path: |
+            chance-hobe-ki/admission-info.apk
+            chance-hobe-ki/bundle.zip
 
       - name: Release-এ আপলোড
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.ver.outputs.version }}
           name: Admission Info v${{ steps.ver.outputs.version }}
-          body: "Admission Info Android অ্যাপ v${{ steps.ver.outputs.version }}। admission-info.apk ডাউনলোড করে ইন্সটল করো।"
-          files: chance-hobe-ki/admission-info.apk
+          body: ${{ toJSON(github.event.inputs.notes || github.event.head_commit.message || 'অ্যাপের নতুন ভার্সন।') }}
+          files: |
+            chance-hobe-ki/admission-info.apk
+            chance-hobe-ki/bundle.zip
           make_latest: true
+
+      # Release তৈরি হওয়ার পরে (যাতে নোটিফিকেশনে চাপলেই নতুন ভার্সন পাওয়া যায়)।
+      # commit message [notify] দিয়ে শুরু হলে (বা হাতে চালালে notify টিক থাকলে) সব ইউজারের ফোনে যায়।
+      - name: ইউজারদের নোটিফিকেশন পাঠানো
+        working-directory: .
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          EVENT_NAME: ${{ github.event_name }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          INPUT_NOTIFY: ${{ github.event.inputs.notify }}
+          INPUT_NOTES: ${{ github.event.inputs.notes }}
+        run: node scripts/send-notification.mjs

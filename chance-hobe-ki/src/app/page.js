@@ -11,6 +11,8 @@ import Footer from "@/components/Footer";
 import NewsCorner from "@/components/NewsCorner";
 import HeroLatestNews from "@/components/HeroLatestNews";
 import AgriCalcCard from "@/components/AgriCalcCard";
+import AppHome from "@/components/AppHome";
+import { IS_APP } from "@/lib/appConfig";
 
 const VISIBLE_COUNT = 6;
 
@@ -50,7 +52,12 @@ function SearchParamsSync({ setCategory, setQuery, setShowAll }) {
   return null;
 }
 
+// অ্যাপ বিল্ডে (NEXT_PUBLIC_APP=1) নতুন অ্যাপ-হোম, ওয়েবসাইটে আগের হোমই।
 export default function HomePage() {
+  return IS_APP ? <AppHome /> : <WebHome />;
+}
+
+function WebHome() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [showAll, setShowAll] = useState(false);
@@ -167,14 +174,13 @@ export default function HomePage() {
               className="vc-1"
               src="/images/hero-1.jpg"
               alt="BUET ক্যাম্পাস"
-              loading="eager"
-              fetchPriority="high"
+              loading="lazy"
             />
             <img
               className="vc-2"
               src="/images/hero-2.jpg"
               alt="ঢাকা বিশ্ববিদ্যালয় ক্যাম্পাস"
-              loading="eager"
+              loading="lazy"
             />
             <img
               className="vc-3"
