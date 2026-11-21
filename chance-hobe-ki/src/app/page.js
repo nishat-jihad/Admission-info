@@ -197,8 +197,10 @@ function WebHome() {
             />
           </div>
 
-          <AppDownloadBar />
-          <AgriCalcCard />
+          <div className="hero-promo">
+            <AppDownloadBar />
+            <AgriCalcCard />
+          </div>
 
           <HeroLatestNews />
         </div>
