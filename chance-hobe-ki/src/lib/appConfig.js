@@ -27,3 +27,7 @@ export const GITHUB_BRANCH = process.env.NEXT_PUBLIC_GITHUB_BRANCH || "app";
 export const NOTIF_FEED_URL = GITHUB_REPO
   ? `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/notifications.json`
   : "";
+
+// ওয়েবসাইটের "অ্যাপ ডাউনলোড" বাটনের লিংক। ওয়েব বিল্ডে GITHUB_REPO ফাঁকা থাকে, তাই এখানে সরাসরি রিপো-নাম বসাও।
+const WEB_APK_REPO = GITHUB_REPO || "nishat-jihad/Admission-info";
+export const WEB_APK_URL = `https://github.com/${WEB_APK_REPO}/releases/latest/download/admission-info.apk`;
