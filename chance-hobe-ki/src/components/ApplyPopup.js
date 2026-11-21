@@ -11,13 +11,13 @@ import { IS_APP, WEB_APK_URL } from "@/lib/appConfig";
 export default function ApplyPopup({ items = [] }) {
   const [list, setList] = useState([]);
   const open = list.length > 0;
-  // ডাউনলোড/স্কিপ বাটন শুধু ওয়েবসাইটের PC-তে (অ্যাপে ও মোবাইলে নয়)
+  // ডাউনলোড/স্কিপ বাটন শুধু ওয়েবসাইটে (PC + মোবাইল ব্রাউজার); অ্যাপের ভেতরে নয়
   const [showDl, setShowDl] = useState(false);
 
   // বর্তমান সময় শুধু ব্রাউজারে দেখা হয় (hydration mismatch এড়াতে)
   useEffect(() => {
     const now = Date.now();
-    setShowDl(!IS_APP && !/Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent) && window.innerWidth > 768);
+    setShowDl(!IS_APP && !/iPhone|iPad|iPod/i.test(navigator.userAgent));
     setList(items.filter((it) => getApplicationStatus(it.application, now).key === "started"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
