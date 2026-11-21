@@ -20,7 +20,7 @@ export default function AppDownloadBar() {
       <div>
         <h2 className="app-dl-bar-title">Admission Info অফিসিয়াল অ্যাপ</h2>
         <p className="app-dl-bar-sub">
-          সার্কুলার, সর্বশেষ আপডেটসহ গুরুত্বপূর্ণ নোটিফিকেশন পেতে ও আরও ভালো ইউজার এক্সপেরিয়েন্সের জন্য আমাদের অফিসিয়াল অ্যাপ ইনস্টল করুন।
+          সার্কুলার, সর্বশেষ আপডেটসহ গুরুত্বপূর্ণ নোটিফিকেশন পেতে ও আরও ভালো এক্সপেরিয়েন্সের জন্য আমাদের official app ইনস্টল করুন।
         </p>
       </div>
       <a className="app-dl-btn app-dl-btn-dark" href={WEB_APK_URL} download>
