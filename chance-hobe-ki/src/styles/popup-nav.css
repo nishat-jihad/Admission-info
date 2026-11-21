@@ -256,3 +256,9 @@ nav.nav-links a.nav-icon-link.active {
     width: 100%;
   }
 }
+
+/* ডাউনলোড শুরুর বার্তা */
+.app-dl-started {
+  color: #0f7a3a;
+  font-weight: 700;
+}
