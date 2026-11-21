@@ -19,3 +19,11 @@ export const GITHUB_REPO = process.env.NEXT_PUBLIC_GITHUB_REPO || "";
 export const APK_URL = GITHUB_REPO
   ? `https://github.com/${GITHUB_REPO}/releases/latest/download/admission-info.apk`
   : SITE_URL;
+
+// নোটিফিকেশনের তালিকা (শেষ ১৬টা) — workflow প্রতিবার নোটিফিকেশন পাঠালে repo-র মূল ফোল্ডারের
+// notifications.json ফাইলে লিখে রাখে। অ্যাপ এখান থেকে পড়ে, তাই অ্যাপ বন্ধ থাকা অবস্থায় আসা নোটিফিকেশনও বেল-এ জমা থাকে।
+// workflow যে branch থেকে চলে (app বা main) সেই branch-এর ফাইল পড়া হয়; না পেলে "app"।
+export const GITHUB_BRANCH = process.env.NEXT_PUBLIC_GITHUB_BRANCH || "app";
+export const NOTIF_FEED_URL = GITHUB_REPO
+  ? `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/notifications.json`
+  : "";
