@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AppMenu from "@/components/AppMenu";
 import AppUpdatePrompt from "@/components/AppUpdatePrompt";
-import { getUpdateInfo, hideUpdate, snooze } from "@/lib/appUpdate";
+import { applyLatestNow, getUpdateInfo, hideUpdate, snooze } from "@/lib/appUpdate";
 import { getMenuOpen, setMenuOpen } from "@/lib/appMenuStore";
 import { SITE_URL } from "@/lib/appConfig";
 
@@ -21,21 +21,56 @@ export default function AppBootstrap() {
       .catch(() => {});
   }, []);
 
+  // নোটিফিকেশনে চাপ দিয়ে খোলার আগে অ্যাপ রিলোড হলে, যে পেজ খোলার কথা ছিল সেটা এখানে খোলে
+  useEffect(() => {
+    try {
+      const u = localStorage.getItem("admissionInfoPendingNav");
+      if (u) {
+        localStorage.removeItem("admissionInfoPendingNav");
+        if (u.startsWith("/")) router.push(u);
+      }
+    } catch (e) {
+      /* সমস্যা নেই */
+    }
+  }, [router]);
+
   // পুশ নোটিফিকেশন (শুধু Firebase সেটআপ থাকলে — workflow তখন NEXT_PUBLIC_PUSH=1 বসায়)
+  // সব ইউজার "all" নামের topic-এ জুড়ে যায়; workflow এই topic-এ নোটিফিকেশন পাঠায়।
+  // নোটিফিকেশনে চাপলে: নতুন ভার্সন থাকলে সাথে সাথে নামিয়ে চালু হয়, তারপর (থাকলে) নির্দিষ্ট পেজ খোলে।
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_PUSH !== "1") return undefined;
     let cancelled = false;
     let handle = null;
-    import("@capacitor/push-notifications")
-      .then(async ({ PushNotifications }) => {
-        let perm = await PushNotifications.checkPermissions();
-        if (perm.receive === "prompt") perm = await PushNotifications.requestPermissions();
-        if (perm.receive !== "granted" || cancelled) return;
-        handle = await PushNotifications.addListener("pushNotificationActionPerformed", (action) => {
-          const url = action && action.notification && action.notification.data && action.notification.data.url;
-          if (typeof url === "string" && url.startsWith("/")) router.push(url);
+    import("@capacitor-firebase/messaging")
+      .then(async ({ FirebaseMessaging }) => {
+        let perm = await FirebaseMessaging.checkPermissions();
+        if (perm.receive === "prompt" || perm.receive === "prompt-with-rationale") {
+          perm = await FirebaseMessaging.requestPermissions();
+        }
+        if (cancelled) return;
+        handle = await FirebaseMessaging.addListener("notificationActionPerformed", async (event) => {
+          const data = (event && event.notification && event.notification.data) || {};
+          const url = typeof data.url === "string" && data.url.startsWith("/") ? data.url : "";
+          if (url) {
+            try {
+              localStorage.setItem("admissionInfoPendingNav", url);
+            } catch (e) {
+              /* সমস্যা নেই */
+            }
+          }
+          const reloading = await applyLatestNow();
+          if (!reloading) {
+            try {
+              localStorage.removeItem("admissionInfoPendingNav");
+            } catch (e) {
+              /* সমস্যা নেই */
+            }
+            if (url) router.push(url);
+          }
         });
-        await PushNotifications.register();
+        if (perm.receive === "granted") {
+          await FirebaseMessaging.subscribeToTopic({ topic: "all" });
+        }
       })
       .catch(() => {});
     return () => {
