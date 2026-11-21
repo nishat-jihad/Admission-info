@@ -3,6 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { APP_VERSION } from "@/lib/appConfig";
 import {
+  downloadBundleForNextLaunch,
   fetchLatestRelease,
   getUpdateInfo,
   hideUpdate,
@@ -13,9 +14,10 @@ import {
   subscribeUpdate,
 } from "@/lib/appUpdate";
 
-// অ্যাপ খুললে (২.৫ সেকেন্ড পর) নতুন ভার্সন দেখে; থাকলে পপ-আপ দেখায়।
-// "আপডেট করো" চাপলে নতুন ভার্সন অ্যাপের ভেতরেই নামে ও চালু হয় (APK ইন্সটল লাগে না)।
-// কোনো কারণে সেটা না হলে নতুন APK ডাউনলোডের লিংক দেখায়।
+// অ্যাপ খুললে (৩ সেকেন্ড পর) নতুন ভার্সন দেখে:
+//  • bundle থাকলে — চুপচাপ নামিয়ে রাখে (অটো-আপডেট); ইউজার পরেরবার অ্যাপ খুললে নতুন ভার্সন পায়। কোনো পপ-আপ নেই।
+//  • bundle না থাকলে বা নামানো ব্যর্থ হলে — পপ-আপ দেখায় ("আপডেট করো" বা নতুন APK ডাউনলোডের লিংক)।
+// মেনুর "নতুন ভার্সন আছে কি না দেখো" বাটন চাপলে সরাসরি পপ-আপ আসে।
 export default function AppUpdatePrompt() {
   const info = useSyncExternalStore(subscribeUpdate, getUpdateInfo, () => null);
   const [phase, setPhase] = useState("idle"); // idle | working | failed
@@ -38,8 +40,17 @@ export default function AppUpdatePrompt() {
 
     timer = setTimeout(async () => {
       const r = await fetchLatestRelease();
-      if (!cancelled && r.status === "new" && !isSnoozed(r.info.version)) showWhenFree(r.info);
-    }, 2500);
+      if (cancelled || r.status !== "new") return;
+      if (r.info.bundleUrl) {
+        try {
+          await downloadBundleForNextLaunch(r.info);
+          return; // চুপচাপ নামানো হয়ে গেছে, পপ-আপ লাগবে না
+        } catch (e) {
+          /* ব্যর্থ হলে নিচে পপ-আপে যাবে */
+        }
+      }
+      if (!isSnoozed(r.info.version)) showWhenFree(r.info);
+    }, 3000);
 
     return () => {
       cancelled = true;
