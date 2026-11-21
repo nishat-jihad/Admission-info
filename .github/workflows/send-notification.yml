@@ -1,0 +1,69 @@
+# ============================================================================
+# শুধু নোটিফিকেশন পাঠানো (APK বিল্ড ছাড়া, ২০-৩০ সেকেন্ডে শেষ)।
+# চালানোর নিয়ম: GitHub → Actions ট্যাব → বাঁ দিকে "Send Notification" → Run workflow
+#   টাইটেল ও নোটিফিকেশনের লেখা লিখে Run workflow চাপুন।
+# এটা Firebase-এর "all" topic-এই যায় (ইউজাররা আগের মতোই পায়), সাথে notifications.json-এ জমা হয়,
+# তাই ইউজার নোটিফিকেশন swipe করে সরালেও অ্যাপের 🔔 বেল-এ থাকে (শেষ ১৬টা)।
+# লাগবে: secret FIREBASE_SERVICE_ACCOUNT_JSON (আগে থেকেই আছে)।
+# ============================================================================
+name: Send Notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "নোটিফিকেশনের টাইটেল (যেমন: নতুন ভার্সন এসেছে)"
+        required: true
+        default: "Admission Info"
+      body:
+        description: "নোটিফিকেশনের লেখা"
+        required: true
+
+concurrency:
+  group: send-notification
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: নোটিফিকেশন পাঠানো
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          EVENT_NAME: workflow_dispatch
+          INPUT_NOTIFY: "true"
+          INPUT_TITLE: ${{ github.event.inputs.title }}
+          INPUT_BODY: ${{ github.event.inputs.body }}
+        run: |
+          # টাইটেল প্রথম লাইনে, লেখা তার নিচের লাইনে — send-notification.mjs এভাবেই পড়ে
+          export INPUT_NOTES="$(printf '%s\n%s' "$INPUT_TITLE" "$INPUT_BODY")"
+          node scripts/send-notification.mjs
+
+      - name: নোটিফিকেশন তালিকা সেভ (notifications.json)
+        run: |
+          if [ -z "$(git status --porcelain notifications.json)" ]; then
+            echo "তালিকায় কোনো বদল নেই।"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add notifications.json
+          git commit -m "chore: notification list update"
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 4
+          done
+          echo "::warning::notifications.json push করা গেল না।"
