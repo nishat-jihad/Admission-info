@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BreakingNewsBar from "@/components/BreakingNewsBar";
 import { AppMenuButton } from "@/components/AppMenu";
-import { NotificationBell } from "@/components/NotificationCenter";
 import { IS_APP } from "@/lib/appConfig";
 
 // Mobile ও PC — দুই জায়গাতেই একই আইকন, একই ক্রম।
@@ -139,10 +138,9 @@ function NavbarInner() {
       </nav>
 
       {IS_APP ? (
-        // অ্যাপে: FB + Telegram-এর পাশে 🔔 নোটিফিকেশন বেল, তার পাশে ☰ মেনু বাটন
+        // অ্যাপে: FB + Telegram-এর পাশে ☰ মেনু বাটন
         <div className="app-header-right">
           <SocialIcons className="nav-social nav-social-mobile" />
-          <NotificationBell />
           <AppMenuButton />
         </div>
       ) : (
