@@ -11,6 +11,7 @@ const MENU_ITEMS = [
   { label: "Ad. Calendar", href: "/exam-dates" },
   { label: "Updates", href: "/updates" },
   { label: "General Check", href: "/general-check" },
+  { label: "Reload", action: "reload" }, // পেজ রিলোড
 ];
 
 const MENU_WIDTH = 220;
@@ -83,12 +84,16 @@ export default function CustomContextMenu() {
       </div>
       {MENU_ITEMS.map((item) => (
         <button
-          key={item.href}
+          key={item.href || item.action}
           type="button"
           role="menuitem"
-          className="ctx-menu-item"
+          className={`ctx-menu-item${item.action ? " ctx-menu-item-sep" : ""}`}
           onClick={() => {
             setPos(null);
+            if (item.action === "reload") {
+              window.location.reload();
+              return;
+            }
             router.push(item.href);
           }}
         >
