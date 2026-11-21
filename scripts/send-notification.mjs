@@ -9,7 +9,6 @@
 // Secret FIREBASE_SERVICE_ACCOUNT_JSON না থাকলে কিছু না করেই বেরিয়ে যায়।
 // ============================================================================
 import { createSign } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 const {
   FIREBASE_SERVICE_ACCOUNT_JSON: saRaw = "",
@@ -75,9 +74,6 @@ const first = lines[0].trim();
 const rest = lines.slice(1).join(" ").replace(/\s+/g, " ").trim();
 const title = (rest ? first : "Admission Info").slice(0, 100);
 const body = (rest || first).replace(/\s+/g, " ").slice(0, 200);
-// প্রতিটা নোটিফিকেশনের নিজস্ব id + পাঠানোর সময় — অ্যাপের 🔔 তালিকায় একই নোটিফিকেশন দুইবার না আসার জন্য
-const sentAt = Date.now();
-const nid = sentAt.toString(36) + Math.random().toString(36).slice(2, 6);
 const token = await getAccessToken();
 const res = await fetch(`https://fcm.googleapis.com/v1/projects/${sa.project_id}/messages:send`, {
   method: "POST",
@@ -86,7 +82,6 @@ const res = await fetch(`https://fcm.googleapis.com/v1/projects/${sa.project_id}
     message: {
       topic: "all",
       notification: { title, body },
-      data: { nid, sentAt: String(sentAt) },
       android: { priority: "HIGH" },
     },
   }),
@@ -97,18 +92,3 @@ if (!res.ok) {
   process.exit(1);
 }
 console.log("নোটিফিকেশন পাঠানো হয়েছে:", title, "|", body);
-
-// অ্যাপের 🔔 নোটিফিকেশন তালিকা: repo-র মূল ফোল্ডারের notifications.json-এ শুধু শেষ ১৬টা রাখা।
-// (workflow-র পরের ধাপ এই ফাইল commit করে দেয়; অ্যাপ বন্ধ থাকলেও মিস হওয়া নোটিফিকেশন তাই তালিকায় আসে)
-const FEED_FILE = "notifications.json";
-const FEED_MAX = 16;
-let feed = [];
-try {
-  if (existsSync(FEED_FILE)) feed = JSON.parse(readFileSync(FEED_FILE, "utf8"));
-  if (!Array.isArray(feed)) feed = [];
-} catch (e) {
-  feed = [];
-}
-feed.unshift({ id: nid, title, body, time: sentAt });
-writeFileSync(FEED_FILE, JSON.stringify(feed.slice(0, FEED_MAX), null, 2) + "\n");
-console.log("notifications.json আপডেট হয়েছে (শেষ", FEED_MAX, "টা)।");
