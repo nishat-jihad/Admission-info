@@ -7,5 +7,10 @@
   },
   "android": {
     "backgroundColor": "#ffffff"
+  },
+  "plugins": {
+    "CapacitorUpdater": {
+      "autoUpdate": false
+    }
   }
 }
