@@ -4,7 +4,8 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getMenuOpen, setMenuOpen, subscribeMenu } from "@/lib/appMenuStore";
-import { APP_VERSION, APK_URL, GITHUB_REPO, SITE_URL } from "@/lib/appConfig";
+import { APP_VERSION, SITE_URL } from "@/lib/appConfig";
+import { fetchLatestRelease, showUpdate } from "@/lib/appUpdate";
 
 const FACEBOOK_URL = "https://www.facebook.com/admissioninfo26";
 const TELEGRAM_URL = "https://t.me/admissioninfo26";
@@ -109,17 +110,6 @@ const SECTIONS = [
   },
 ];
 
-// "1.2.3" বনাম "1.2.10" তুলনা
-function isNewer(latest, current) {
-  const a = latest.split(".").map((n) => parseInt(n, 10) || 0);
-  const b = current.split(".").map((n) => parseInt(n, 10) || 0);
-  for (let i = 0; i < Math.max(a.length, b.length); i++) {
-    if ((a[i] || 0) > (b[i] || 0)) return true;
-    if ((a[i] || 0) < (b[i] || 0)) return false;
-  }
-  return false;
-}
-
 // বাঁ দিক থেকে আসা ড্রয়ার (AppBootstrap-এ একবার বসে)
 export default function AppMenu() {
   const open = useSyncExternalStore(subscribeMenu, getMenuOpen, () => false);
@@ -166,22 +156,15 @@ export default function AppMenu() {
   }
 
   async function checkUpdate() {
-    if (!GITHUB_REPO) {
-      setUpdate({ state: "off" });
-      return;
-    }
     setUpdate({ state: "loading" });
-    try {
-      const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`, {
-        headers: { Accept: "application/vnd.github+json" },
-      });
-      if (!res.ok) throw new Error("bad status");
-      const data = await res.json();
-      const latest = String(data.tag_name || "").replace(/^v/i, "");
-      if (latest && isNewer(latest, APP_VERSION)) setUpdate({ state: "new", version: latest });
-      else setUpdate({ state: "latest" });
-    } catch (e) {
-      setUpdate({ state: "error" });
+    const r = await fetchLatestRelease();
+    if (r.status === "new") {
+      // নতুন ভার্সন থাকলে পপ-আপ খোলে (মেনু বন্ধ করে)
+      setUpdate({ state: "idle" });
+      setMenuOpen(false);
+      showUpdate(r.info);
+    } else {
+      setUpdate({ state: r.status });
     }
   }
 
@@ -239,14 +222,6 @@ export default function AppMenu() {
                 {update.state === "latest" && "তুমি সর্বশেষ ভার্সনেই আছ।"}
                 {update.state === "error" && "এখন দেখা যাচ্ছে না। ইন্টারনেট চেক করে আবার চেষ্টা করো।"}
                 {update.state === "off" && "এই বিল্ডে আপডেট চেক চালু নেই।"}
-                {update.state === "new" && (
-                  <>
-                    নতুন ভার্সন {update.version} এসেছে।{" "}
-                    <a href={APK_URL} target="_blank" rel="noopener noreferrer">
-                      ডাউনলোড করো
-                    </a>
-                  </>
-                )}
               </div>
             )}
             <div className="app-drawer-item app-drawer-static">
