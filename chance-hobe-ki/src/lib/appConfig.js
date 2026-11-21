@@ -20,8 +20,6 @@ export const APK_URL = GITHUB_REPO
   ? `https://github.com/${GITHUB_REPO}/releases/latest/download/admission-info.apk`
   : SITE_URL;
 
-// নোটিফিকেশনের তালিকা (শেষ ১৬টা) — workflow প্রতিবার নোটিফিকেশন পাঠালে repo-র মূল ফোল্ডারের
-// notifications.json ফাইলে লিখে রাখে। অ্যাপ এখান থেকে পড়ে, তাই অ্যাপ বন্ধ থাকা অবস্থায় আসা নোটিফিকেশনও বেল-এ জমা থাকে।
-export const NOTIF_FEED_URL = GITHUB_REPO
-  ? `https://raw.githubusercontent.com/${GITHUB_REPO}/main/notifications.json`
-  : "";
+// ওয়েবসাইটের "অ্যাপ ডাউনলোড" বাটনের লিংক। ওয়েব বিল্ডে GITHUB_REPO ফাঁকা থাকে, তাই এখানে সরাসরি রিপো-নাম বসাও।
+const WEB_APK_REPO = GITHUB_REPO || "nishat-jihad/Admission-info";
+export const WEB_APK_URL = `https://github.com/${WEB_APK_REPO}/releases/latest/download/admission-info.apk`;
