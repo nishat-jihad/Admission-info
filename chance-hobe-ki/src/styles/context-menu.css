@@ -53,3 +53,10 @@
   width: 110px;
   height: auto;
 }
+
+/* Reload আইটেমের ওপরে হালকা লাইন */
+.ctx-menu-item-sep {
+  margin-top: 4px;
+  border-top: 1px solid #e5e5e5;
+  border-radius: 0 0 8px 8px;
+}
