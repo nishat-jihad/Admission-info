@@ -19,3 +19,7 @@ export const GITHUB_REPO = process.env.NEXT_PUBLIC_GITHUB_REPO || "";
 export const APK_URL = GITHUB_REPO
   ? `https://github.com/${GITHUB_REPO}/releases/latest/download/admission-info.apk`
   : SITE_URL;
+
+// ওয়েবসাইটের "অ্যাপ ডাউনলোড" বাটনের লিংক। ওয়েব বিল্ডে GITHUB_REPO ফাঁকা থাকে, তাই এখানে সরাসরি রিপো-নাম বসাও।
+const WEB_APK_REPO = GITHUB_REPO || "nishat-jihad/Admission-info";
+export const WEB_APK_URL = `https://github.com/${WEB_APK_REPO}/releases/latest/download/admission-info.apk`;
