@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getApplicationStatus } from "@/lib/examCalendar";
+import { IS_APP, WEB_APK_URL } from "@/lib/appConfig";
 
 // সাইটে ঢুকলেই (Mobile + PC দুই জায়গাতেই) একটা pop-up আসবে — যেসব ভার্সিটিতে এখন আবেদন চলছে
 // শুধু সেগুলো আর প্রত্যেকটার পাশে "Apply Now" বাটন। "Apply Now"-এর লিংক আসে
@@ -9,12 +10,14 @@ import { getApplicationStatus } from "@/lib/examCalendar";
 // এখানে বিস্তারিত পেজের কোনো লিংক নেই।
 export default function ApplyPopup({ items = [] }) {
   const [list, setList] = useState([]);
-  const closeRef = useRef(null);
   const open = list.length > 0;
+  // ডাউনলোড/স্কিপ বাটন শুধু ওয়েবসাইটের PC-তে (অ্যাপে ও মোবাইলে নয়)
+  const [showDl, setShowDl] = useState(false);
 
   // বর্তমান সময় শুধু ব্রাউজারে দেখা হয় (hydration mismatch এড়াতে)
   useEffect(() => {
     const now = Date.now();
+    setShowDl(!IS_APP && !/Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent) && window.innerWidth > 768);
     setList(items.filter((it) => getApplicationStatus(it.application, now).key === "started"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -27,7 +30,6 @@ export default function ApplyPopup({ items = [] }) {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKey);
-    if (closeRef.current) closeRef.current.focus();
     return () => {
       document.body.style.overflow = prevOverflow;
       document.removeEventListener("keydown", onKey);
@@ -53,7 +55,6 @@ export default function ApplyPopup({ items = [] }) {
       >
         <button
           type="button"
-          ref={closeRef}
           className="apply-popup-close"
           aria-label="বন্ধ করো"
           onClick={close}
@@ -83,6 +84,23 @@ export default function ApplyPopup({ items = [] }) {
             </li>
           ))}
         </ul>
+
+        {showDl && (
+          <div className="apply-popup-dl">
+            <p className="apply-popup-dl-title">সর্বশেষ আপডেট ও ভালো অভিজ্ঞতার জন্য আমাদের অফিসিয়াল অ্যাপ ইনস্টল করুন</p>
+            <div className="apply-popup-dl-actions">
+              <a className="app-dl-btn app-dl-btn-dark" href={WEB_APK_URL} download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+                  <path d="M12 4v11M7 11l5 5 5-5M5 20h14" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Download
+              </a>
+              <button type="button" className="app-dl-btn app-dl-btn-light" onClick={close}>
+                Skip
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
