@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import NewsCorner from "@/components/NewsCorner";
 import HeroLatestNews from "@/components/HeroLatestNews";
 import AgriCalcCard from "@/components/AgriCalcCard";
+import AppDownloadBar from "@/components/AppDownloadBar";
 import AppHome from "@/components/AppHome";
 import { IS_APP } from "@/lib/appConfig";
 
@@ -196,7 +197,10 @@ function WebHome() {
             />
           </div>
 
-          <AgriCalcCard />
+          <div className="hero-promo">
+            <AppDownloadBar />
+            <AgriCalcCard />
+          </div>
 
           <HeroLatestNews />
         </div>
