@@ -3,6 +3,7 @@
 // GitHub Releases-এর সর্বশেষ রিলিজের ট্যাগ (যেমন v1.0.1) দেখে বর্তমান ভার্সনের সাথে মেলায়।
 // নতুন থাকলে showUpdate(...) দিয়ে AppUpdatePrompt পপ-আপ দেখানো হয়।
 // ============================================================================
+import { CapacitorHttp } from "@capacitor/core";
 import { APP_VERSION, APK_URL, GITHUB_REPO } from "@/lib/appConfig";
 
 // "1.2.3" বনাম "1.2.10" তুলনা
@@ -16,9 +17,47 @@ export function isNewer(latest, current) {
   return false;
 }
 
+// সর্বশেষ রিলিজের ট্যাগ (যেমন v1.0.30) বের করা — GitHub API ব্যবহার না করে (API-র limit ঘণ্টায় ~৬০, ফোনের নেটে সহজেই শেষ হয়ে যায়)।
+// github.com/<repo>/releases/latest পেজটা সর্বশেষ রিলিজের ট্যাগ-পেজে redirect করে; সেই শেষ URL থেকে ট্যাগ পড়া হয়।
+// CapacitorHttp অ্যাপের নিজস্ব (native) রিকোয়েস্ট, তাই ব্রাউজারের CORS বাধা নেই।
+async function latestTagViaWeb() {
+  const res = await CapacitorHttp.get({
+    url: `https://github.com/${GITHUB_REPO}/releases/latest`,
+    headers: { Accept: "text/html" },
+    responseType: "text",
+    connectTimeout: 10000,
+    readTimeout: 10000,
+  });
+  if (res.status < 200 || res.status >= 400) return "";
+  const m1 = String(res.url || "").match(/\/releases\/tag\/([^/?#]+)/);
+  if (m1) return decodeURIComponent(m1[1]);
+  const m2 = String(res.data || "").match(/\/releases\/tag\/(v?[0-9][^"'/?#<\s]*)/);
+  return m2 ? decodeURIComponent(m2[1]) : "";
+}
+
 // ফেরত দেয়: { status: "new" | "latest" | "error" | "off", info? }
 export async function fetchLatestRelease() {
   if (!GITHUB_REPO) return { status: "off" };
+
+  // ১) ওয়েব পেজ থেকে (limit নেই)
+  try {
+    const tag = await latestTagViaWeb();
+    const version = tag.replace(/^v/i, "");
+    if (version) {
+      const base = `https://github.com/${GITHUB_REPO}/releases/download/${tag}`;
+      const info = {
+        version,
+        notes: "",
+        apkUrl: `${base}/admission-info.apk`,
+        bundleUrl: `${base}/bundle.zip`,
+      };
+      return isNewer(version, APP_VERSION) ? { status: "new", info } : { status: "latest", info };
+    }
+  } catch (e) {
+    /* ব্যর্থ হলে নিচের API পদ্ধতিতে যাবে */
+  }
+
+  // ২) বিকল্প: GitHub API (limit শেষ হলে ব্যর্থ হবে)
   try {
     const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`, {
       headers: { Accept: "application/vnd.github+json" },
