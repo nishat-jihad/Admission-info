@@ -21,6 +21,7 @@ import {
 export default function AppUpdatePrompt() {
   const info = useSyncExternalStore(subscribeUpdate, getUpdateInfo, () => null);
   const [phase, setPhase] = useState("idle"); // idle | working | failed
+  const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -44,11 +45,12 @@ export default function AppUpdatePrompt() {
       if (r.info.bundleUrl) {
         try {
           await downloadBundleForNextLaunch(r.info);
-          return; // চুপচাপ নামানো হয়ে গেছে, পপ-আপ লাগবে না
         } catch (e) {
-          /* ব্যর্থ হলে নিচে পপ-আপে যাবে */
+          /* ব্যর্থ হলেও পপ-আপ দেখানো হয় না — মেনুর "নতুন ভার্সন আছে কি না দেখো" বাটনে হাতে দেখা যায় */
         }
+        return; // স্বয়ংক্রিয় চেকে কোনো পপ-আপ নেই
       }
+      // রিলিজে bundle.zip না থাকলে (শুধু APK) তবেই পপ-আপ
       if (!isSnoozed(r.info.version)) showWhenFree(r.info);
     }, 3000);
 
@@ -78,6 +80,7 @@ export default function AppUpdatePrompt() {
       await installBundleUpdate(info);
       // সফল হলে অ্যাপ নিজে নতুন করে লোড হয়ে যায়
     } catch (e) {
+      setErrMsg(String((e && e.message) || e || "").slice(0, 160));
       setPhase("failed");
     }
   }
@@ -96,6 +99,7 @@ export default function AppUpdatePrompt() {
         {phase === "failed" && (
           <p className="app-update-hint">
             অ্যাপের ভেতরে আপডেট হলো না। নিচের বাটনে নতুন APK নামিয়ে ইন্সটল করো।
+            {errMsg && <><br /><small>কারণ: {errMsg}</small></>}
           </p>
         )}
         <div className="app-update-actions">
