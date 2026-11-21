@@ -16,6 +16,8 @@
 # সাইনিং secret (APK-র জন্য, ঐচ্ছিক): ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD,
 #   ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD
 # পুশ নোটিফিকেশন secret (ঐচ্ছিক): GOOGLE_SERVICES_JSON (Firebase-এর google-services.json ফাইলের পুরো লেখা)
+#   + FIREBASE_SERVICE_ACCOUNT_JSON (Firebase-এর service account key ফাইলের পুরো লেখা — নোটিফিকেশন নিজে পাঠানোর জন্য)
+# নোটিফিকেশন যায় শুধু commit message "[notify]" দিয়ে শুরু হলে (বা হাতে চালালে notify টিক দিলে)।
 # ============================================================================
 name: Build Android APK
 
@@ -34,6 +36,11 @@ on:
         description: "নতুন কী কী বদলেছে (ইউজার আপডেট পপ-আপে দেখবে)। ফাঁকা রাখলেও চলে।"
         required: false
         default: ""
+      notify:
+        description: "ইউজারদের নোটিফিকেশন পাঠাবে? (টিক দিলে উপরের notes-ই নোটিফিকেশনের লেখা)"
+        type: boolean
+        required: false
+        default: false
 
 concurrency:
   group: build-apk
@@ -164,3 +171,15 @@ jobs:
             chance-hobe-ki/admission-info.apk
             chance-hobe-ki/bundle.zip
           make_latest: true
+
+      # Release তৈরি হওয়ার পরে (যাতে নোটিফিকেশনে চাপলেই নতুন ভার্সন পাওয়া যায়)।
+      # commit message [notify] দিয়ে শুরু হলে (বা হাতে চালালে notify টিক থাকলে) সব ইউজারের ফোনে যায়।
+      - name: ইউজারদের নোটিফিকেশন পাঠানো
+        working-directory: .
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          EVENT_NAME: ${{ github.event_name }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          INPUT_NOTIFY: ${{ github.event.inputs.notify }}
+          INPUT_NOTES: ${{ github.event.inputs.notes }}
+        run: node scripts/send-notification.mjs
