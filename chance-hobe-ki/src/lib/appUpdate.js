@@ -51,6 +51,28 @@ export async function installBundleUpdate(info) {
   await CapacitorUpdater.set({ id: bundle.id });
 }
 
+// অটো-আপডেট: নতুন ভার্সন চুপচাপ নামিয়ে রাখে; ইউজার পরেরবার অ্যাপ খুললে (পুরোপুরি বন্ধ করে আবার খুললে) চালু হয়।
+// কিছু দেখানো লাগে না। একই ভার্সন দ্বিতীয়বার নামে না। ব্যর্থ হলে error ছোঁড়ে।
+const PENDING_KEY = "admissionInfoPendingVersion";
+
+export async function downloadBundleForNextLaunch(info) {
+  if (!info.bundleUrl) throw new Error("bundle নেই");
+  try {
+    if (localStorage.getItem(PENDING_KEY) === info.version) return "already";
+  } catch (e) {
+    /* localStorage না থাকলে সমস্যা নেই */
+  }
+  const { CapacitorUpdater } = await import("@capgo/capacitor-updater");
+  const bundle = await CapacitorUpdater.download({ url: info.bundleUrl, version: info.version });
+  await CapacitorUpdater.next({ id: bundle.id });
+  try {
+    localStorage.setItem(PENDING_KEY, info.version);
+  } catch (e) {
+    /* সমস্যা নেই */
+  }
+  return "downloaded";
+}
+
 // ---- পপ-আপের অবস্থা (খোলা/বন্ধ) ----
 let current = null;
 const listeners = new Set();
