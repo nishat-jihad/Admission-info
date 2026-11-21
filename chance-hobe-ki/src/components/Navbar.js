@@ -98,7 +98,10 @@ export default function Navbar({ showBreaking = true }) {
 }
 
 function NavbarInner() {
-  const pathname = usePathname();
+  // অ্যাপে (static export) পাথ শেষে "/" থাকে (যেমন "/exam-dates/") — সেটা বাদ দিয়ে মেলানো হয়,
+  // নইলে Home আর News ছাড়া বাকি আইকন নীল হতো না।
+  const rawPath = usePathname() || "/";
+  const pathname = rawPath.length > 1 ? rawPath.replace(/\/+$/, "") : rawPath;
 
   return (
     <header className="navbar">
