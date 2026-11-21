@@ -422,3 +422,82 @@
   font-size: 14px;
   color: #777;
 }
+
+/* ---------- "নতুন আপডেট" পপ-আপ ---------- */
+.app-update-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(17, 24, 39, 0.5);
+}
+.app-update {
+  width: 100%;
+  max-width: 340px;
+  padding: 20px 20px 16px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.3);
+}
+.app-update-title {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+.app-update-ver {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #4b5563;
+}
+.app-update-ver strong {
+  color: var(--blue);
+}
+.app-update-notes {
+  max-height: 140px;
+  margin: 0 0 10px;
+  overflow-y: auto;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #374151;
+  white-space: pre-line;
+}
+.app-update-hint {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #eef2fd;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #1e44b8;
+}
+.app-update-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+.app-update-later,
+.app-update-go {
+  flex: 1 1 0;
+  padding: 11px 0;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.app-update-later {
+  border: 1px solid #d9dce1;
+  background: #fff;
+  color: #374151;
+}
+.app-update-go {
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  color: #fff;
+}
