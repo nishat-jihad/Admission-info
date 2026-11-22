@@ -3,25 +3,32 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AppMenu from "@/components/AppMenu";
-import NotificationPanel from "@/components/NotificationCenter";
 import AppUpdatePrompt from "@/components/AppUpdatePrompt";
-import { applyLatestNow, getUpdateInfo, hideUpdate, snooze } from "@/lib/appUpdate";
+import { applyLatestNow, applyPendingUpdate, getUpdateInfo, hideUpdate, snooze, startUpdateWatcher } from "@/lib/appUpdate";
 import { getMenuOpen, setMenuOpen } from "@/lib/appMenuStore";
-import { addFromFirebase, getPanelOpen, setPanelOpen, syncNotificationFeed } from "@/lib/notificationStore";
 import { SITE_URL } from "@/lib/appConfig";
 
 // শুধু অ্যাপ মোডে layout.js থেকে একবার বসে। কাজ:
 // ১) স্ট্যাটাস বার সাদা  ২) Android back বাটন (আপডেট পপ-আপ/মেনু খোলা থাকলে আগে সেটা বন্ধ)
 // ৩) PDF লিংক ব্রাউজারে খোলা (WebView-তে PDF দেখা যায় না)  ৪) ☰ মেনুর ড্রয়ার  ৫) "নতুন আপডেট" পপ-আপ
-// ৬) 🔔 নোটিফিকেশন তালিকা (শেষ ১৬টা) জমানো ও প্যানেল
 export default function AppBootstrap() {
   const router = useRouter();
 
   // অ্যাপের ভেতরে আপডেট হওয়া নতুন ভার্সন ঠিকমতো খুলেছে — এটা জানিয়ে না দিলে প্লাগইন ১০ সেকেন্ড পর আগের ভার্সনে ফেরত যায়
+  // তারপর: আগের বার চুপচাপ নামানো নতুন bundle থাকলে এখনই চালু করে; আর অ্যাপ ব্যাকগ্রাউন্ডে গেলেও চালু করার ব্যবস্থা বসে।
   useEffect(() => {
+    let cancelled = false;
     import("@capgo/capacitor-updater")
       .then(({ CapacitorUpdater }) => CapacitorUpdater.notifyAppReady())
-      .catch(() => {});
+      .catch(() => {})
+      .then(() => {
+        if (!cancelled) applyPendingUpdate().catch(() => {});
+      });
+    const stop = startUpdateWatcher();
+    return () => {
+      cancelled = true;
+      stop();
+    };
   }, []);
 
   // নোটিফিকেশনে চাপ দিয়ে খোলার আগে অ্যাপ রিলোড হলে, যে পেজ খোলার কথা ছিল সেটা এখানে খোলে
@@ -43,7 +50,7 @@ export default function AppBootstrap() {
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_PUSH !== "1") return undefined;
     let cancelled = false;
-    const handles = [];
+    let handle = null;
     import("@capacitor-firebase/messaging")
       .then(async ({ FirebaseMessaging }) => {
         let perm = await FirebaseMessaging.checkPermissions();
@@ -51,14 +58,7 @@ export default function AppBootstrap() {
           perm = await FirebaseMessaging.requestPermissions();
         }
         if (cancelled) return;
-        // অ্যাপ খোলা থাকা অবস্থায় নোটিফিকেশন এলে বেল-এর তালিকায় জমা হয়
-        handles.push(
-          await FirebaseMessaging.addListener("notificationReceived", (event) => {
-            if (event && event.notification) addFromFirebase([event.notification]);
-          })
-        );
-        handles.push(await FirebaseMessaging.addListener("notificationActionPerformed", async (event) => {
-          if (event && event.notification) addFromFirebase([event.notification]);
+        handle = await FirebaseMessaging.addListener("notificationActionPerformed", async (event) => {
           const data = (event && event.notification && event.notification.data) || {};
           const url = typeof data.url === "string" && data.url.startsWith("/") ? data.url : "";
           if (url) {
@@ -77,7 +77,7 @@ export default function AppBootstrap() {
             }
             if (url) router.push(url);
           }
-        }));
+        });
         if (perm.receive === "granted") {
           await FirebaseMessaging.subscribeToTopic({ topic: "all" });
         }
@@ -85,42 +85,9 @@ export default function AppBootstrap() {
       .catch(() => {});
     return () => {
       cancelled = true;
-      handles.forEach((h) => h.remove());
-    };
-  }, [router]);
-
-  // বেল-এর তালিকা মেলানো — অ্যাপ খুললে ও ব্যাকগ্রাউন্ড থেকে ফিরলে:
-  // ১) repo-র notifications.json (অ্যাপ বন্ধ থাকলে মিস হওয়া নোটিফিকেশন)  ২) ফোনের ট্রেতে এখনো থাকা নোটিফিকেশন
-  useEffect(() => {
-    let cancelled = false;
-    let handle = null;
-    const sync = async () => {
-      syncNotificationFeed();
-      if (process.env.NEXT_PUBLIC_PUSH !== "1") return;
-      try {
-        const { FirebaseMessaging } = await import("@capacitor-firebase/messaging");
-        const res = await FirebaseMessaging.getDeliveredNotifications();
-        if (!cancelled) addFromFirebase(res.notifications);
-      } catch (e) {
-        /* সমস্যা নেই */
-      }
-    };
-    sync();
-    import("@capacitor/app")
-      .then(async ({ App }) => {
-        const h = await App.addListener("appStateChange", ({ isActive }) => {
-          if (isActive) sync();
-        });
-        if (cancelled) h.remove();
-        else handle = h;
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
       if (handle) handle.remove();
     };
-  }, []);
-
+  }, [router]);
   useEffect(() => {
     import("@capacitor/status-bar")
       .then(async ({ StatusBar, Style }) => {
@@ -144,10 +111,6 @@ export default function AppBootstrap() {
           if (upd) {
             snooze(upd.version);
             hideUpdate();
-            return;
-          }
-          if (getPanelOpen()) {
-            setPanelOpen(false);
             return;
           }
           if (getMenuOpen()) {
@@ -184,7 +147,6 @@ export default function AppBootstrap() {
   return (
     <>
       <AppMenu />
-      <NotificationPanel />
       <AppUpdatePrompt />
     </>
   );
