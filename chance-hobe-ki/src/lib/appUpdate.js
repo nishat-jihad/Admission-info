@@ -81,13 +81,118 @@ export async function fetchLatestRelease() {
   }
 }
 
-// অ্যাপের ভেতরেই নতুন ভার্সন (সাইটের ফাইলগুলো) নামিয়ে চালু করা — APK ইন্সটল লাগে না।
-// সফল হলে অ্যাপ নিজে নতুন করে লোড হয়। ব্যর্থ হলে error ছোঁড়ে (পপ-আপ তখন APK ডাউনলোডের লিংক দেখায়)।
+// ============================================================================
+// bundle (সাইটের ফাইল) নামানো ও চালু করার অংশ — @capgo/capacitor-updater দিয়ে।
+// নিয়ম:
+//  • একই ভার্সন আগে নামানো থাকলে (অটো-আপডেটে) আবার নামানো হয় না, সেটাই চালু করা হয়।
+//  • আগের ব্যর্থ/অসম্পূর্ণ/পুরনো bundle মুছে ফেলা হয়, যাতে আটকে না যায়।
+//  • নামানো ব্যর্থ হলে একবার আবার চেষ্টা করে। এরপরও ব্যর্থ হলে error-এ "download:" বা "set:" লেখা থাকে,
+//    তাই পপ-আপের "কারণ:" দেখেই বোঝা যায় কোন ধাপে সমস্যা।
+// ============================================================================
+const PENDING_KEY = "admissionInfoPendingBundle"; // {version, id} — নামানো আছে, কিন্তু এখনো চালু হয়নি
+const FAIL_KEY = "admissionInfoBundleFail"; // {version, count} — চালু করে ফেরত চলে আসার হিসাব
+
+function lsGet(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "null");
+  } catch (e) {
+    return null;
+  }
+}
+function lsSet(key, val) {
+  try {
+    if (val === null) localStorage.removeItem(key);
+    else localStorage.setItem(key, JSON.stringify(val));
+  } catch (e) {
+    /* localStorage না থাকলে সমস্যা নেই */
+  }
+}
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const msg = (e) => String((e && (e.message || e.errorMessage)) || e || "").slice(0, 150);
+
+async function getUpdater() {
+  const { CapacitorUpdater } = await import("@capgo/capacitor-updater");
+  return CapacitorUpdater;
+}
+
+async function listBundles(U) {
+  try {
+    const r = await U.list();
+    return (r && r.bundles) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+async function currentBundleId(U) {
+  try {
+    const r = await U.current();
+    return r && r.bundle ? r.bundle.id : "";
+  } catch (e) {
+    return "";
+  }
+}
+
+// এই ভার্সনের ঠিকঠাক নামানো bundle থাকলে সেটা ফেরত দেয়; বাকি পুরনো/ব্যর্থগুলো মুছে ফেলে।
+async function findAndCleanup(U, version) {
+  const curId = await currentBundleId(U);
+  let reusable = null;
+  for (const b of await listBundles(U)) {
+    if (!b || !b.id || b.id === "builtin" || b.id === curId) continue;
+    const ok = b.version === version && (b.status === "pending" || b.status === "success");
+    if (ok && !reusable) {
+      reusable = b;
+      continue;
+    }
+    try {
+      await U.delete({ id: b.id });
+    } catch (e) {
+      /* মুছতে না পারলে সমস্যা নেই */
+    }
+  }
+  return reusable;
+}
+
+async function freshDownload(U, info) {
+  let lastErr;
+  for (let i = 0; i < 2; i++) {
+    try {
+      return await U.download({ url: info.bundleUrl, version: info.version });
+    } catch (e) {
+      lastErr = e;
+      if (i === 0) await sleep(1500);
+    }
+  }
+  throw new Error("download: " + msg(lastErr));
+}
+
+async function ensureBundle(U, info) {
+  const found = await findAndCleanup(U, info.version);
+  return found || (await freshDownload(U, info));
+}
+
+// "আপডেট করো" চাপলে: নামিয়ে (বা আগে নামানো থাকলে সেটা) সাথে সাথে চালু করে — অ্যাপ নিজে রিলোড হয়।
 export async function installBundleUpdate(info) {
   if (!info.bundleUrl) throw new Error("bundle নেই");
-  const { CapacitorUpdater } = await import("@capgo/capacitor-updater");
-  const bundle = await CapacitorUpdater.download({ url: info.bundleUrl, version: info.version });
-  await CapacitorUpdater.set({ id: bundle.id });
+  const U = await getUpdater();
+  let bundle = await ensureBundle(U, info);
+  try {
+    await U.set({ id: bundle.id });
+  } catch (e) {
+    // নামানো ফাইল নষ্ট থাকতে পারে — মুছে নতুন করে নামিয়ে আরেকবার
+    try {
+      await U.delete({ id: bundle.id });
+    } catch (e2) {
+      /* সমস্যা নেই */
+    }
+    bundle = await freshDownload(U, info);
+    try {
+      await U.set({ id: bundle.id });
+    } catch (e3) {
+      throw new Error("set: " + msg(e3));
+    }
+  }
+  lsSet(PENDING_KEY, null);
 }
 
 // নোটিফিকেশনে চাপ দিয়ে অ্যাপ খুললে: নতুন ভার্সন থাকলে সাথে সাথে নামিয়ে চালু করে (অ্যাপ নিজে একবার রিলোড হয়)।
@@ -96,35 +201,75 @@ export async function applyLatestNow() {
   try {
     const r = await fetchLatestRelease();
     if (r.status !== "new" || !r.info.bundleUrl) return false;
-    const { CapacitorUpdater } = await import("@capgo/capacitor-updater");
-    const bundle = await CapacitorUpdater.download({ url: r.info.bundleUrl, version: r.info.version });
-    await CapacitorUpdater.set({ id: bundle.id });
+    await installBundleUpdate(r.info);
     return true;
   } catch (e) {
     return false;
   }
 }
 
-// অটো-আপডেট: নতুন ভার্সন চুপচাপ নামিয়ে রাখে; ইউজার পরেরবার অ্যাপ খুললে (পুরোপুরি বন্ধ করে আবার খুললে) চালু হয়।
-// কিছু দেখানো লাগে না। একই ভার্সন দ্বিতীয়বার নামে না। ব্যর্থ হলে error ছোঁড়ে।
-const PENDING_KEY = "admissionInfoPendingVersion";
-
+// অটো-আপডেট (কোনো পপ-আপ ছাড়া): নতুন ভার্সন চুপচাপ নামিয়ে রাখে।
+// চালু হয় — অ্যাপ ব্যাকগ্রাউন্ডে গেলে বা পরেরবার খুললে (নিচের applyPendingUpdate / startUpdateWatcher)।
+// ব্যর্থ হলে error ছোঁড়ে।
 export async function downloadBundleForNextLaunch(info) {
   if (!info.bundleUrl) throw new Error("bundle নেই");
-  try {
-    if (localStorage.getItem(PENDING_KEY) === info.version) return "already";
-  } catch (e) {
-    /* localStorage না থাকলে সমস্যা নেই */
-  }
-  const { CapacitorUpdater } = await import("@capgo/capacitor-updater");
-  const bundle = await CapacitorUpdater.download({ url: info.bundleUrl, version: info.version });
-  await CapacitorUpdater.next({ id: bundle.id });
-  try {
-    localStorage.setItem(PENDING_KEY, info.version);
-  } catch (e) {
-    /* সমস্যা নেই */
-  }
+  // এই ভার্সন চালু করে দুইবার ফেরত চলে এসেছে (bundle ভাঙা) — আর চুপচাপ চেষ্টা নয়; হাতে চেক করলে পপ-আপ আসবে
+  const fail = lsGet(FAIL_KEY);
+  if (fail && fail.version === info.version && fail.count >= 2) return "skipped";
+  const U = await getUpdater();
+  const bundle = await ensureBundle(U, info);
+  await U.next({ id: bundle.id });
+  lsSet(PENDING_KEY, { version: info.version, id: bundle.id });
   return "downloaded";
+}
+
+// নামানো থাকা নতুন bundle এখনই চালু করে (রিলোড হয়)। ফেরত দেয় true — রিলোড শুরু হয়েছে।
+export async function applyPendingUpdate() {
+  const p = lsGet(PENDING_KEY);
+  if (!p) return false;
+  // চলতি ভার্সনই যদি ওটা বা তার চেয়ে নতুন হয়, তবে হিসাব মিটে গেছে
+  if (!isNewer(p.version, APP_VERSION)) {
+    lsSet(PENDING_KEY, null);
+    lsSet(FAIL_KEY, null);
+    return false;
+  }
+  try {
+    const U = await getUpdater();
+    if ((await currentBundleId(U)) === p.id) return false;
+    const b = (await listBundles(U)).find((x) => x.id === p.id);
+    if (!b || b.status === "error") {
+      // চালু হওয়ার পর ফেরত চলে এসেছে (rollback) — হিসাব রাখা
+      const fail = lsGet(FAIL_KEY);
+      lsSet(FAIL_KEY, { version: p.version, count: fail && fail.version === p.version ? fail.count + 1 : 1 });
+      lsSet(PENDING_KEY, null);
+      return false;
+    }
+    await U.set({ id: p.id });
+    return true;
+  } catch (e) {
+    lsSet(PENDING_KEY, null);
+    return false;
+  }
+}
+
+// অ্যাপ ব্যাকগ্রাউন্ডে গেলে (হোম/রিসেন্টে) নামানো bundle চালু করে — ইউজার কিছু টের পায় না।
+// ফেরত দেয় বন্ধ করার ফাংশন।
+export function startUpdateWatcher() {
+  let cancelled = false;
+  let handle = null;
+  import("@capacitor/app")
+    .then(async ({ App }) => {
+      const h = await App.addListener("appStateChange", ({ isActive }) => {
+        if (!isActive) setTimeout(() => applyPendingUpdate().catch(() => {}), 1500);
+      });
+      if (cancelled) h.remove();
+      else handle = h;
+    })
+    .catch(() => {});
+  return () => {
+    cancelled = true;
+    if (handle) handle.remove();
+  };
 }
 
 // ---- পপ-আপের অবস্থা (খোলা/বন্ধ) ----
