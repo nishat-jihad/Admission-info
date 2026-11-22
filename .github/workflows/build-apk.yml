@@ -105,7 +105,14 @@ jobs:
           # PDF গুলো অ্যাপে বান্ডেল হয় না (ব্রাউজারে ওয়েবসাইট থেকে খোলে) — APK ছোট থাকে
           rm -rf out/docs
           # অ্যাপের ভেতরে "আপডেট করো" চাপলে এই zip নামে (index.html জিপের একদম উপরে)
-          (cd out && zip -qr ../bundle.zip .)
+          (cd out && zip -qrX ../bundle.zip .)
+          # যাচাই: index.html জিপের একদম উপরে না থাকলে অ্যাপ এই bundle চালাতে পারবে না — তাই এখানেই বিল্ড থামিয়ে দেয়
+          ls -lh bundle.zip
+          unzip -l bundle.zip | head -15
+          if ! unzip -Z1 bundle.zip | grep -qx "index.html"; then
+            echo "::error::bundle.zip-এর উপরের স্তরে index.html নেই"
+            exit 1
+          fi
 
       - name: Android প্রজেক্ট তৈরি
         env:
