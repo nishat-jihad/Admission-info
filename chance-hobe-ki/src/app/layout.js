@@ -27,6 +27,14 @@ const notoBengali = Noto_Sans_Bengali({
 
 const SITE_URL = "https://admissioninfo.vercel.app";
 
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Admission Info",
+  alternateName: "ভর্তি তথ্য",
+  url: SITE_URL,
+};
+
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -110,6 +118,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="bn" className={IS_APP ? "is-app" : undefined}>
       <body className={`${bangers.variable} ${notoBengali.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         {children}
         <ApplyPopup items={applyItems} />
         {IS_APP ? (
