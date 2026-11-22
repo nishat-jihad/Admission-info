@@ -101,7 +101,17 @@ jobs:
           NEXT_PUBLIC_GITHUB_REPO: ${{ github.repository }}
           NEXT_PUBLIC_PUSH: ${{ steps.push.outputs.enabled }}
         run: |
-          npx next build
+          # Google Fonts (next/font) নামানো মাঝে মাঝে ক্ষণিকের জন্য ব্যর্থ হয় — তাই সর্বোচ্চ ৩ বার চেষ্টা করে
+          for i in 1 2 3; do
+            if npx next build; then break; fi
+            if [ "$i" = "3" ]; then
+              echo "::error::৩ বার চেষ্টা করেও সাইট বিল্ড হলো না"
+              exit 1
+            fi
+            echo "::warning::বিল্ড ব্যর্থ (চেষ্টা $i/3) — ২০ সেকেন্ড পর আবার চেষ্টা"
+            rm -rf .next out
+            sleep 20
+          done
           # PDF গুলো অ্যাপে বান্ডেল হয় না (ব্রাউজারে ওয়েবসাইট থেকে খোলে) — APK ছোট থাকে
           rm -rf out/docs
           # অ্যাপের ভেতরে "আপডেট করো" চাপলে এই zip নামে (index.html জিপের একদম উপরে)
