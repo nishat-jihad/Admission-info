@@ -85,6 +85,11 @@ export const metadata = {
   },
 };
 
+// Pop-up-এ যে ভার্সিটির নাম আলাদা করে দেখাতে চাই (শুধু pop-up-এ বদলায়, বাকি পেজে নয়)।
+const POPUP_NAME_OVERRIDE = {
+  ju_a: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (জাবি) — A+D",
+};
+
 export default function RootLayout({ children }) {
   // যেসব ভার্সিটির "Apply Now" লিংক আছে (APPLY_LINKS, Admission Calendar-এর সাথে একই) — pop-up-এর ডেটা।
   // কোনটার আবেদন এখন চলছে সেটা ব্রাউজারে বর্তমান সময় দেখে ঠিক হয়।
@@ -94,6 +99,7 @@ export default function RootLayout({ children }) {
     .map((b) => ({
       id: b.universityId,
       name:
+        POPUP_NAME_OVERRIDE[b.universityId] ||
         (updates.find((u) => u.universityId === b.universityId) || {}).universityName ||
         b.shortName,
       applyUrl: b.applyUrl,
