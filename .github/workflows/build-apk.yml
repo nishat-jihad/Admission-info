@@ -99,14 +99,20 @@ jobs:
           NEXT_PUBLIC_APP: "1"
           NEXT_PUBLIC_APP_VERSION: ${{ steps.ver.outputs.version }}
           NEXT_PUBLIC_GITHUB_REPO: ${{ github.repository }}
-          NEXT_PUBLIC_GITHUB_BRANCH: ${{ github.ref_name }}
           NEXT_PUBLIC_PUSH: ${{ steps.push.outputs.enabled }}
         run: |
           npx next build
           # PDF গুলো অ্যাপে বান্ডেল হয় না (ব্রাউজারে ওয়েবসাইট থেকে খোলে) — APK ছোট থাকে
           rm -rf out/docs
           # অ্যাপের ভেতরে "আপডেট করো" চাপলে এই zip নামে (index.html জিপের একদম উপরে)
-          (cd out && zip -qr ../bundle.zip .)
+          (cd out && zip -qrX ../bundle.zip .)
+          # যাচাই: index.html জিপের একদম উপরে না থাকলে অ্যাপ এই bundle চালাতে পারবে না — তাই এখানেই বিল্ড থামিয়ে দেয়
+          ls -lh bundle.zip
+          unzip -l bundle.zip | head -15
+          if ! unzip -Z1 bundle.zip | grep -qx "index.html"; then
+            echo "::error::bundle.zip-এর উপরের স্তরে index.html নেই"
+            exit 1
+          fi
 
       - name: Android প্রজেক্ট তৈরি
         env:
@@ -190,26 +196,3 @@ jobs:
           INPUT_NOTIFY: ${{ github.event.inputs.notify }}
           INPUT_NOTES: ${{ github.event.inputs.notes }}
         run: node scripts/send-notification.mjs
-
-      # অ্যাপের 🔔 তালিকা: নোটিফিকেশন পাঠানো হলে notifications.json (শেষ ১৬টা) repo-তে সেভ।
-      # ফাইলটা chance-hobe-ki/ ফোল্ডারের বাইরে, তাই এই commit-এ নতুন APK বিল্ড চলে না।
-      - name: নোটিফিকেশন তালিকা সেভ (notifications.json)
-        working-directory: .
-        env:
-          BRANCH: ${{ github.ref_name }}
-        run: |
-          if [ -z "$(git status --porcelain notifications.json)" ]; then
-            echo "তালিকায় কোনো বদল নেই।"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add notifications.json
-          git commit -m "chore: notification list update"
-          for i in 1 2 3; do
-            git fetch origin "$BRANCH"
-            git rebase "origin/$BRANCH"
-            if git push origin "HEAD:$BRANCH"; then exit 0; fi
-            sleep 4
-          done
-          echo "::warning::notifications.json push করা গেল না।"
