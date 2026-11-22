@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AppMenu from "@/components/AppMenu";
 import AppUpdatePrompt from "@/components/AppUpdatePrompt";
-import { applyLatestNow, getUpdateInfo, hideUpdate, snooze } from "@/lib/appUpdate";
+import { applyLatestNow, applyPendingUpdate, getUpdateInfo, hideUpdate, snooze, startUpdateWatcher } from "@/lib/appUpdate";
 import { getMenuOpen, setMenuOpen } from "@/lib/appMenuStore";
 import { SITE_URL } from "@/lib/appConfig";
 
@@ -15,10 +15,20 @@ export default function AppBootstrap() {
   const router = useRouter();
 
   // অ্যাপের ভেতরে আপডেট হওয়া নতুন ভার্সন ঠিকমতো খুলেছে — এটা জানিয়ে না দিলে প্লাগইন ১০ সেকেন্ড পর আগের ভার্সনে ফেরত যায়
+  // তারপর: আগের বার চুপচাপ নামানো নতুন bundle থাকলে এখনই চালু করে; আর অ্যাপ ব্যাকগ্রাউন্ডে গেলেও চালু করার ব্যবস্থা বসে।
   useEffect(() => {
+    let cancelled = false;
     import("@capgo/capacitor-updater")
       .then(({ CapacitorUpdater }) => CapacitorUpdater.notifyAppReady())
-      .catch(() => {});
+      .catch(() => {})
+      .then(() => {
+        if (!cancelled) applyPendingUpdate().catch(() => {});
+      });
+    const stop = startUpdateWatcher();
+    return () => {
+      cancelled = true;
+      stop();
+    };
   }, []);
 
   // নোটিফিকেশনে চাপ দিয়ে খোলার আগে অ্যাপ রিলোড হলে, যে পেজ খোলার কথা ছিল সেটা এখানে খোলে
