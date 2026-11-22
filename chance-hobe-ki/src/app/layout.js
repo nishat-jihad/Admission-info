@@ -35,6 +35,14 @@ const websiteJsonLd = {
   url: SITE_URL,
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Admission Info",
+  url: SITE_URL,
+  logo: `${SITE_URL}/images/admission-info-logo.png`,
+};
+
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -121,6 +129,10 @@ export default function RootLayout({ children }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         {children}
         <ApplyPopup items={applyItems} />
