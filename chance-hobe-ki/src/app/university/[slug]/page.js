@@ -5,6 +5,7 @@ import { universities } from "@/data/universities";
 import { updates, mergeTableRows } from "@/data/updates";
 import UniversitySidebar from "@/components/UniversitySidebar";
 import EligibilityCalculator from "@/components/EligibilityCalculator";
+import DetailFoldTable from "@/components/DetailFoldTable";
 
 export function generateStaticParams() {
   return Object.keys(universities).map((slug) => ({ slug }));
@@ -293,11 +294,8 @@ export default function UniversityDetailPage({ params }) {
                 </tbody>
               </table>
             </div>
-            {(examDate.extraTables || []).map((t, ti) => (
-              <div key={ti}>
-                <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
-                  {t.title}
-                </h3>
+            {(examDate.extraTables || []).map((t, ti) => {
+              const table = (
                 <div className="update-table-wrap" style={{ marginTop: 12 }}>
                   <table className="update-table">
                     <thead>
@@ -326,8 +324,24 @@ export default function UniversityDetailPage({ params }) {
                     </tbody>
                   </table>
                 </div>
-              </div>
-            ))}
+              );
+              // t.foldOnDetail: true হলে টেবিল শুরুতে বন্ধ থাকে; ক্লিক করলে খোলে।
+              if (t.foldOnDetail) {
+                return (
+                  <DetailFoldTable key={ti} title={t.title}>
+                    {table}
+                  </DetailFoldTable>
+                );
+              }
+              return (
+                <div key={ti}>
+                  <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                    {t.title}
+                  </h3>
+                  {table}
+                </div>
+              );
+            })}
             {(examDate.notes || []).length > 0 && (
               <div>
                 <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
