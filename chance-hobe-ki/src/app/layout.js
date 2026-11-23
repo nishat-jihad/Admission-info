@@ -88,17 +88,23 @@ export const metadata = {
 export default function RootLayout({ children }) {
   // যেসব ভার্সিটির "Apply Now" লিংক আছে (APPLY_LINKS, Admission Calendar-এর সাথে একই) — pop-up-এর ডেটা।
   // কোনটার আবেদন এখন চলছে সেটা ব্রাউজারে বর্তমান সময় দেখে ঠিক হয়।
+  // pop-up-এ নামের সাথে "— A ইউনিট" / "— D ইউনিট" দেখানো হয় না, শুধু ভার্সিটির নাম (যেমন: জাহাঙ্গীরনগর বিশ্ববিদ্যালয়)।
+  // তাই একই ভার্সিটির একাধিক ইউনিট (JU A/D) থাকলেও pop-up-এ নামটা একবারই আসবে।
+  const stripUnit = (n) => n.replace(/\s*[—–-]\s*[A-Za-z]+\s*ইউনিট\s*$/, "").trim();
   const seen = new Set();
+  const seenNames = new Set();
   const applyItems = buildAdmissionCalendar({ updates, examDates })
     .filter((b) => b.applyUrl && !seen.has(b.universityId) && seen.add(b.universityId))
     .map((b) => ({
       id: b.universityId,
-      name:
+      name: stripUnit(
         (updates.find((u) => u.universityId === b.universityId) || {}).universityName ||
-        b.shortName,
+          b.shortName
+      ),
       applyUrl: b.applyUrl,
       application: b.application,
-    }));
+    }))
+    .filter((it) => !seenNames.has(it.name) && seenNames.add(it.name));
 
   return (
     <html lang="bn" className={IS_APP ? "is-app" : undefined}>
