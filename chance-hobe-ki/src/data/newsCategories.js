@@ -24,6 +24,7 @@ export const CATEGORIES = [
 ];
 
 export const NEWS_CATEGORIES = {
+  "buet-admission-2026-27-1305-seats-apply-1-december-exam-1-february": ["সার্কুলার", "ইঞ্জিনিয়ারিং", "ভার্সিটি", "পরীক্ষা"],
   "ju-admission-2026-27-circular-1848-seats-apply-22-november": ["সার্কুলার", "ভার্সিটি", "পরীক্ষা"],
   "du-science-unit-admission-2026-27-1891-seats-12-december": ["পরীক্ষা", "ভার্সিটি", "সার্কুলার"],
   "kuet-admission-2026-27-circular-1105-seats": ["সার্কুলার", "ইঞ্জিনিয়ারিং", "ভার্সিটি"],
