@@ -45,6 +45,26 @@ export default function EligibilityCalculator({ id, uni }) {
       ? `তোমার GPA অনুযায়ী তুমি ${uni.name} এ পরীক্ষা দেওয়ার যোগ্যতা রাখো।`
       : `দুঃখিত, তোমার GPA ${uni.name} এর ন্যূনতম শর্ত পূরণ করছে না।`;
 
+    // BUET: ২০২৬-২৭ বিজ্ঞপ্তি অনুযায়ী — কোন শর্ত পূরণ হয়নি সেটা আলাদা করে দেখানো হয়,
+    // আর যোগ্য হলেও ১০,০০০ জন বাছাইয়ের নিয়মটা মনে করিয়ে দেওয়া হয়।
+    if (id === "buet") {
+      const c = uni.calc;
+      const bn = (n) => Number(n).toFixed(2).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
+      if (eligible) {
+        msg =
+          "তোমার GPA অনুযায়ী তুমি বুয়েটে আবেদনের ন্যূনতম যোগ্যতা পূরণ করছো (SSC বিজ্ঞান বিভাগ থেকে হতে হবে)। " +
+          "তবে সব আবেদনকারীর মধ্য থেকে HSC-তে উচ্চতর গণিত, পদার্থবিজ্ঞান ও রসায়নের মোট নম্বরে সেরা ১০,০০০ জন ভর্তি পরীক্ষায় বসার সুযোগ পাবে।";
+      } else {
+        const fails = [];
+        if ((vals.ssc || 0) < c.minSsc) fails.push(`SSC GPA ন্যূনতম ${bn(c.minSsc)}`);
+        if ((vals.hsc || 0) < c.minHsc) fails.push(`HSC GPA ন্যূনতম ${bn(c.minHsc)}`);
+        if ((vals.hm || 0) < c.minSubject) fails.push(`উচ্চতর গণিতে ন্যূনতম ${bn(c.minSubject)}`);
+        if ((vals.phy || 0) < c.minSubject) fails.push(`পদার্থবিজ্ঞানে ন্যূনতম ${bn(c.minSubject)}`);
+        if ((vals.chem || 0) < c.minSubject) fails.push(`রসায়নে ন্যূনতম ${bn(c.minSubject)}`);
+        msg = `দুঃখিত, তোমার GPA বুয়েটের ন্যূনতম শর্ত পূরণ করছে না। লাগবে: ${fails.join("; ")}।`;
+      }
+    }
+
     if (uni.extraNote) {
       const en = uni.extraNote;
       const rawVal = (values[en.field] || "").toString().trim();
@@ -118,6 +138,10 @@ export default function EligibilityCalculator({ id, uni }) {
           এই তথ্য ২০২৬ সালের সার্কুলার অনুযায়ী আপডেট করা হয়েছে।
         </div>
       ) : id === "ju_a" || id === "ju_d" ? (
+        <div className="circular-update-note" style={{ color: "var(--green-dark)" }}>
+          এই তথ্য ২০২৬ সালের সার্কুলার অনুযায়ী আপডেট করা হয়েছে।
+        </div>
+      ) : id === "buet" ? (
         <div className="circular-update-note" style={{ color: "var(--green-dark)" }}>
           এই তথ্য ২০২৬ সালের সার্কুলার অনুযায়ী আপডেট করা হয়েছে।
         </div>
