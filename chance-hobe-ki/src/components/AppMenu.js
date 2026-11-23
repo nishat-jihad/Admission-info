@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getMenuOpen, setMenuOpen, subscribeMenu } from "@/lib/appMenuStore";
 import { APP_VERSION, SITE_URL } from "@/lib/appConfig";
-import { fetchLatestRelease, showUpdate } from "@/lib/appUpdate";
+import { fetchLatestRelease, getAutoLog, showUpdate } from "@/lib/appUpdate";
 
 const FACEBOOK_URL = "https://www.facebook.com/admissioninfo26";
 const TELEGRAM_URL = "https://t.me/admissioninfo26";
@@ -228,6 +228,7 @@ export default function AppMenu() {
               <Icon name="tag" />
               <span>ভার্সন {APP_VERSION}</span>
             </div>
+            {getAutoLog() && <div className="app-drawer-note">অটো-আপডেট: {getAutoLog()}</div>}
           </div>
         </div>
 
