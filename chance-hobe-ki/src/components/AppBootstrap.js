@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import AppMenu from "@/components/AppMenu";
 import NotificationPanel from "@/components/NotificationCenter";
 import AppUpdatePrompt from "@/components/AppUpdatePrompt";
+import DiagPanel from "@/components/DiagPanel";
+import { diagLog, diagProbe } from "@/lib/diag";
 import { applyLatestNow, applyPendingUpdate, getUpdateInfo, hideUpdate, snooze, startUpdateWatcher } from "@/lib/appUpdate";
 import { getMenuOpen, setMenuOpen } from "@/lib/appMenuStore";
 import { addFromFirebase, getPanelOpen, setPanelOpen, syncNotificationFeed } from "@/lib/notificationStore";
-import { SITE_URL } from "@/lib/appConfig";
+import { APP_VERSION, SITE_URL } from "@/lib/appConfig";
 
 // শুধু অ্যাপ মোডে layout.js থেকে একবার বসে। কাজ:
 // ১) স্ট্যাটাস বার সাদা  ২) Android back বাটন (আপডেট পপ-আপ/মেনু খোলা থাকলে আগে সেটা বন্ধ)
@@ -22,8 +24,20 @@ export default function AppBootstrap() {
   useEffect(() => {
     let cancelled = false;
     import("@capgo/capacitor-updater")
-      .then(({ CapacitorUpdater }) => CapacitorUpdater.notifyAppReady())
-      .catch(() => {})
+      .then(async ({ CapacitorUpdater }) => {
+        diagLog("hydrated: AppBootstrap চলছে (v" + APP_VERSION + ")");
+        // আগে notifyAppReady (দেরি না করে), তারপর শুধু-পড়ার ডায়াগনস্টিক
+        try {
+          await CapacitorUpdater.notifyAppReady();
+          diagLog("notifyAppReady: ok");
+        } catch (e) {
+          diagLog("notifyAppReady FAILED: " + String((e && (e.message || e.errorMessage)) || e).slice(0, 150));
+          throw e;
+        }
+        // await নয়: কোনো native কল আটকে গেলেও নিচের applyPendingUpdate যেন থেমে না যায়
+        diagProbe(CapacitorUpdater).catch(() => {});
+      })
+      .catch((e) => diagLog("updater import/ready ব্যর্থ: " + String((e && e.message) || e).slice(0, 150)))
       .then(() => {
         if (!cancelled) applyPendingUpdate().catch(() => {});
       });
@@ -196,6 +210,7 @@ export default function AppBootstrap() {
       <AppMenu />
       <NotificationPanel />
       <AppUpdatePrompt />
+      <DiagPanel />
     </>
   );
 }

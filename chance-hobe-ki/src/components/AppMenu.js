@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getMenuOpen, setMenuOpen, subscribeMenu } from "@/lib/appMenuStore";
 import { APP_VERSION, SITE_URL } from "@/lib/appConfig";
-import { fetchLatestRelease, getAutoLog, showUpdate } from "@/lib/appUpdate";
+import { fetchLatestRelease, showUpdate } from "@/lib/appUpdate";
+import { setDiagPanelOpen } from "@/lib/diag";
 
 const FACEBOOK_URL = "https://www.facebook.com/admissioninfo26";
 const TELEGRAM_URL = "https://t.me/admissioninfo26";
@@ -224,11 +225,21 @@ export default function AppMenu() {
                 {update.state === "off" && "এই বিল্ডে আপডেট চেক চালু নেই।"}
               </div>
             )}
+            <button
+              type="button"
+              className="app-drawer-item"
+              onClick={() => {
+                setMenuOpen(false);
+                setDiagPanelOpen(true);
+              }}
+            >
+              <Icon name="info" />
+              <span>আপডেট লগ দেখো</span>
+            </button>
             <div className="app-drawer-item app-drawer-static">
               <Icon name="tag" />
               <span>ভার্সন {APP_VERSION}</span>
             </div>
-            {getAutoLog() && <div className="app-drawer-note">অটো-আপডেট: {getAutoLog()}</div>}
           </div>
         </div>
 
