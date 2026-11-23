@@ -12,9 +12,22 @@ export default function ApplyPopup({ items = [] }) {
   const open = list.length > 0;
 
   // বর্তমান সময় শুধু ব্রাউজারে দেখা হয় (hydration mismatch এড়াতে)
+  // শুধু সাইটে নতুন করে ঢোকার সময় একবার দেখায় (নতুন ট্যাব/নতুন ভিজিট)। রিলোড করলে বা
+  // সাইটের অন্য পেজে গেলে আর দেখায় না — এটা মনে রাখা হয় sessionStorage-এ।
+  const SEEN_KEY = "applyPopupSeen";
   useEffect(() => {
+    try {
+      if (sessionStorage.getItem(SEEN_KEY)) return;
+    } catch (e) {
+      // sessionStorage বন্ধ থাকলে (প্রাইভেট মোড ইত্যাদি) আগের মতোই দেখাবে
+    }
     const now = Date.now();
-    setList(items.filter((it) => getApplicationStatus(it.application, now).key === "started"));
+    const started = items.filter((it) => getApplicationStatus(it.application, now).key === "started");
+    if (started.length === 0) return;
+    setList(started);
+    try {
+      sessionStorage.setItem(SEEN_KEY, "1");
+    } catch (e) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
