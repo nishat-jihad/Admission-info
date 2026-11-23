@@ -5,6 +5,16 @@ const isApp = process.env.NEXT_PUBLIC_APP === "1";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   ...(isApp ? { output: "export", trailingSlash: true } : {}),
+  // [ডায়াগনস্টিক — ক্র্যাশের কারণ খুঁজে পাওয়ার পর এই অংশ মুছে দিও]
+  // অ্যাপ বিল্ডে JS ছোট (minify) না করা, যাতে error-এর লেখায় আসল ফাংশন/ফাইলের নাম আসে।
+  ...(isApp
+    ? {
+        webpack: (config) => {
+          config.optimization.minimize = false;
+          return config;
+        },
+      }
+    : {}),
   images: {
     ...(isApp ? { unoptimized: true } : {}),
     remotePatterns: [
