@@ -342,18 +342,27 @@ export default function UniversityDetailPage({ params }) {
                 </div>
               );
             })}
-            {(examDate.notes || []).length > 0 && (
-              <div>
-                <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
-                  গুরুত্বপূর্ণ তথ্য
-                </h3>
-                <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, color: "#333", lineHeight: 1.7 }}>
+            {(examDate.notes || []).length > 0 && (() => {
+              const list = (
+                <ul style={{ margin: examDate.foldNotes ? "8px 0 0" : 0, paddingLeft: 20, fontSize: 14, color: "#333", lineHeight: 1.7 }}>
                   {examDate.notes.map((n, i) => (
                     <li key={i}>{n}</li>
                   ))}
                 </ul>
-              </div>
-            )}
+              );
+              // examDate.foldNotes: true হলে "গুরুত্বপূর্ণ তথ্য" শুরুতে বন্ধ থাকে; ক্লিক করলে খোলে।
+              if (examDate.foldNotes) {
+                return <DetailFoldTable title="গুরুত্বপূর্ণ তথ্য">{list}</DetailFoldTable>;
+              }
+              return (
+                <div>
+                  <h3 style={{ fontFamily: "'SolaimanLipi', 'Nirmala UI', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--black)", margin: "20px 0 8px" }}>
+                    গুরুত্বপূর্ণ তথ্য
+                  </h3>
+                  {list}
+                </div>
+              );
+            })()}
             <Link className="back-link back-link-pill" href="/updates">
               সব ভার্সিটির আপডেট দেখুন →
             </Link>
