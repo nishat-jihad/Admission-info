@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/react';
 import Script from "next/script";
 import { Bangers, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
@@ -9,6 +8,7 @@ import AppBootstrap from "@/components/AppBootstrap";
 import { IS_APP } from "@/lib/appConfig";
 import ApplyPopup from "@/components/ApplyPopup";
 import CustomContextMenu from "@/components/CustomContextMenu";
+import VercelAnalytics from "@/components/VercelAnalytics";
 import { updates } from "@/data/updates";
 import { examDates } from "@/data/examDates";
 import { buildAdmissionCalendar } from "@/lib/examCalendar";
@@ -142,7 +142,7 @@ export default function RootLayout({ children }) {
         ) : (
           <>
             <CustomContextMenu />
-            <Analytics />
+            <VercelAnalytics />
             <Script id="microsoft-clarity" strategy="afterInteractive">
               {`
             (function(c,l,a,r,i,t,y){
