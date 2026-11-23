@@ -272,6 +272,82 @@ export function startUpdateWatcher() {
   };
 }
 
+
+// ============================================================================
+// অটো-আপডেট (নতুন): ইউজারের কিছু চাপতে হয় না।
+//  • অ্যাপ খোলার পর (cold start): নতুন ভার্সন থাকলে নামিয়ে সাথে সাথে চালু করে (অ্যাপ একবার রিলোড হয়) —
+//    "আপডেট করো" বাটনে যে কোড চলে (installBundleUpdate), হুবহু সেটাই।
+//  • ব্যাকগ্রাউন্ড থেকে ফিরলে: চুপচাপ নামিয়ে রাখে, ইউজার অ্যাপ ছাড়লে চালু হয় (আগের পদ্ধতি)।
+//  • যেকোনো ধাপে ব্যর্থ হলে কিছু দেখায় না; ওয়েবসাইট থেকে নতুন APK নামানোই বিকল্প।
+//    শুধু কারণটা সেভ থাকে, মেনুর ভার্সনের নিচে "অটো-আপডেট: ..." হিসেবে দেখা যায়।
+// ============================================================================
+const AUTO_LOG_KEY = "admissionInfoAutoLog"; // {t, text}
+const AUTO_TRY_KEY = "admissionInfoAutoTry"; // {version, count} — একই ভার্সন বারবার রিলোড-লুপ ঠেকাতে
+const AUTO_LAST_KEY = "admissionInfoAutoLast"; // শেষ চেকের সময় (ms)
+let autoRunning = false;
+
+export function getAutoLog() {
+  const v = lsGet(AUTO_LOG_KEY);
+  if (!v || !v.text) return "";
+  const d = new Date(v.t);
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  return `${d.getDate()}/${d.getMonth() + 1} ${hh}:${mm} — ${v.text}`;
+}
+function autoLog(text) {
+  lsSet(AUTO_LOG_KEY, { t: Date.now(), text: String(text).slice(0, 120) });
+}
+
+// mode: "launch" (নামিয়ে এখনই চালু) | "resume" (নামিয়ে রাখে, ছাড়লে চালু)
+export async function autoUpdate(mode) {
+  if (autoRunning) return;
+  if (mode === "resume") {
+    const last = Number(localStorage.getItem(AUTO_LAST_KEY) || 0);
+    if (Date.now() - last < 30 * 60 * 1000) return; // ৩০ মিনিটের মধ্যে আবার চেক নয়
+  }
+  autoRunning = true;
+  try {
+    lsSet(AUTO_LAST_KEY, null);
+    try {
+      localStorage.setItem(AUTO_LAST_KEY, String(Date.now()));
+    } catch (e) {
+      /* সমস্যা নেই */
+    }
+    const r = await fetchLatestRelease();
+    if (r.status === "error") return autoLog("চেক ব্যর্থ (নেট/GitHub)");
+    if (r.status === "off") return;
+    if (r.status === "latest") return autoLog(`নতুন কিছু নেই (v${APP_VERSION})`);
+    const info = r.info;
+    if (!info.bundleUrl) return autoLog("রিলিজে bundle.zip নেই");
+
+    if (mode === "resume") {
+      const res = await downloadBundleForNextLaunch(info);
+      return autoLog(res === "skipped" ? `v${info.version} বাদ (আগে দুইবার ফেরত এসেছে)` : `v${info.version} নামানো হয়েছে, অ্যাপ ছাড়লে চালু হবে`);
+    }
+
+    // launch: একই ভার্সনে ২ বারের বেশি চেষ্টা নয় (bundle ভাঙা হলে রিলোড-লুপ হবে না)
+    const t = lsGet(AUTO_TRY_KEY);
+    const count = t && t.version === info.version ? t.count : 0;
+    if (count >= 2) return autoLog(`v${info.version} ২ বার চেষ্টা করেও চালু হয়নি — থেমে আছে`);
+    lsSet(AUTO_TRY_KEY, { version: info.version, count: count + 1 });
+    autoLog(`v${info.version} নামানো হচ্ছে…`);
+    await installBundleUpdate(info); // সফল হলে অ্যাপ এখানেই রিলোড হয়
+  } catch (e) {
+    autoLog(msg(e) || "অজানা ত্রুটি");
+  } finally {
+    autoRunning = false;
+  }
+}
+
+// নতুন ভার্সন চালু হয়ে গেলে চেষ্টার হিসাব মুছে দেয় (AppBootstrap থেকে ডাকা)
+export function clearAutoTryIfDone() {
+  const t = lsGet(AUTO_TRY_KEY);
+  if (t && !isNewer(t.version, APP_VERSION)) {
+    lsSet(AUTO_TRY_KEY, null);
+    autoLog(`v${APP_VERSION} চালু আছে`);
+  }
+}
+
 // ---- পপ-আপের অবস্থা (খোলা/বন্ধ) ----
 let current = null;
 const listeners = new Set();
