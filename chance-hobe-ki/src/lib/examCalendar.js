@@ -165,6 +165,8 @@ export const APPLY_LINKS = {
   du: "https://admission.eis.du.ac.bd/",
   ru: "https://admission.ru.ac.bd/",
   kuet: "https://admission.kuet.ac.bd/",
+  // BUET: আবেদন শুরু ১ ডিসেম্বর ২০২৬ সকাল ১০টা (বিজ্ঞপ্তি অনুযায়ী অনলাইন আবেদনের ওয়েবসাইট www.buet.ac.bd)
+  buet: "https://www.buet.ac.bd/",
   // JU: আবেদন শুরু ২২ নভেম্বর ২০২৬ সকাল ১০টা — তার আগে "আবেদন শুরু হয়নি", সময় হলে নিজে থেকে বাটন আসবে
   ju_a: "https://admission.juniv.edu/",
   ju_d: "https://admission.juniv.edu/",
