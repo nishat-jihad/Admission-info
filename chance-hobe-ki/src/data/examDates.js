@@ -204,9 +204,9 @@ export const examDates = [
     universityName: "বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয় (বুয়েট)",
     shortName: "BUET",
     category: "engineering",
-    applicationStart: "শীঘ্রই জানানো হবে",
-    applicationEnd: "শীঘ্রই জানানো হবে",
-    schedule: [{ unit: "A", date: "16 জানুয়ারি" }],
+    applicationStart: "1 ডিসেম্বর",
+    applicationEnd: "7 জানুয়ারি",
+    schedule: [{ unit: "A", date: "1 ফেব্রুয়ারি" }],
   },
   {
     id: "butex",
