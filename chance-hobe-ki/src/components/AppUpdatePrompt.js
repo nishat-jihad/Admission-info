@@ -3,60 +3,45 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { APP_VERSION } from "@/lib/appConfig";
 import {
-  downloadBundleForNextLaunch,
-  fetchLatestRelease,
+  autoUpdate,
+  clearAutoTryIfDone,
   getUpdateInfo,
   hideUpdate,
   installBundleUpdate,
-  isSnoozed,
-  showUpdate,
   snooze,
   subscribeUpdate,
 } from "@/lib/appUpdate";
 
-// অ্যাপ খুললে (৩ সেকেন্ড পর) নতুন ভার্সন দেখে:
-//  • bundle থাকলে — চুপচাপ নামিয়ে রাখে (অটো-আপডেট); ইউজার পরেরবার অ্যাপ খুললে নতুন ভার্সন পায়। কোনো পপ-আপ নেই।
-//  • bundle না থাকলে বা নামানো ব্যর্থ হলে — পপ-আপ দেখায় ("আপডেট করো" বা নতুন APK ডাউনলোডের লিংক)।
-// মেনুর "নতুন ভার্সন আছে কি না দেখো" বাটন চাপলে সরাসরি পপ-আপ আসে।
+// অটো-আপডেট (ইউজারের কিছু চাপতে হয় না) — বিস্তারিত lib/appUpdate.js-এর autoUpdate-এ।
+// এই কম্পোনেন্ট শুধু সেটা চালু করে, আর মেনুর "নতুন ভার্সন আছে কি না দেখো" বাটনে আসা পপ-আপ দেখায়।
 export default function AppUpdatePrompt() {
   const info = useSyncExternalStore(subscribeUpdate, getUpdateInfo, () => null);
   const [phase, setPhase] = useState("idle"); // idle | working | failed
   const [errMsg, setErrMsg] = useState("");
 
+  // অটো-আপডেট (পপ-আপ ছাড়া):
+  //  • অ্যাপ খোলার ৩ সেকেন্ড পর নতুন ভার্সন থাকলে নামিয়ে সাথে সাথে চালু করে
+  //  • ব্যাকগ্রাউন্ড থেকে ফিরলে (৩০ মিনিটে একবার) চুপচাপ নামিয়ে রাখে, অ্যাপ ছাড়লে চালু হয়
   useEffect(() => {
     let cancelled = false;
-    let timer = null;
-
-    // "আবেদন শুরু হয়েছে" পপ-আপ (ApplyPopup) খোলা থাকলে তার সাথে একসাথে আসে না —
-    // সেটা বন্ধ হওয়ার পরেই আপডেট পপ-আপ দেখায়।
-    const isBusy = () => !!document.querySelector(".apply-popup-overlay");
-    function showWhenFree(next) {
-      if (cancelled) return;
-      if (isBusy()) {
-        timer = setTimeout(() => showWhenFree(next), 800);
-        return;
-      }
-      showUpdate(next);
-    }
-
-    timer = setTimeout(async () => {
-      const r = await fetchLatestRelease();
-      if (cancelled || r.status !== "new") return;
-      if (r.info.bundleUrl) {
-        try {
-          await downloadBundleForNextLaunch(r.info);
-        } catch (e) {
-          /* ব্যর্থ হলেও পপ-আপ দেখানো হয় না — মেনুর "নতুন ভার্সন আছে কি না দেখো" বাটনে হাতে দেখা যায় */
-        }
-        return; // স্বয়ংক্রিয় চেকে কোনো পপ-আপ নেই
-      }
-      // রিলিজে bundle.zip না থাকলে (শুধু APK) তবেই পপ-আপ
-      if (!isSnoozed(r.info.version)) showWhenFree(r.info);
+    let handle = null;
+    clearAutoTryIfDone();
+    const timer = setTimeout(() => {
+      if (!cancelled) autoUpdate("launch");
     }, 3000);
-
+    import("@capacitor/app")
+      .then(async ({ App }) => {
+        const h = await App.addListener("appStateChange", ({ isActive }) => {
+          if (isActive && !cancelled) autoUpdate("resume");
+        });
+        if (cancelled) h.remove();
+        else handle = h;
+      })
+      .catch(() => {});
     return () => {
       cancelled = true;
       clearTimeout(timer);
+      if (handle) handle.remove();
     };
   }, []);
 
