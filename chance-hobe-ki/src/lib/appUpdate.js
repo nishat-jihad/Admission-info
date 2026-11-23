@@ -5,7 +5,6 @@
 // ============================================================================
 import { CapacitorHttp } from "@capacitor/core";
 import { APP_VERSION, APK_URL, GITHUB_REPO } from "@/lib/appConfig";
-import { diagLog } from "@/lib/diag";
 
 // "1.2.3" বনাম "1.2.10" তুলনা
 export function isNewer(latest, current) {
@@ -161,7 +160,6 @@ async function freshDownload(U, info) {
       return await U.download({ url: info.bundleUrl, version: info.version });
     } catch (e) {
       lastErr = e;
-      diagLog(`download চেষ্টা ${i + 1} ব্যর্থ: ` + msg(e));
       if (i === 0) await sleep(1500);
     }
   }
@@ -178,13 +176,9 @@ export async function installBundleUpdate(info) {
   if (!info.bundleUrl) throw new Error("bundle নেই");
   const U = await getUpdater();
   let bundle = await ensureBundle(U, info);
-  diagLog(`install: bundle তৈরি id=${String(bundle.id).slice(0, 6)} v${bundle.version} status=${bundle.status}`);
   try {
-    diagLog("install: set() ডাকছি (এরপর রিলোড হওয়ার কথা)");
     await U.set({ id: bundle.id });
-    diagLog("install: set() ফিরেছে");
   } catch (e) {
-    diagLog("install: set() ব্যর্থ: " + msg(e));
     // নামানো ফাইল নষ্ট থাকতে পারে — মুছে নতুন করে নামিয়ে আরেকবার
     try {
       await U.delete({ id: bundle.id });
@@ -225,7 +219,6 @@ export async function downloadBundleForNextLaunch(info) {
   const U = await getUpdater();
   const bundle = await ensureBundle(U, info);
   await U.next({ id: bundle.id });
-  diagLog(`auto: v${info.version} নামানো, next() বসানো (id=${String(bundle.id).slice(0, 6)}, status=${bundle.status})`);
   lsSet(PENDING_KEY, { version: info.version, id: bundle.id });
   return "downloaded";
 }
@@ -246,13 +239,11 @@ export async function applyPendingUpdate() {
     const b = (await listBundles(U)).find((x) => x.id === p.id);
     if (!b || b.status === "error") {
       // চালু হওয়ার পর ফেরত চলে এসেছে (rollback) — হিসাব রাখা
-      diagLog(`rollback ধরা পড়েছে: v${p.version} bundle ${b ? "status=" + b.status : "তালিকায় নেই"}`);
       const fail = lsGet(FAIL_KEY);
       lsSet(FAIL_KEY, { version: p.version, count: fail && fail.version === p.version ? fail.count + 1 : 1 });
       lsSet(PENDING_KEY, null);
       return false;
     }
-    diagLog(`applyPending: v${p.version}-এর জন্য set() ডাকছি`);
     await U.set({ id: p.id });
     return true;
   } catch (e) {
