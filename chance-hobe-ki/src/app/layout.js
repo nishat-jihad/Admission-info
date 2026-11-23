@@ -6,7 +6,7 @@ import "../styles/popup-nav.css";
 import "../styles/context-menu.css";
 import "../styles/app.css";
 import AppBootstrap from "@/components/AppBootstrap";
-import { IS_APP, APP_VERSION } from "@/lib/appConfig";
+import { IS_APP } from "@/lib/appConfig";
 import ApplyPopup from "@/components/ApplyPopup";
 import CustomContextMenu from "@/components/CustomContextMenu";
 import { updates } from "@/data/updates";
@@ -85,35 +85,31 @@ export const metadata = {
   },
 };
 
-// অ্যাপে (IS_APP) পেজ লোড হওয়ার সাথে সাথে চলা ছোট স্ক্রিপ্ট: React চালু হওয়ার আগেই লগ লেখে।
-// তাই নতুন bundle-এর ফাইল লোডই না হলে (load-fail) বা React চালুর আগে ভেঙে গেলে (js-error) তাও লগে থাকে।
-const EARLY_DIAG = `(function(){try{var K="admissionInfoDiag",V=${JSON.stringify(APP_VERSION)};function L(m){try{var a=JSON.parse(localStorage.getItem(K)||"[]");a.push({t:Date.now(),v:V,m:String(m).slice(0,300)});if(a.length>150)a=a.slice(-150);localStorage.setItem(K,JSON.stringify(a))}catch(e){}}L("boot: html লোড হয়েছে "+location.pathname);window.addEventListener("error",function(e){var t=e&&e.target;if(t&&t!==window&&(t.src||t.href)){L("load-fail: "+String(t.src||t.href).replace(location.origin,""))}else{L("js-error: "+(e&&e.message)+" ("+String((e&&e.filename)||"").split("/").pop()+":"+(e&&e.lineno)+")")}},true);window.addEventListener("unhandledrejection",function(e){var r=e&&e.reason;L("promise-error: "+String((r&&r.message)||r).slice(0,200))})}catch(e){}})();`;
+// Pop-up-এ যে ভার্সিটির নাম আলাদা করে দেখাতে চাই (শুধু pop-up-এ বদলায়, বাকি পেজে নয়)।
+// জাবি-র সব ইউনিটের আবেদন একসাথে শুরু হয়েছে, তাই ইউনিটের নাম ছাড়া শুধু ভার্সিটির নাম।
+const POPUP_NAME_OVERRIDE = {
+  ju_a: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (জাবি)",
+};
 
 export default function RootLayout({ children }) {
   // যেসব ভার্সিটির "Apply Now" লিংক আছে (APPLY_LINKS, Admission Calendar-এর সাথে একই) — pop-up-এর ডেটা।
   // কোনটার আবেদন এখন চলছে সেটা ব্রাউজারে বর্তমান সময় দেখে ঠিক হয়।
-  // pop-up-এ নামের সাথে "— A ইউনিট" / "— D ইউনিট" দেখানো হয় না, শুধু ভার্সিটির নাম (যেমন: জাহাঙ্গীরনগর বিশ্ববিদ্যালয়)।
-  // তাই একই ভার্সিটির একাধিক ইউনিট (JU A/D) থাকলেও pop-up-এ নামটা একবারই আসবে।
-  const stripUnit = (n) => n.replace(/\s*[—–-]\s*[A-Za-z]+\s*ইউনিট\s*$/, "").trim();
   const seen = new Set();
-  const seenNames = new Set();
   const applyItems = buildAdmissionCalendar({ updates, examDates })
     .filter((b) => b.applyUrl && !seen.has(b.universityId) && seen.add(b.universityId))
     .map((b) => ({
       id: b.universityId,
-      name: stripUnit(
+      name:
+        POPUP_NAME_OVERRIDE[b.universityId] ||
         (updates.find((u) => u.universityId === b.universityId) || {}).universityName ||
-          b.shortName
-      ),
+        b.shortName,
       applyUrl: b.applyUrl,
       application: b.application,
-    }))
-    .filter((it) => !seenNames.has(it.name) && seenNames.add(it.name));
+    }));
 
   return (
     <html lang="bn" className={IS_APP ? "is-app" : undefined}>
       <body className={`${bangers.variable} ${notoBengali.variable}`}>
-        {IS_APP && <script dangerouslySetInnerHTML={{ __html: EARLY_DIAG }} />}
         {children}
         <ApplyPopup items={applyItems} />
         {IS_APP ? (
