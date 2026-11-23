@@ -369,7 +369,7 @@ export default function UniversityDetailPage({ params }) {
           </section>
         )}
 
-        {uni.calcNote && <div className="placeholder-note calc-pre-note">{uni.calcNote}</div>}
+        {uni.calcNote && <div className="placeholder-note calc-pre-note" style={{ marginTop: 28, marginBottom: 24 }}>{uni.calcNote}</div>}
 
         <EligibilityCalculator id={params.slug} uni={uni} />
       </main>
