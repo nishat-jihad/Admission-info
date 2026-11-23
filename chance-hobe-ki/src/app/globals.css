@@ -3041,14 +3041,14 @@ html::-webkit-scrollbar-track {
 }
 html::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--blue), var(--green));
-  border-radius: 10px;
+  border-radius: 0;
   border: 2px solid #eef1ec;
 }
 html::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--blue-dark), var(--green-dark));
 }
 
-/* ২) বাঁ পাশের সাইডবারের স্ক্রলবার (পাতলা ও কালো, অ্যাক্টিভ বাটনের সাথে মেলানো) */
+/* ২) বাঁ পাশের সাইডবারের স্ক্রলবার */
 nav.uni-nav::-webkit-scrollbar {
   width: 6px;
 }
@@ -3057,13 +3057,13 @@ nav.uni-nav::-webkit-scrollbar-track {
 }
 nav.uni-nav::-webkit-scrollbar-thumb {
   background: #c9cfc6;
-  border-radius: 10px;
+  border-radius: 0;
 }
 nav.uni-nav:hover::-webkit-scrollbar-thumb {
   background: var(--black);
 }
 
-/* ৩) Firefox-এর জন্য (সে ওপরের ::-webkit নিয়ম বোঝে না) */
+/* ৩) Firefox-এর জন্য */
 @supports (-moz-appearance: none) {
   html {
     scrollbar-width: thin;
