@@ -1,13 +1,25 @@
-export const dynamic = "force-static";
-
-const SITE_URL = "https://admissioninfo.vercel.app";
-
 export default function robots() {
+  const baseUrl = 'https://admissioninfo.vercel.app';
+
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/', '/_next/'],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: ['/api/', '/_next/'],
+      },
+      {
+        userAgent: 'Bingbot',
+        allow: '/',
+        disallow: ['/api/', '/_next/'],
+      },
+    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }
