@@ -80,8 +80,8 @@ export const examDates = [
     universityName: "কৃষি গুচ্ছ",
     shortName: "কৃষি গুচ্ছ",
     category: "university",
-    applicationStart: "শীঘ্রই জানানো হবে",
-    applicationEnd: "শীঘ্রই জানানো হবে",
+    applicationStart: "25 নভেম্বর",
+    applicationEnd: "15 ডিসেম্বর",
     schedule: [{ unit: "ভর্তি পরীক্ষা", date: "2 জানুয়ারি" }],
   },
   {
@@ -90,9 +90,15 @@ export const examDates = [
     universityName: "জগন্নাথ বিশ্ববিদ্যালয় (জবি)",
     shortName: "JnU",
     category: "university",
-    applicationStart: "15 নভেম্বর",
+    applicationStart: "25 নভেম্বর",
     applicationEnd: "10 ডিসেম্বর",
-    schedule: [{ unit: "A", date: "1 জানুয়ারি" }],
+    schedule: [
+      { unit: "A", date: "1 জানুয়ারি" },
+      { unit: "E", date: "8 জানুয়ারি" },
+      { unit: "B", date: "15 জানুয়ারি" },
+      { unit: "C", date: "22 জানুয়ারি" },
+      { unit: "D", date: "23 জানুয়ারি" },
+    ],
   },
   {
     id: "cu",
