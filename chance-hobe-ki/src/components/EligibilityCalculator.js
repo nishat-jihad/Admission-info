@@ -7,9 +7,6 @@ import { checkEligibility } from "@/lib/eligibility";
 export default function EligibilityCalculator({ id, uni }) {
   const [values, setValues] = useState({});
   const [result, setResult] = useState(null);
-  // শুধু মেডিকেলের জন্য: পশ্চাৎপদ জনগোষ্ঠী কোটা ও নম্বর কর্তনের ধরন
-  const [backward, setBackward] = useState(false);
-  const [deduction, setDeduction] = useState("0");
 
   const fieldRows = uni.fields.length > 2 ? [uni.fields.slice(0, 2), uni.fields.slice(2)] : [uni.fields];
 
@@ -42,7 +39,7 @@ export default function EligibilityCalculator({ id, uni }) {
     uni.fields.forEach((f) => {
       vals[f] = parseFloat(values[f]) || 0;
     });
-    const eligible = checkEligibility(id, vals, { backward });
+    const eligible = checkEligibility(id, vals, {});
 
     let msg = eligible
       ? `তোমার GPA অনুযায়ী তুমি ${uni.name} এ পরীক্ষা দেওয়ার যোগ্যতা রাখো।`
@@ -73,21 +70,20 @@ export default function EligibilityCalculator({ id, uni }) {
     if (id === "medical") {
       const c = uni.calc;
       const bn = (n) => Number(n).toFixed(2).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
-      const minCombined = backward ? c.backwardMinCombined : c.minCombined;
-      const minBio = backward ? c.backwardMinBio : c.minBio;
+      const minCombined = c.minCombined;
+      const minBio = c.minBio;
       const combined = (vals.ssc || 0) + (vals.hsc || 0);
-      const who = backward ? "পশ্চাৎপদ জনগোষ্ঠীর" : "সাধারণ";
       if (eligible) {
-        const gpaMarks = (vals.ssc || 0) * 8 + (vals.hsc || 0) * 12 - Number(deduction);
+        const gpaMarks = (vals.ssc || 0) * 8 + (vals.hsc || 0) * 12;
         msg =
-          `তোমার GPA অনুযায়ী তুমি ${who} প্রার্থী হিসেবে মেডিকেল/ডেন্টাল ভর্তি পরীক্ষায় অংশ নেওয়ার ন্যূনতম GPA শর্ত পূরণ করছো। ` +
-          `GPA থেকে তোমার প্রাপ্ত নম্বর ${bn(gpaMarks)}/১০০ (SSC×৮ + HSC×১২${Number(deduction) ? ` − কর্তন ${bn(Number(deduction))}` : ""}); ` +
+          `তোমার GPA অনুযায়ী তুমি মেডিকেল/ডেন্টাল ভর্তি পরীক্ষায় অংশ নেওয়ার ন্যূনতম GPA শর্ত পূরণ করছো। ` +
+          `GPA থেকে তোমার প্রাপ্ত নম্বর ${bn(gpaMarks)}/১০০ (SSC×৮ + HSC×১২); ` +
           `এর সাথে ভর্তি পরীক্ষার ১০০ নম্বর যোগ হয়ে মোট ২০০-তে মেধাতালিকা হবে।`;
       } else {
         const fails = [];
         if (combined < minCombined) fails.push(`SSC+HSC মোট GPA ন্যূনতম ${bn(minCombined)} (তোমার ${bn(combined)})`);
         if ((vals.bio || 0) < minBio) fails.push(`HSC জীববিজ্ঞানে ন্যূনতম ${bn(minBio)}`);
-        msg = `দুঃখিত, তোমার GPA ${who} প্রার্থীর ন্যূনতম শর্ত পূরণ করছে না। লাগবে: ${fails.join("; ")}।`;
+        msg = `দুঃখিত, তোমার GPA ন্যূনতম শর্ত পূরণ করছে না। লাগবে: ${fails.join("; ")}।`;
       }
     }
 
@@ -139,40 +135,6 @@ export default function EligibilityCalculator({ id, uni }) {
             </div>
           ))}
         </div>
-
-        {id === "medical" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, margin: "4px 0 16px" }}>
-            <label style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 14, lineHeight: 1.6, cursor: "pointer" }}>
-              <input
-                type="checkbox"
-                checked={backward}
-                onChange={(e) => {
-                  setBackward(e.target.checked);
-                  setResult(null);
-                }}
-                style={{ marginTop: 5 }}
-              />
-              <span>
-                আমি পশ্চাৎপদ জনগোষ্ঠীর প্রার্থী (সব উপজাতীয় ও পার্বত্য জেলার অ-উপজাতীয়)
-              </span>
-            </label>
-            <div className="calc-field">
-              <label htmlFor="f_deduction">নম্বর কর্তন (প্রযোজ্য হলে)</label>
-              <select
-                id="f_deduction"
-                value={deduction}
-                onChange={(e) => {
-                  setDeduction(e.target.value);
-                  setResult(null);
-                }}
-              >
-                <option value="0">২০২৬ সালে HSC পাস — কর্তন নেই</option>
-                <option value="3">২০২৫ সালে HSC পাস — ৩ নম্বর কর্তন</option>
-                <option value="5">২০২৫-২৬ শিক্ষাবর্ষে সরকারি মেডিকেল/ডেন্টালে ভর্তি — ৫ নম্বর কর্তন</option>
-              </select>
-            </div>
-          </div>
-        )}
 
         <button className="calc-btn" onClick={handleCheck}>
           চেক করো
