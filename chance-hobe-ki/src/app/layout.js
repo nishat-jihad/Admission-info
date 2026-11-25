@@ -89,6 +89,8 @@ export const metadata = {
 // জাবি-র সব ইউনিটের আবেদন একসাথে শুরু হয়েছে, তাই ইউনিটের নাম ছাড়া শুধু ভার্সিটির নাম।
 const POPUP_NAME_OVERRIDE = {
   ju_a: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (জাবি)",
+  medical: "সরকারি মেডিকেল ও ডেন্টাল (MBBS/BDS)",
+  krishi: "কৃষি গুচ্ছ",
 };
 
 export default function RootLayout({ children }) {
