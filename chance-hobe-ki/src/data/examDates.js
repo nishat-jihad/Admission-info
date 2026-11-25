@@ -36,8 +36,8 @@ export const examDates = [
     universityName: "সরকারি মেডিকেল ও ডেন্টাল কলেজ ভর্তি পরীক্ষা",
     shortName: "মেডিকেল",
     category: "medical",
-    applicationStart: "15–18 নভেম্বরের মধ্যে (সম্ভাব্য)",
-    applicationEnd: "শীঘ্রই জানানো হবে",
+    applicationStart: "25 নভেম্বর",
+    applicationEnd: "3 ডিসেম্বর",
     schedule: [{ unit: "ভর্তি পরীক্ষা", date: "18 ডিসেম্বর" }],
   },
   {
