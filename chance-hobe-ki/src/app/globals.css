@@ -2574,6 +2574,10 @@ section.block h2 .circular-tag {
   font-size: 13.5px;
   color: #7a5a00;
 }
+/* ০.২৫ নম্বর কাটার বক্স ও "ফলাফল নির্ণয় পদ্ধতি" টাইটেলের মাঝে ফাঁকা */
+.placeholder-note + section.block {
+  margin-top: 26px;
+}
 .calc-note {
   border-radius: 10px;
   padding: 10px 14px;
@@ -2647,7 +2651,7 @@ section.block h2 .circular-tag {
 .calc-btn {
   background: var(--green);
   color: #fff;
-  border: 1.5px solid var(--black);
+  border: none;
   padding: 11px 26px;
   border-radius: 999px;
   font-weight: 700;
@@ -3081,4 +3085,47 @@ nav.uni-nav:hover::-webkit-scrollbar-thumb {
     scrollbar-width: thin;
     scrollbar-color: #c9cfc6 transparent;
   }
+}
+
+
+/* ---------- Updates পেজ: ভার্সিটি/ইঞ্জিনিয়ারিং সাব-ক্যাটাগরি বার (News বারের মতো, active সবুজ) ---------- */
+.up-subbar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  margin: 16px 0 6px;
+  border: 1px solid #d9dce1;
+  border-radius: 999px;
+  background: #fff;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.up-subbar::-webkit-scrollbar {
+  display: none;
+}
+.up-subcat {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: #333;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 8px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.up-subcat:hover {
+  background: #e8f6ed;
+  color: var(--green-dark);
+}
+.up-subcat.is-active {
+  background: var(--green);
+  color: #fff;
 }
