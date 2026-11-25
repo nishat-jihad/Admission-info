@@ -2625,6 +2625,14 @@ section.block h2 .circular-tag {
   margin-bottom: 5px;
   color: #444;
 }
+.calc-field select {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  font-size: 14px;
+  background: #fff;
+}
 .calc-field input {
   width: 100%;
   padding: 9px 12px;
