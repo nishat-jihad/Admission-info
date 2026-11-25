@@ -5,7 +5,7 @@ import { universities } from "@/data/universities";
  * admission-eligibility rules. `vals` is a map of field -> GPA number,
  * using the same field keys as universities[id].fields (ssc, hsc, phy, ...).
  */
-export function checkEligibility(uniId, vals) {
+export function checkEligibility(uniId, vals, opts = {}) {
   const c = universities[uniId].calc;
   const combined = (vals.ssc || 0) + (vals.hsc || 0);
 
@@ -75,12 +75,11 @@ export function checkEligibility(uniId, vals) {
   }
 
   if (uniId === "medical") {
-    return (
-      (vals.ssc || 0) >= c.minSsc &&
-      (vals.hsc || 0) >= c.minHsc &&
-      (vals.bio || 0) >= c.minBio &&
-      combined >= c.minCombined
-    );
+    // ২০২৬-২৭ বিজ্ঞপ্তি: SSC+HSC মোট GPA ন্যূনতম ৮.৫০ ও HSC জীববিজ্ঞানে ৩.৫০;
+    // পশ্চাৎপদ জনগোষ্ঠীর জন্য যথাক্রমে ৮.০০ ও ৩.০০। আলাদা করে SSC/HSC-র ন্যূনতম GPA নেই।
+    const minCombined = opts.backward ? c.backwardMinCombined : c.minCombined;
+    const minBio = opts.backward ? c.backwardMinBio : c.minBio;
+    return combined >= minCombined && (vals.bio || 0) >= minBio;
   }
 
   if (uniId === "afmc") {
