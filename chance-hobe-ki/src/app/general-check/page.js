@@ -60,31 +60,30 @@ const STATUS_UI = {
 
 const toBn = (n) => Number(n).toLocaleString("bn-BD");
 
-function ResultColumn({ title, items, emptyText }) {
+// একটাই table, তিন কলাম (ভার্সিটি | ইঞ্জিনিয়ারিং | মেডিকেল)
+function ResultTable({ columns, emptyText }) {
   return (
-    <div className="gc-col">
-      <div className="gc-col-title">{title}</div>
-      {items.length === 0 && <div className="gc-col-empty">{emptyText}</div>}
-      <ul className="gc-col-list">
-        {items.map((u) => {
-          const ui = STATUS_UI[u.status];
-          return (
-            <li key={u.id} className={`gc-row ${ui.cls}`}>
-              <div className="gc-cell gc-cell-name">
-                <Link href={`/university/${u.id}`} className="gc-row-name">
+    <div className="gct">
+      {columns.map((col) => (
+        <div className="gct-col" key={col.title}>
+          <div className="gct-head">{col.title}</div>
+          {col.items.length === 0 && <div className="gct-empty">{emptyText}</div>}
+          {col.items.map((u) => {
+            const ui = STATUS_UI[u.status];
+            return (
+              <div className="gct-row" key={u.id}>
+                <Link href={`/university/${u.id}`} className="gct-name">
                   {u.name}
                 </Link>
-              </div>
-              <div className="gc-cell gc-cell-status">
-                <span className={`gc-badge ${ui.cls}`}>
-                  <span className="gc-badge-icon">{ui.icon}</span>
+                <span className={`gct-badge ${ui.cls}`}>
+                  <span className="gct-badge-icon">{ui.icon}</span>
                   {ui.text}
                 </span>
               </div>
-            </li>
-          );
-        })}
-      </ul>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 }
@@ -251,44 +250,26 @@ export default function GeneralCheckPage() {
                   )}
 
                   <div className="gc-table-heading yes">যেখানে যেখানে পরীক্ষা দিতে পারবে</div>
-                  <div className="gc-columns">
-                    <ResultColumn
-                      title="ভার্সিটি"
-                      items={result.versity.filter((u) => u.status !== "no")}
-                      emptyText="কোনোটাতে নেই"
-                    />
-                    <ResultColumn
-                      title="ইঞ্জিনিয়ারিং"
-                      items={result.engineering.filter((u) => u.status !== "no")}
-                      emptyText="কোনোটাতে নেই"
-                    />
-                    <ResultColumn
-                      title="মেডিকেল"
-                      items={result.medical.filter((u) => u.status !== "no")}
-                      emptyText="কোনোটাতে নেই"
-                    />
-                  </div>
+                  <ResultTable
+                    emptyText="কোনোটাতে নেই"
+                    columns={[
+                      { title: "ভার্সিটি", items: result.versity.filter((u) => u.status !== "no") },
+                      { title: "ইঞ্জিনিয়ারিং", items: result.engineering.filter((u) => u.status !== "no") },
+                      { title: "মেডিকেল", items: result.medical.filter((u) => u.status !== "no") },
+                    ]}
+                  />
 
                   {result.noCount > 0 && (
                     <>
                       <div className="gc-table-heading no">যেখানে যেখানে পরীক্ষা দিতে পারবে না</div>
-                      <div className="gc-columns">
-                        <ResultColumn
-                          title="ভার্সিটি"
-                          items={result.versity.filter((u) => u.status === "no")}
-                          emptyText="সবগুলোতে পারবে"
-                        />
-                        <ResultColumn
-                          title="ইঞ্জিনিয়ারিং"
-                          items={result.engineering.filter((u) => u.status === "no")}
-                          emptyText="সবগুলোতে পারবে"
-                        />
-                        <ResultColumn
-                          title="মেডিকেল"
-                          items={result.medical.filter((u) => u.status === "no")}
-                          emptyText="সবগুলোতে পারবে"
-                        />
-                      </div>
+                      <ResultTable
+                        emptyText="সবগুলোতে পারবে"
+                        columns={[
+                          { title: "ভার্সিটি", items: result.versity.filter((u) => u.status === "no") },
+                          { title: "ইঞ্জিনিয়ারিং", items: result.engineering.filter((u) => u.status === "no") },
+                          { title: "মেডিকেল", items: result.medical.filter((u) => u.status === "no") },
+                        ]}
+                      />
                     </>
                   )}
                 </>
