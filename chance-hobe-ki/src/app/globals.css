@@ -3297,27 +3297,48 @@ nav.uni-nav:hover::-webkit-scrollbar-thumb {
   color: #777;
   text-align: center;
 }
+/* মোবাইল: তিন কলাম পাশাপাশি (ভার্সিটি | ইঞ্জিনিয়ারিং | মেডিকেল), প্রতিটার নিচে নিচে নাম */
 @media (max-width: 760px) {
+  .gct {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .gct-col {
-    grid-template-columns: 84px minmax(0, 1fr);
+    display: block;
+    border-bottom: none;
+    border-right: 2px solid var(--black);
+  }
+  .gct-col:last-child {
+    border-right: none;
   }
   .gct-head {
-    padding: 10px 4px;
+    border-right: none;
+    border-bottom: 2px solid var(--black);
+    padding: 11px 4px;
     font-size: 13px;
   }
+  .gct-items {
+    display: block;
+    margin: 0;
+  }
   .gct-row {
-    flex-basis: 50%;
-    padding: 12px 10px;
+    padding: 12px 8px;
+    border-right: none;
+    border-bottom: 1.5px solid #cfcfcf;
+  }
+  .gct-row:last-child {
+    border-bottom: none;
   }
   .gct-name {
     font-size: 12.5px;
+    word-break: break-word;
   }
   .gct-badge.unknown {
     font-size: 10.5px;
-    padding: 2px 8px;
+    padding: 2px 7px;
   }
   .gct-empty {
     font-size: 12px;
-    padding: 12px 6px;
+    padding: 14px 6px;
   }
 }
