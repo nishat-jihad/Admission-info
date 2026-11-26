@@ -114,6 +114,19 @@ export default function Footer() {
   if (IS_APP) return null;
 
   return (
+    <>
+    {/* Campus skyline: puro image dekha jay, kono building/tree crop hoy na.
+        Mobile e width 100% (choto), PC te max-width diye boro hoye jay na. */}
+    <div className="footer-skyline" aria-hidden="true">
+      <Image
+        src="/images/footer-skyline.webp"
+        alt=""
+        width={2172}
+        height={267}
+        sizes="(max-width: 1500px) 100vw, 1500px"
+        className="footer-skyline-img"
+      />
+    </div>
     <footer className="site-footer">
       <style dangerouslySetInnerHTML={{ __html: FOOTER_EXTRA_CSS }} />
       <div className="footer-inner">
@@ -184,5 +197,6 @@ export default function Footer() {
 
       <div className="footer-bottom">© ২০২৬ Admission Info — সব স্বত্ব সংরক্ষিত।</div>
     </footer>
+    </>
   );
 }
