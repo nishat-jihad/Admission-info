@@ -3129,3 +3129,163 @@ nav.uni-nav:hover::-webkit-scrollbar-thumb {
   background: var(--green);
   color: #fff;
 }
+
+/* ---------- GENERAL CHECK: বিষয়ভিত্তিক GPA + ফলাফল বক্স ---------- */
+.gc-subject-title {
+  margin: 20px 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--black);
+}
+.gc-subject-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.gc-subject-grid .field {
+  margin-bottom: 0;
+}
+.gc-error {
+  margin: -8px 0 16px;
+  font-size: 13.5px;
+  color: #a3251c;
+  background: #fbe7e5;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.gc-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.gc-summary-card {
+  border: 1.5px solid var(--black);
+  border-radius: 16px;
+  padding: 16px 14px;
+  text-align: center;
+  box-shadow: var(--shadow-hard);
+}
+.gc-summary-card.yes {
+  background: #f0fbf3;
+}
+.gc-summary-card.no {
+  background: #fff1ef;
+}
+.gc-summary-num {
+  font-size: clamp(30px, 5vw, 40px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+.gc-summary-card.yes .gc-summary-num {
+  color: var(--green-dark);
+}
+.gc-summary-card.no .gc-summary-num {
+  color: var(--red);
+}
+.gc-summary-label {
+  margin-top: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #444;
+}
+.gc-unknown-note {
+  margin-bottom: 14px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #6b6b6b;
+  background: #f4f4f4;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.gc-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+  margin-top: 4px;
+}
+.gc-col {
+  background: #fff;
+  border: 1.5px solid var(--black);
+  border-radius: 16px;
+  box-shadow: var(--shadow-hard);
+  overflow: hidden;
+}
+.gc-col-title {
+  padding: 12px 14px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--blue);
+  background: #f2f6ff;
+  border-bottom: 1.5px solid var(--black);
+}
+.gc-col-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.gc-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #eee;
+}
+.gc-row:last-child {
+  border-bottom: none;
+}
+.gc-row-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+  text-decoration: none;
+}
+.gc-row-name:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+.gc-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.gc-badge-icon {
+  font-weight: 800;
+}
+.gc-badge.yes {
+  background: #e3f6e9;
+  color: var(--green-dark);
+}
+.gc-badge.no {
+  background: #fde4e1;
+  color: #a3251c;
+}
+.gc-badge.unknown {
+  background: #ececec;
+  color: #666;
+}
+@media (max-width: 760px) {
+  .gc-subject-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .gc-columns {
+    grid-template-columns: 1fr;
+  }
+  .gc-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .gc-subject-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
