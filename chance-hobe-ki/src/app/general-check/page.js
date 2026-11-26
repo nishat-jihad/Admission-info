@@ -52,15 +52,9 @@ const SUBJECT_FIELDS = [
   { key: "eng", label: "English" },
 ];
 
-const STATUS_UI = {
-  yes: { icon: "✓", text: "পারবে", cls: "yes" },
-  no: { icon: "✕", text: "পারবে না", cls: "no" },
-  unknown: { icon: "?", text: "বিষয়ের GPA দাও", cls: "unknown" },
-};
-
 const toBn = (n) => Number(n).toLocaleString("bn-BD");
 
-// একটাই table, তিন কলাম (ভার্সিটি | ইঞ্জিনিয়ারিং | মেডিকেল)
+// একটাই table: ওপর থেকে নিচে ভার্সিটি → ইঞ্জিনিয়ারিং → মেডিকেল, প্রতিটার ভেতরে ঘরগুলো পাশাপাশি সাজানো
 function ResultTable({ columns, emptyText }) {
   return (
     <div className="gct">
@@ -68,20 +62,21 @@ function ResultTable({ columns, emptyText }) {
         <div className="gct-col" key={col.title}>
           <div className="gct-head">{col.title}</div>
           {col.items.length === 0 && <div className="gct-empty">{emptyText}</div>}
-          {col.items.map((u) => {
-            const ui = STATUS_UI[u.status];
-            return (
+          {col.items.length > 0 && (
+            <div className="gct-items">
+            {col.items.map((u) => (
               <div className="gct-row" key={u.id}>
                 <Link href={`/university/${u.id}`} className="gct-name">
                   {u.name}
                 </Link>
-                <span className={`gct-badge ${ui.cls}`}>
-                  <span className="gct-badge-icon">{ui.icon}</span>
-                  {ui.text}
-                </span>
+                {/* পারবে/পারবে না হেডিং দেখেই বোঝা যায়; শুধু বিষয়ের GPA লাগলে ছোট নোট */}
+                {u.status === "unknown" && (
+                  <span className="gct-badge unknown">বিষয়ের GPA দাও</span>
+                )}
               </div>
-            );
-          })}
+            ))}
+            </div>
+          )}
         </div>
       ))}
     </div>
