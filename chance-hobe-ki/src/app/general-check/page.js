@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { generalCriteria } from "@/data/generalCriteria";
+import { runGeneralCheck } from "@/lib/generalCheck";
 
 const GPA_SCALE = [
   { marks: "80-100", grade: "A+", points: "5.00" },
@@ -44,10 +44,52 @@ function GpaScaleChart() {
   );
 }
 
+const SUBJECT_FIELDS = [
+  { key: "phy", label: "Physics" },
+  { key: "chem", label: "Chemistry" },
+  { key: "hm", label: "Higher Math" },
+  { key: "bio", label: "Biology" },
+  { key: "eng", label: "English" },
+];
+
+const STATUS_UI = {
+  yes: { icon: "✓", text: "পারবে", cls: "yes" },
+  no: { icon: "✕", text: "পারবে না", cls: "no" },
+  unknown: { icon: "?", text: "বিষয়ের GPA দাও", cls: "unknown" },
+};
+
+const toBn = (n) => Number(n).toLocaleString("bn-BD");
+
+function ResultColumn({ title, items }) {
+  return (
+    <div className="gc-col">
+      <div className="gc-col-title">{title}</div>
+      <ul className="gc-col-list">
+        {items.map((u) => {
+          const ui = STATUS_UI[u.status];
+          return (
+            <li key={u.id} className={`gc-row ${ui.cls}`}>
+              <Link href={`/university/${u.id}`} className="gc-row-name">
+                {u.name}
+              </Link>
+              <span className={`gc-badge ${ui.cls}`}>
+                <span className="gc-badge-icon">{ui.icon}</span>
+                {ui.text}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 export default function GeneralCheckPage() {
   const [ssc, setSsc] = useState("");
   const [hsc, setHsc] = useState("");
+  const [subjects, setSubjects] = useState({ phy: "", chem: "", hm: "", bio: "", eng: "" });
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // GPA বাস্তবে কখনো 5 এর বেশি হয় না, তাই টাইপ করার সময়ই 5 এর বেশি হলে আটকে দেওয়া হচ্ছে
   function handleGpaChange(setter, raw) {
@@ -69,32 +111,28 @@ export default function GeneralCheckPage() {
     }
   }
 
+  function setSubject(key, raw) {
+    handleGpaChange((v) => setSubjects((prev) => ({ ...prev, [key]: v })), raw);
+  }
+
   function handleCheck() {
-    const sscVal = parseFloat(ssc) || 0;
-    const hscVal = parseFloat(hsc) || 0;
-    const combined = sscVal + hscVal;
+    const sscVal = parseFloat(ssc);
+    const hscVal = parseFloat(hsc);
+    if (isNaN(sscVal) || isNaN(hscVal)) {
+      setError("আগে SSC আর HSC দুটোর GPA বসাও।");
+      setResult(null);
+      return;
+    }
+    setError("");
 
-    const eligibleUnis = [];
-    const excludedUnis = [];
-
-    Object.entries(generalCriteria).forEach(([slug, c]) => {
-      if (c.requiresScience) {
-        excludedUnis.push(c.name);
-        return;
-      }
-      let eligible;
-      if (c.minSsc !== undefined || c.minHsc !== undefined) {
-        eligible =
-          sscVal >= (c.minSsc || 0) &&
-          hscVal >= (c.minHsc || 0) &&
-          (c.minCombined === undefined || combined >= c.minCombined);
-      } else {
-        eligible = combined >= c.minCombined;
-      }
-      if (eligible) eligibleUnis.push({ name: c.name, slug });
+    // খালি রাখা বিষয়ের GPA বাদ যাবে (undefined) — এগুলো লাগলে ফলাফলে "বিষয়ের GPA দাও" দেখাবে
+    const subjectVals = {};
+    SUBJECT_FIELDS.forEach(({ key }) => {
+      const n = parseFloat(subjects[key]);
+      if (!isNaN(n)) subjectVals[key] = n;
     });
 
-    setResult({ eligibleUnis, excludedUnis });
+    setResult(runGeneralCheck({ ssc: sscVal, hsc: hscVal, subjects: subjectVals }));
   }
 
   return (
@@ -117,12 +155,6 @@ export default function GeneralCheckPage() {
           <div className="general-check-layout">
             <div className="general-check-main">
               <div className="general-card general-check-card">
-                <div className="general-intro">
-                  যেসব ভার্সিটিতে ভর্তির জন্য <b>Physics / Chemistry / Higher&nbsp;Math</b>-এ
-                  আলাদা ন্যূনতম GPA (বিষয়ভিত্তিক যোগ্যতা) লাগে — যেমন BUET, BUTex, IUT,
-                  Medical — সেগুলো এই তালিকা থেকে বাদ দিয়ে বাকি ভার্সিটিগুলো দেখানো হবে।
-                </div>
-
                 <div className="general-fields">
                   <div className="field">
                     <label>SSC GPA</label>
@@ -152,6 +184,31 @@ export default function GeneralCheckPage() {
                   </div>
                 </div>
 
+                <div className="gc-subject-title">HSC-র বিষয়ভিত্তিক GPA</div>
+                <div className="gc-subject-grid">
+                  {SUBJECT_FIELDS.map(({ key, label }) => (
+                    <div className="field" key={key}>
+                      <label>{label}</label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        min="1"
+                        max="5"
+                        placeholder="GPA"
+                        value={subjects[key]}
+                        onChange={(e) => setSubject(key, e.target.value)}
+                        onBlur={() =>
+                          handleGpaBlur(subjects[key], (v) =>
+                            setSubjects((prev) => ({ ...prev, [key]: v }))
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {error && <div className="gc-error">{error}</div>}
+
                 <button className="check-btn wide" onClick={handleCheck}>
                   দেখাও
                 </button>
@@ -168,38 +225,32 @@ export default function GeneralCheckPage() {
                 </div>
               )}
 
-              {result && result.eligibleUnis.length > 0 && (
-                <div className="general-result-table-wrap">
-                  <table className="general-result-table">
-                    <tbody>
-                      {result.eligibleUnis.map((u) => (
-                        <tr key={u.slug}>
-                          <td>
-                            <Link href={`/university/${u.slug}`} className="general-result-link">
-                              {u.name}
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-
-              {result && result.eligibleUnis.length === 0 && (
-                <div className="general-empty">
-                  তোমার দেওয়া GPA দিয়ে এই তালিকার কোনো ভার্সিটিতে সাধারণভাবে আবেদনযোগ্যতা
-                  পূরণ হচ্ছে না।
-                </div>
-              )}
-
               {result && (
-                <div className="excluded-note">
-                  ⚠️ এই তালিকায় নেই: <b>{result.excludedUnis.join(", ")}</b> — ইঞ্জিনিয়ারিং,
-                  মেডিকেল ও এরকম আরও কিছু নির্দিষ্ট বিশ্ববিদ্যালয়ে Physics, Chemistry, Higher
-                  Math/Biology-তে আলাদা GPA বা নম্বর লাগে, তাই এগুলো এখানে সাধারণভাবে দেখানো
-                  হচ্ছে না। এগুলোর জন্য নির্দিষ্ট ভার্সিটি চেক করো।
-                </div>
+                <>
+                  <div className="gc-summary">
+                    <div className="gc-summary-card yes">
+                      <div className="gc-summary-num">{toBn(result.yesCount)}</div>
+                      <div className="gc-summary-label">টা জায়গায় পরীক্ষা দিতে পারবে</div>
+                    </div>
+                    <div className="gc-summary-card no">
+                      <div className="gc-summary-num">{toBn(result.noCount)}</div>
+                      <div className="gc-summary-label">টা জায়গায় পরীক্ষা দিতে পারবে না</div>
+                    </div>
+                  </div>
+
+                  {result.unknownCount > 0 && (
+                    <div className="gc-unknown-note">
+                      {toBn(result.unknownCount)}টা জায়গার জন্য উপরের বিষয়ভিত্তিক GPA লাগবে — ওগুলো
+                      বসালে এখানে পারবে/পারবে না দেখাবে, আপাতত কোনো কার্ডে গোনা হয়নি।
+                    </div>
+                  )}
+
+                  <div className="gc-columns">
+                    <ResultColumn title="ভার্সিটি" items={result.versity} />
+                    <ResultColumn title="ইঞ্জিনিয়ারিং" items={result.engineering} />
+                    <ResultColumn title="মেডিকেল" items={result.medical} />
+                  </div>
+                </>
               )}
 
               {result && <GpaScaleChart />}
