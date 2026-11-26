@@ -60,22 +60,27 @@ const STATUS_UI = {
 
 const toBn = (n) => Number(n).toLocaleString("bn-BD");
 
-function ResultColumn({ title, items }) {
+function ResultColumn({ title, items, emptyText }) {
   return (
     <div className="gc-col">
       <div className="gc-col-title">{title}</div>
+      {items.length === 0 && <div className="gc-col-empty">{emptyText}</div>}
       <ul className="gc-col-list">
         {items.map((u) => {
           const ui = STATUS_UI[u.status];
           return (
             <li key={u.id} className={`gc-row ${ui.cls}`}>
-              <Link href={`/university/${u.id}`} className="gc-row-name">
-                {u.name}
-              </Link>
-              <span className={`gc-badge ${ui.cls}`}>
-                <span className="gc-badge-icon">{ui.icon}</span>
-                {ui.text}
-              </span>
+              <div className="gc-cell gc-cell-name">
+                <Link href={`/university/${u.id}`} className="gc-row-name">
+                  {u.name}
+                </Link>
+              </div>
+              <div className="gc-cell gc-cell-status">
+                <span className={`gc-badge ${ui.cls}`}>
+                  <span className="gc-badge-icon">{ui.icon}</span>
+                  {ui.text}
+                </span>
+              </div>
             </li>
           );
         })}
@@ -245,11 +250,47 @@ export default function GeneralCheckPage() {
                     </div>
                   )}
 
+                  <div className="gc-table-heading yes">যেখানে যেখানে পরীক্ষা দিতে পারবে</div>
                   <div className="gc-columns">
-                    <ResultColumn title="ভার্সিটি" items={result.versity} />
-                    <ResultColumn title="ইঞ্জিনিয়ারিং" items={result.engineering} />
-                    <ResultColumn title="মেডিকেল" items={result.medical} />
+                    <ResultColumn
+                      title="ভার্সিটি"
+                      items={result.versity.filter((u) => u.status !== "no")}
+                      emptyText="কোনোটাতে নেই"
+                    />
+                    <ResultColumn
+                      title="ইঞ্জিনিয়ারিং"
+                      items={result.engineering.filter((u) => u.status !== "no")}
+                      emptyText="কোনোটাতে নেই"
+                    />
+                    <ResultColumn
+                      title="মেডিকেল"
+                      items={result.medical.filter((u) => u.status !== "no")}
+                      emptyText="কোনোটাতে নেই"
+                    />
                   </div>
+
+                  {result.noCount > 0 && (
+                    <>
+                      <div className="gc-table-heading no">যেখানে যেখানে পরীক্ষা দিতে পারবে না</div>
+                      <div className="gc-columns">
+                        <ResultColumn
+                          title="ভার্সিটি"
+                          items={result.versity.filter((u) => u.status === "no")}
+                          emptyText="সবগুলোতে পারবে"
+                        />
+                        <ResultColumn
+                          title="ইঞ্জিনিয়ারিং"
+                          items={result.engineering.filter((u) => u.status === "no")}
+                          emptyText="সবগুলোতে পারবে"
+                        />
+                        <ResultColumn
+                          title="মেডিকেল"
+                          items={result.medical.filter((u) => u.status === "no")}
+                          emptyText="সবগুলোতে পারবে"
+                        />
+                      </div>
+                    </>
+                  )}
                 </>
               )}
 
