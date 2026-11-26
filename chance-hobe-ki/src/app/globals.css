@@ -1488,9 +1488,16 @@ nav.nav-links a.nav-icon-link.active .nav-label {
 .footer-skyline-img {
   display: block;
   width: 100%;
-  max-width: 1500px;
   height: auto;
-  margin: 0 auto;
+  object-fit: fill;
+}
+/* PC/tablet: ekdom puro width e boshe (dui pashe faka thake na).
+   Height = 10vw, tai ছবি shudhu halka (~১.২x) tana hoy, ar shob screen e
+   ek-i anupat thake, kono building/tree kata jay na. */
+@media (min-width: 701px) {
+  .footer-skyline-img {
+    height: 10vw;
+  }
 }
 @media (max-width: 700px) {
   .footer-skyline {
