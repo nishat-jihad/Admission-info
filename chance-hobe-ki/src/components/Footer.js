@@ -116,14 +116,14 @@ export default function Footer() {
   return (
     <>
     {/* Campus skyline: puro image dekha jay, kono building/tree crop hoy na.
-        Mobile e width 100% (choto), PC te max-width diye boro hoye jay na. */}
+        Mobile e width 100% (choto), PC te puro width, halka tana (height 10vw). */}
     <div className="footer-skyline" aria-hidden="true">
       <Image
         src="/images/footer-skyline.webp"
         alt=""
         width={2172}
         height={267}
-        sizes="(max-width: 1500px) 100vw, 1500px"
+        sizes="100vw"
         className="footer-skyline-img"
       />
     </div>
