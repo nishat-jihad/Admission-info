@@ -1479,10 +1479,28 @@ nav.nav-links a.nav-icon-link.active .nav-label {
 }
 
 /* ---------- FOOTER ---------- */
+/* Skyline footer-er thik upore boshe; tar niche-e footer-er sobuj border-top thake */
+.footer-skyline {
+  margin-top: 56px;
+  line-height: 0;
+  overflow: hidden;
+}
+.footer-skyline-img {
+  display: block;
+  width: 100%;
+  max-width: 1500px;
+  height: auto;
+  margin: 0 auto;
+}
+@media (max-width: 700px) {
+  .footer-skyline {
+    margin-top: 40px;
+  }
+}
 footer.site-footer {
   background: linear-gradient(180deg, #0c1f3f 0%, #0a1a38 100%);
   color: #e7ecfb;
-  margin-top: 64px;
+  margin-top: 0;
   border-top: 3px solid var(--green);
 }
 .footer-inner {
