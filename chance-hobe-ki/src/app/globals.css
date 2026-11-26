@@ -3222,7 +3222,7 @@ nav.uni-nav:hover::-webkit-scrollbar-thumb {
   color: var(--red);
 }
 
-/* ---------- GENERAL CHECK: একটাই table, ওপর থেকে নিচে সেকশন ---------- */
+/* ---------- GENERAL CHECK: একটাই table — বাঁয়ে ভার্সিটি/ইঞ্জিনিয়ারিং/মেডিকেল, ডানে তাদের তালিকা ---------- */
 .gct {
   background: #fff;
   border: 2px solid var(--black);
@@ -3231,24 +3231,30 @@ nav.uni-nav:hover::-webkit-scrollbar-thumb {
   overflow: hidden;
 }
 .gct-col {
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
   border-bottom: 2px solid var(--black);
+  overflow: hidden;
 }
 .gct-col:last-child {
   border-bottom: none;
 }
 .gct-head {
-  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 10px;
   text-align: center;
   font-size: 15.5px;
   font-weight: 800;
   color: var(--blue);
   background: #eaf0ff;
+  border-right: 2px solid var(--black);
 }
 .gct-items {
   display: flex;
   flex-wrap: wrap;
-  border-top: 2px solid var(--black);
+  align-content: flex-start;
   margin: 0 -1.5px -1.5px 0;
 }
 .gct-row {
@@ -3259,7 +3265,7 @@ nav.uni-nav:hover::-webkit-scrollbar-thumb {
   align-items: flex-start;
   justify-content: center;
   gap: 7px;
-  padding: 15px 18px;
+  padding: 14px 14px;
   border-right: 1.5px solid #cfcfcf;
   border-bottom: 1.5px solid #cfcfcf;
 }
@@ -3283,23 +3289,35 @@ nav.uni-nav:hover::-webkit-scrollbar-thumb {
   color: #666;
 }
 .gct-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   font-size: 13.5px;
   color: #777;
   text-align: center;
-  border-top: 2px solid var(--black);
 }
-/* মোবাইলে প্রতি লাইনে ২টা ঘর */
 @media (max-width: 760px) {
+  .gct-col {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+  .gct-head {
+    padding: 10px 4px;
+    font-size: 13px;
+  }
   .gct-row {
     flex-basis: 50%;
-    padding: 13px 12px;
+    padding: 12px 10px;
   }
   .gct-name {
-    font-size: 13px;
+    font-size: 12.5px;
   }
   .gct-badge.unknown {
     font-size: 10.5px;
     padding: 2px 8px;
+  }
+  .gct-empty {
+    font-size: 12px;
+    padding: 12px 6px;
   }
 }
