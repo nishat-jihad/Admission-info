@@ -111,9 +111,12 @@ function lsSet(key, val) {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const msg = (e) => String((e && (e.message || e.errorMessage)) || e || "").slice(0, 150);
 
+// গুরুত্বপূর্ণ: প্লাগইন অবজেক্ট সরাসরি async ফাংশন থেকে return করা যাবে না।
+// JavaScript তখন সেটার .then খোঁজে, আর Capacitor তাতে "CapacitorUpdater.then() is not implemented on android" ছোঁড়ে।
+// তাই একটা সাধারণ অবজেক্টে মুড়িয়ে ফেরত দেওয়া হয়; ব্যবহারের সময় const { U } = await getUpdater();
 async function getUpdater() {
   const { CapacitorUpdater } = await import("@capgo/capacitor-updater");
-  return CapacitorUpdater;
+  return { U: CapacitorUpdater };
 }
 
 async function listBundles(U) {
@@ -176,7 +179,7 @@ async function ensureBundle(U, info) {
 // "আপডেট করো" চাপলে: নামিয়ে (বা আগে নামানো থাকলে সেটা) সাথে সাথে চালু করে — অ্যাপ নিজে রিলোড হয়।
 export async function installBundleUpdate(info) {
   if (!info.bundleUrl) throw new Error("bundle নেই");
-  const U = await getUpdater();
+  const { U } = await getUpdater();
   let bundle = await ensureBundle(U, info);
   diagLog(`install: bundle তৈরি id=${String(bundle.id).slice(0, 6)} v${bundle.version} status=${bundle.status}`);
   try {
@@ -222,7 +225,7 @@ export async function downloadBundleForNextLaunch(info) {
   // এই ভার্সন চালু করে দুইবার ফেরত চলে এসেছে (bundle ভাঙা) — আর চুপচাপ চেষ্টা নয়; হাতে চেক করলে পপ-আপ আসবে
   const fail = lsGet(FAIL_KEY);
   if (fail && fail.version === info.version && fail.count >= 2) return "skipped";
-  const U = await getUpdater();
+  const { U } = await getUpdater();
   const bundle = await ensureBundle(U, info);
   await U.next({ id: bundle.id });
   diagLog(`auto: v${info.version} নামানো, next() বসানো (id=${String(bundle.id).slice(0, 6)}, status=${bundle.status})`);
@@ -241,7 +244,7 @@ export async function applyPendingUpdate() {
     return false;
   }
   try {
-    const U = await getUpdater();
+    const { U } = await getUpdater();
     if ((await currentBundleId(U)) === p.id) return false;
     const b = (await listBundles(U)).find((x) => x.id === p.id);
     if (!b || b.status === "error") {
