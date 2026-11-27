@@ -11,6 +11,39 @@ const CATEGORIES = [
   { key: "engineering", label: "ইঞ্জিনিয়ারিং" },
 ];
 
+// ভার্সিটি / ইঞ্জিনিয়ারিং ট্যাবের সাব-ক্যাটাগরি বার: প্রথমে "সব", তারপর প্রতিটি ভার্সিটির শর্ট নাম।
+// ids = updates.js এর universityId; নতুন ভার্সিটি যোগ করলে এখানেও যোগ করো।
+const SUB_CATEGORIES = {
+  versity: [
+    { key: "all", label: "সব" },
+    { key: "du", label: "DU", ids: ["du"] },
+    { key: "ru", label: "RU", ids: ["ru"] },
+    { key: "cu", label: "CU", ids: ["cu"] },
+    { key: "ku_a", label: "KU (A)", ids: ["ku_a"] },
+    { key: "ku_b", label: "KU (B)", ids: ["ku_b"] },
+    { key: "jnu", label: "JnU", ids: ["jnu"] },
+    { key: "cou", label: "CoU", ids: ["cou"] },
+    { key: "ju_a", label: "JU (A)", ids: ["ju_a"] },
+    { key: "ju_d", label: "JU (D)", ids: ["ju_d"] },
+    { key: "gst", label: "GST", ids: ["gst"] },
+    { key: "agri", label: "Agri", ids: ["krishi"] },
+    { key: "bup", label: "BUP", ids: ["bup"] },
+  ],
+  engineering: [
+    { key: "all", label: "সব" },
+    { key: "buet", label: "BUET", ids: ["buet"] },
+    { key: "kuet", label: "KUET", ids: ["kuet"] },
+    { key: "cuet", label: "CUET", ids: ["cuet"] },
+    { key: "ruet", label: "RUET", ids: ["ruet"] },
+    { key: "sust", label: "SUST", ids: ["sust"] },
+    { key: "hstu_a", label: "HSTU (A)", ids: ["hstu_a"] },
+    { key: "hstu_b", label: "HSTU (B)", ids: ["hstu_b"] },
+    { key: "mist", label: "MIST", ids: ["mist"] },
+    { key: "butex", label: "BUTex", ids: ["butex"] },
+    { key: "iut", label: "IUT", ids: ["iut"] },
+  ],
+};
+
 // Hand-curated extra search terms per universityId, keyed the same way as
 // updates.js/universities.js. These cover the English full names / common
 // Banglish spellings that don't otherwise appear anywhere in the Bangla
@@ -110,6 +143,7 @@ function pdfLinks(u) {
 
 export default function UpdatesFilterList({ updates, inlineNews = null }) {
   const [activeCategory, setActiveCategory] = useState("versity");
+  const [subCategory, setSubCategory] = useState("all");
   const [query, setQuery] = useState("");
   const [openSources, setOpenSources] = useState({});
   // প্রথম টেবিল (সময়সূচি) ও প্রথম extraTable ছাড়া বাকি টেবিল ফোল্ডেড থাকে;
@@ -147,8 +181,13 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
         .filter(({ words }) => matchesQuery(words, trimmedQuery))
         .map(({ update }) => update);
     }
-    return updates.filter((u) => u.category === activeCategory);
-  }, [searchIndex, updates, isSearching, trimmedQuery, activeCategory]);
+    const inCat = updates.filter((u) => u.category === activeCategory);
+    const subs = SUB_CATEGORIES[activeCategory];
+    if (!subs || subCategory === "all") return inCat;
+    const sub = subs.find((x) => x.key === subCategory);
+    if (!sub || !sub.ids) return inCat;
+    return inCat.filter((u) => sub.ids.includes(u.universityId));
+  }, [searchIndex, updates, isSearching, trimmedQuery, activeCategory, subCategory]);
 
   function handleSearchSubmit(e) {
     e.preventDefault();
@@ -202,9 +241,28 @@ export default function UpdatesFilterList({ updates, inlineNews = null }) {
                 "updates-filter-btn" +
                 (activeCategory === cat.key ? " updates-filter-btn-active" : "")
               }
-              onClick={() => setActiveCategory(cat.key)}
+              onClick={() => {
+                setActiveCategory(cat.key);
+                setSubCategory("all");
+              }}
             >
               {cat.label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {!isSearching && SUB_CATEGORIES[activeCategory] && (
+        <div className="up-subbar" role="group" aria-label="ভার্সিটি অনুযায়ী ফিল্টার">
+          {SUB_CATEGORIES[activeCategory].map((sc) => (
+            <button
+              key={sc.key}
+              type="button"
+              className={`up-subcat${sc.key === subCategory ? " is-active" : ""}`}
+              aria-pressed={sc.key === subCategory}
+              onClick={() => setSubCategory(sc.key)}
+            >
+              {sc.label}
             </button>
           ))}
         </div>

@@ -16,10 +16,23 @@ export default function ApplyPopup({ items = [] }) {
   const [started, setStarted] = useState(false);
 
   // বর্তমান সময় শুধু ব্রাউজারে দেখা হয় (hydration mismatch এড়াতে)
+  // নতুন করে ঢোকার সময় (নতুন ট্যাব/নতুন ভিজিট/অ্যাপ খোলা) একবার দেখায়। রিলোড করলে বা
+  // অন্য পেজে গেলে আর দেখায় না — এটা মনে রাখা হয় sessionStorage-এ।
+  const SEEN_KEY = "applyPopupSeen";
   useEffect(() => {
+    try {
+      if (sessionStorage.getItem(SEEN_KEY)) return;
+    } catch (e) {
+      // sessionStorage বন্ধ থাকলে (প্রাইভেট মোড ইত্যাদি) আগের মতোই দেখাবে
+    }
     const now = Date.now();
+    const startedItems = items.filter((it) => getApplicationStatus(it.application, now).key === "started");
+    if (startedItems.length === 0) return;
     setShowDl(!IS_APP && !/iPhone|iPad|iPod/i.test(navigator.userAgent));
-    setList(items.filter((it) => getApplicationStatus(it.application, now).key === "started"));
+    setList(startedItems);
+    try {
+      sessionStorage.setItem(SEEN_KEY, "1");
+    } catch (e) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

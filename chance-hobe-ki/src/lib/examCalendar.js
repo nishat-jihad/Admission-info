@@ -165,9 +165,17 @@ export const APPLY_LINKS = {
   du: "https://admission.eis.du.ac.bd/",
   ru: "https://admission.ru.ac.bd/",
   kuet: "https://admission.kuet.ac.bd/",
+  // BUET: আবেদন শুরু ১ ডিসেম্বর ২০২৬ সকাল ১০টা (বিজ্ঞপ্তি অনুযায়ী অনলাইন আবেদনের ওয়েবসাইট www.buet.ac.bd)
+  buet: "https://www.buet.ac.bd/",
   // JU: আবেদন শুরু ২২ নভেম্বর ২০২৬ সকাল ১০টা — তার আগে "আবেদন শুরু হয়নি", সময় হলে নিজে থেকে বাটন আসবে
   ju_a: "https://admission.juniv.edu/",
   ju_d: "https://admission.juniv.edu/",
+  // জবি: আবেদন শুরু ২৫ নভেম্বর ২০২৬ দুপুর ১২টা
+  jnu: "https://jnuadmission.com/",
+  // কৃষি গুচ্ছ: আবেদন শুরু ২৫ নভেম্বর ২০২৬ (ওয়েবসাইটে দেওয়া অফিসিয়াল আবেদনের সাইট)
+  krishi: "https://acas.edu.bd/",
+  // সরকারি মেডিকেল/ডেন্টাল: আবেদন শুরু ২৫ নভেম্বর ২০২৬ সন্ধ্যা ৬:৩০
+  medical: "https://dgme.teletalk.com.bd/",
 };
 
 // কোন সারির ইউনিটের জন্য বিস্তারিত পেজ (/university/[slug]) আছে, সেটা ঠিক করার নিয়ম।

@@ -1479,10 +1479,35 @@ nav.nav-links a.nav-icon-link.active .nav-label {
 }
 
 /* ---------- FOOTER ---------- */
+/* Skyline footer-er thik upore boshe; tar niche-e footer-er sobuj border-top thake */
+.footer-skyline {
+  margin-top: 56px;
+  line-height: 0;
+  overflow: hidden;
+}
+.footer-skyline-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+}
+/* PC/tablet: ekdom puro width e boshe (dui pashe faka thake na).
+   Height = 10vw, tai ছবি shudhu halka (~১.২x) tana hoy, ar shob screen e
+   ek-i anupat thake, kono building/tree kata jay na. */
+@media (min-width: 701px) {
+  .footer-skyline-img {
+    height: 10vw;
+  }
+}
+@media (max-width: 700px) {
+  .footer-skyline {
+    margin-top: 40px;
+  }
+}
 footer.site-footer {
   background: linear-gradient(180deg, #0c1f3f 0%, #0a1a38 100%);
   color: #e7ecfb;
-  margin-top: 64px;
+  margin-top: 0;
   border-top: 3px solid var(--green);
 }
 .footer-inner {
@@ -2574,6 +2599,10 @@ section.block h2 .circular-tag {
   font-size: 13.5px;
   color: #7a5a00;
 }
+/* ০.২৫ নম্বর কাটার বক্স ও "ফলাফল নির্ণয় পদ্ধতি" টাইটেলের মাঝে ফাঁকা */
+.placeholder-note + section.block {
+  margin-top: 26px;
+}
 .calc-note {
   border-radius: 10px;
   padding: 10px 14px;
@@ -2625,6 +2654,14 @@ section.block h2 .circular-tag {
   margin-bottom: 5px;
   color: #444;
 }
+.calc-field select {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  font-size: 14px;
+  background: #fff;
+}
 .calc-field input {
   width: 100%;
   padding: 9px 12px;
@@ -2639,7 +2676,7 @@ section.block h2 .circular-tag {
 .calc-btn {
   background: var(--green);
   color: #fff;
-  border: 1.5px solid var(--black);
+  border: none;
   padding: 11px 26px;
   border-radius: 999px;
   font-weight: 700;
@@ -3028,5 +3065,305 @@ section.block h2 .circular-tag {
   .updates-filter-btn {
     font-size: 13px;
     padding: 10px 8px;
+  }
+}
+/* ===== কাস্টম স্ক্রলবার ===== */
+
+/* ১) পুরো পেজের (ডান পাশের) স্ক্রলবার */
+html::-webkit-scrollbar {
+  width: 10px;
+}
+html::-webkit-scrollbar-track {
+  background: #eef1ec;
+}
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--blue), var(--green));
+  border-radius: 0;
+  border: 2px solid #eef1ec;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--blue-dark), var(--green-dark));
+}
+
+/* ২) বাঁ পাশের সাইডবারের স্ক্রলবার */
+nav.uni-nav::-webkit-scrollbar {
+  width: 6px;
+}
+nav.uni-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+nav.uni-nav::-webkit-scrollbar-thumb {
+  background: #c9cfc6;
+  border-radius: 0;
+}
+nav.uni-nav:hover::-webkit-scrollbar-thumb {
+  background: var(--black);
+}
+
+/* ৩) Firefox-এর জন্য */
+@supports (-moz-appearance: none) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--blue) #eef1ec;
+  }
+  nav.uni-nav {
+    scrollbar-width: thin;
+    scrollbar-color: #c9cfc6 transparent;
+  }
+}
+
+
+/* ---------- Updates পেজ: ভার্সিটি/ইঞ্জিনিয়ারিং সাব-ক্যাটাগরি বার (News বারের মতো, active সবুজ) ---------- */
+.up-subbar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  margin: 16px 0 6px;
+  border: 1px solid #d9dce1;
+  border-radius: 999px;
+  background: #fff;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.up-subbar::-webkit-scrollbar {
+  display: none;
+}
+.up-subcat {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: #333;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 8px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.up-subcat:hover {
+  background: #e8f6ed;
+  color: var(--green-dark);
+}
+.up-subcat.is-active {
+  background: var(--green);
+  color: #fff;
+}
+
+/* ---------- GENERAL CHECK: বিষয়ভিত্তিক GPA + ফলাফল বক্স ---------- */
+.gc-subject-title {
+  margin: 20px 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--black);
+}
+.gc-subject-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.gc-subject-grid .field {
+  margin-bottom: 0;
+}
+.gc-error {
+  margin: -8px 0 16px;
+  font-size: 13.5px;
+  color: #a3251c;
+  background: #fbe7e5;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.gc-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.gc-summary-card {
+  border: 1.5px solid var(--black);
+  border-radius: 16px;
+  padding: 16px 14px;
+  text-align: center;
+  box-shadow: var(--shadow-hard);
+}
+.gc-summary-card.yes {
+  background: #f0fbf3;
+}
+.gc-summary-card.no {
+  background: #fff1ef;
+}
+.gc-summary-num {
+  font-size: clamp(30px, 5vw, 40px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+.gc-summary-card.yes .gc-summary-num {
+  color: var(--green-dark);
+}
+.gc-summary-card.no .gc-summary-num {
+  color: var(--red);
+}
+.gc-summary-label {
+  margin-top: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #444;
+}
+.gc-unknown-note {
+  margin-bottom: 14px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #6b6b6b;
+  background: #f4f4f4;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+@media (max-width: 760px) {
+  .gc-subject-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .gc-subject-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gc-table-heading {
+  margin: 22px 0 10px;
+  font-size: 16px;
+  font-weight: 800;
+}
+.gc-table-heading.yes {
+  color: var(--green-dark);
+}
+.gc-table-heading.no {
+  color: var(--red);
+}
+
+/* ---------- GENERAL CHECK: একটাই table — বাঁয়ে ভার্সিটি/ইঞ্জিনিয়ারিং/মেডিকেল, ডানে তাদের তালিকা ---------- */
+.gct {
+  background: #fff;
+  border: 2px solid var(--black);
+  border-radius: 14px;
+  box-shadow: var(--shadow-hard);
+  overflow: hidden;
+}
+.gct-col {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  border-bottom: 2px solid var(--black);
+  overflow: hidden;
+}
+.gct-col:last-child {
+  border-bottom: none;
+}
+.gct-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 10px;
+  text-align: center;
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--blue);
+  background: #eaf0ff;
+  border-right: 2px solid var(--black);
+}
+.gct-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  margin: 0 -1.5px -1.5px 0;
+}
+.gct-row {
+  flex: 0 0 33.3333%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 7px;
+  padding: 14px 14px;
+  border-right: 1.5px solid #cfcfcf;
+  border-bottom: 1.5px solid #cfcfcf;
+}
+.gct-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.gct-name:hover {
+  color: var(--blue-dark);
+}
+.gct-badge.unknown {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #ececec;
+  color: #666;
+}
+.gct-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  font-size: 13.5px;
+  color: #777;
+  text-align: center;
+}
+/* মোবাইল: তিন কলাম পাশাপাশি (ভার্সিটি | ইঞ্জিনিয়ারিং | মেডিকেল), প্রতিটার নিচে নিচে নাম */
+@media (max-width: 760px) {
+  .gct {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .gct-col {
+    display: block;
+    border-bottom: none;
+    border-right: 2px solid var(--black);
+  }
+  .gct-col:last-child {
+    border-right: none;
+  }
+  .gct-head {
+    border-right: none;
+    border-bottom: 2px solid var(--black);
+    padding: 11px 4px;
+    font-size: 13px;
+  }
+  .gct-items {
+    display: block;
+    margin: 0;
+  }
+  .gct-row {
+    padding: 12px 8px;
+    border-right: none;
+    border-bottom: 1.5px solid #cfcfcf;
+  }
+  .gct-row:last-child {
+    border-bottom: none;
+  }
+  .gct-name {
+    font-size: 12.5px;
+    word-break: break-word;
+  }
+  .gct-badge.unknown {
+    font-size: 10.5px;
+    padding: 2px 7px;
+  }
+  .gct-empty {
+    font-size: 12px;
+    padding: 14px 6px;
   }
 }
